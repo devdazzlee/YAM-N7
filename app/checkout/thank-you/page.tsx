@@ -108,10 +108,10 @@ function ThankYouContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C5A059] mx-auto mb-4"></div>
-          <p className="text-[#6B7280]">Loading order details...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted">Loading order details...</p>
         </div>
       </div>
     );
@@ -122,11 +122,11 @@ function ThankYouContent() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
       {/* Success Section */}
-      <section className="py-10 sm:py-16 md:py-20 bg-gradient-to-b from-[#FBF6EC] to-white">
+      <section className="py-10 sm:py-16 md:py-20 bg-gradient-to-b from-surface-muted to-background">
         <div className="container mx-auto px-3 sm:px-4">
           <div className="max-w-2xl mx-auto text-center">
             <motion.div
@@ -135,13 +135,13 @@ function ThankYouContent() {
               transition={{ duration: 0.6 }}
               className="space-y-4 sm:space-y-6"
             >
-              <div className="w-16 h-16 sm:w-24 sm:h-24 bg-[#F5EDD8] rounded-full flex items-center justify-center mx-auto">
-                <CheckCircle className="w-10 h-10 sm:w-16 sm:h-16 text-[#C5A059]" />
+              <div className="w-16 h-16 sm:w-24 sm:h-24 bg-surface rounded-full flex items-center justify-center mx-auto">
+                <CheckCircle className="w-10 h-10 sm:w-16 sm:h-16 text-primary" />
               </div>
-              <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#1A1A1A]">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-foreground">
                 Order Confirmed!
               </h1>
-              <p className="text-base sm:text-xl text-[#6B7280] px-2">
+              <p className="text-base sm:text-xl text-muted px-2">
                 Thank you for your purchase. Your order has been received and is being processed.
               </p>
             </motion.div>
@@ -151,32 +151,32 @@ function ThankYouContent() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 mt-6 sm:mt-8 space-y-4 sm:space-y-6 text-left"
+              className="bg-card rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 mt-6 sm:mt-8 space-y-4 sm:space-y-6 text-left"
             >
               <div className="flex items-center justify-center space-x-3 mb-3 sm:mb-4">
-                <Package className="w-5 h-5 sm:w-6 sm:h-6 text-[#C5A059]" />
-                <h2 className="text-lg sm:text-2xl font-bold text-[#1A1A1A]">Order Details</h2>
+                <Package className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                <h2 className="text-lg sm:text-2xl font-bold text-foreground">Order Details</h2>
               </div>
               <div className="space-y-3">
                 <div className="flex flex-col xs:flex-row justify-between gap-1">
-                  <span className="text-[#6B7280] text-sm sm:text-base">Order Number:</span>
-                  <span className="font-semibold text-[#1A1A1A] text-sm sm:text-base break-all">{order.orderNumber}</span>
+                  <span className="text-muted text-sm sm:text-base">Order Number:</span>
+                  <span className="font-semibold text-foreground text-sm sm:text-base break-all">{order.orderNumber}</span>
                 </div>
                 <div className="flex justify-between gap-1">
-                  <span className="text-[#6B7280] text-sm sm:text-base">Order Date:</span>
-                  <span className="font-semibold text-[#1A1A1A] text-sm sm:text-base">
+                  <span className="text-muted text-sm sm:text-base">Order Date:</span>
+                  <span className="font-semibold text-foreground text-sm sm:text-base">
                     {new Date(order.date).toLocaleDateString()}
                   </span>
                 </div>
                 <div className="flex justify-between gap-1">
-                  <span className="text-[#6B7280] text-sm sm:text-base">Total Amount:</span>
-                  <span className="font-semibold text-[#C5A059] text-base sm:text-xl">
+                  <span className="text-muted text-sm sm:text-base">Total Amount:</span>
+                  <span className="font-semibold text-primary text-base sm:text-xl">
                     Rs. {order.totals.total.toLocaleString()}
                   </span>
                 </div>
                 <div className="flex flex-col xs:flex-row justify-between gap-1">
-                  <span className="text-[#6B7280] text-sm sm:text-base">Payment Method:</span>
-                  <span className="font-semibold text-[#1A1A1A] text-sm sm:text-base flex items-center gap-2">
+                  <span className="text-muted text-sm sm:text-base">Payment Method:</span>
+                  <span className="font-semibold text-foreground text-sm sm:text-base flex items-center gap-2">
                     <Truck className="w-4 h-4 flex-shrink-0" />
                     Cash on Delivery
                   </span>
@@ -184,9 +184,9 @@ function ThankYouContent() {
               </div>
 
               {/* Shipping Address */}
-              <div className="pt-3 sm:pt-4 border-t border-gray-200">
-                <h3 className="font-semibold text-[#1A1A1A] mb-2 text-sm sm:text-base">Delivery Address:</h3>
-                <p className="text-[#6B7280] text-xs sm:text-sm">
+              <div className="pt-3 sm:pt-4 border-t border-border">
+                <h3 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Delivery Address:</h3>
+                <p className="text-muted text-xs sm:text-sm">
                   {order.customer.firstName} {order.customer.lastName}
                   <br />
                   {order.shipping.address}
@@ -198,15 +198,15 @@ function ThankYouContent() {
               </div>
 
               {/* Order Items */}
-              <div className="pt-3 sm:pt-4 border-t border-gray-200">
-                <h3 className="font-semibold text-[#1A1A1A] mb-2 sm:mb-3 text-sm sm:text-base">Order Items:</h3>
+              <div className="pt-3 sm:pt-4 border-t border-border">
+                <h3 className="font-semibold text-foreground mb-2 sm:mb-3 text-sm sm:text-base">Order Items:</h3>
                 <div className="space-y-2">
                   {order.items.map((item) => (
                     <div key={item.id} className="flex justify-between gap-2 text-xs sm:text-sm">
-                      <span className="text-[#6B7280] flex-1 min-w-0">
+                      <span className="text-muted flex-1 min-w-0">
                         {item.name} x {item.quantity}
                       </span>
-                      <span className="font-semibold text-[#1A1A1A] flex-shrink-0">
+                      <span className="font-semibold text-foreground flex-shrink-0">
                         Rs. {(item.price * item.quantity).toLocaleString()}
                       </span>
                     </div>
@@ -214,10 +214,10 @@ function ThankYouContent() {
                 </div>
               </div>
 
-              <div className="pt-3 sm:pt-4 border-t border-gray-200">
-                <div className="bg-[#F5EDD8] rounded-lg p-3 sm:p-4 flex items-start gap-2 sm:gap-3">
-                  <Truck className="w-5 h-5 text-[#C5A059] mt-0.5 flex-shrink-0" />
-                  <div className="text-xs sm:text-sm text-[#1A1A1A]">
+              <div className="pt-3 sm:pt-4 border-t border-border">
+                <div className="bg-surface rounded-lg p-3 sm:p-4 flex items-start gap-2 sm:gap-3">
+                  <Truck className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div className="text-xs sm:text-sm text-foreground">
                     <p className="font-semibold mb-1">Cash on Delivery</p>
                     <p>Please keep cash ready. Our delivery person will collect the payment when your order arrives.</p>
                   </div>
@@ -236,7 +236,7 @@ function ThankYouContent() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full sm:w-auto bg-[#C5A059] hover:bg-[#1A1A1A] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base"
+                  className="w-full sm:w-auto bg-primary hover:bg-surface-elevated text-foreground px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base"
                 >
                   <Home className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>Continue Shopping</span>
@@ -257,10 +257,10 @@ function ThankYouContent() {
 export default function ThankYouPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C5A059] mx-auto mb-4"></div>
-          <p className="text-[#6B7280]">Loading order details...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted">Loading order details...</p>
         </div>
       </div>
     }>

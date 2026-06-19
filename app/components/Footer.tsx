@@ -27,11 +27,11 @@ export default function Footer() {
   }, [fetchAll]);
 
   return (
-    <footer className="bg-[#1A1A1A] text-white">
+    <footer className="bg-surface-elevated text-foreground border-t border-border">
       <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
 
         {/* Top: Logo + Description + Social */}
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 sm:gap-8 mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-white/10">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 sm:gap-8 mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-foreground/10">
           <div className="max-w-lg">
             <img
               src="/YAM-N7-Logo.png"
@@ -40,15 +40,15 @@ export default function Footer() {
               width={220}
               height={80}
             />
-            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-3">
+            <p className="text-muted-subtle text-xs sm:text-sm leading-relaxed mb-3">
               Your destination for premium perfumes, attars, and luxury fragrances. Crafted with elegance since 2000.
             </p>
             <div className="flex items-center gap-4">
-              <a href={`tel:${CONTACT.phoneTel}`} className="inline-flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs sm:text-sm">
+              <a href={`tel:${CONTACT.phoneTel}`} className="inline-flex items-center gap-1.5 text-muted-subtle hover:text-foreground transition-colors text-xs sm:text-sm">
                 <Phone className="w-3.5 h-3.5" />
                 <span>{CONTACT.phoneDisplay}</span>
               </a>
-              <a href={`mailto:${CONTACT.email}`} className="inline-flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs sm:text-sm">
+              <a href={`mailto:${CONTACT.email}`} className="inline-flex items-center gap-1.5 text-muted-subtle hover:text-foreground transition-colors text-xs sm:text-sm">
                 <Mail className="w-3.5 h-3.5" />
                 <span>{CONTACT.email}</span>
               </a>
@@ -56,12 +56,12 @@ export default function Footer() {
           </div>
           {/* Social Icons */}
           <div className="flex items-center gap-2.5">
-            <span className="text-gray-500 text-xs mr-1 hidden sm:inline">Follow us</span>
+            <span className="text-muted text-xs mr-1 hidden sm:inline">Follow us</span>
             <a
               href="https://www.facebook.com/yamn7/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#C5A059] transition-colors"
+              className="w-9 h-9 bg-foreground/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
               aria-label="Facebook"
             >
               <Facebook className="w-4 h-4" />
@@ -70,7 +70,7 @@ export default function Footer() {
               href="https://www.instagram.com/yamn7official/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#C5A059] transition-colors"
+              className="w-9 h-9 bg-foreground/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
               aria-label="Instagram"
             >
               <Instagram className="w-4 h-4" />
@@ -82,19 +82,19 @@ export default function Footer() {
         <div className="grid grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8">
           {/* Shop - Dynamic from API */}
           <div>
-            <h3 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider mb-2 sm:mb-3">Shop</h3>
+            <h3 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wider mb-2 sm:mb-3">Shop</h3>
             <ul className="space-y-1 sm:space-y-1.5">
               {categories.length > 0 ? (
                 categories.map((cat) => (
                   <li key={cat.id}>
-                    <Link href={`/categories/${cat.slug}`} className="text-gray-400 hover:text-[#F5EDD8] transition-colors text-[11px] sm:text-sm">
+                    <Link href={`/categories/${cat.slug}`} className="text-muted-subtle hover:text-primary-light transition-colors text-[11px] sm:text-sm">
                       {cat.name}
                     </Link>
                   </li>
                 ))
               ) : (
                 <li>
-                  <Link href="/shop" className="text-gray-400 hover:text-[#F5EDD8] transition-colors text-[11px] sm:text-sm">
+                  <Link href="/shop" className="text-muted-subtle hover:text-primary-light transition-colors text-[11px] sm:text-sm">
                     All Products
                   </Link>
                 </li>
@@ -104,7 +104,7 @@ export default function Footer() {
 
           {/* Info */}
           <div>
-            <h3 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider mb-2 sm:mb-3">Info</h3>
+            <h3 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wider mb-2 sm:mb-3">Info</h3>
             <ul className="space-y-1 sm:space-y-1.5">
               {[
                 { name: 'About Us', href: '/about' },
@@ -115,7 +115,7 @@ export default function Footer() {
                 { name: 'Terms', href: '/terms-conditions' },
               ].map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-gray-400 hover:text-[#F5EDD8] transition-colors text-[11px] sm:text-sm">
+                  <Link href={link.href} className="text-muted-subtle hover:text-primary-light transition-colors text-[11px] sm:text-sm">
                     {link.name}
                   </Link>
                 </li>
@@ -125,7 +125,7 @@ export default function Footer() {
 
           {/* Account */}
           <div>
-            <h3 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider mb-2 sm:mb-3">Account</h3>
+            <h3 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wider mb-2 sm:mb-3">Account</h3>
             <ul className="space-y-1 sm:space-y-1.5">
               {[
                 { name: 'My Account', href: '/login' },
@@ -134,7 +134,7 @@ export default function Footer() {
                 { name: 'Support', href: '/contact' },
               ].map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-gray-400 hover:text-[#F5EDD8] transition-colors text-[11px] sm:text-sm">
+                  <Link href={link.href} className="text-muted-subtle hover:text-primary-light transition-colors text-[11px] sm:text-sm">
                     {link.name}
                   </Link>
                 </li>
@@ -144,17 +144,17 @@ export default function Footer() {
 
           {/* Contact — desktop only full column */}
           <div className="hidden lg:block">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-3">Contact Us</h3>
+            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-3">Contact Us</h3>
             <div className="space-y-2.5">
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#C5A059] flex-shrink-0" />
-                <a href={`tel:${CONTACT.phoneTel}`} className="text-gray-400 hover:text-[#F5EDD8] transition-colors text-sm">
+                <Phone className="w-4 h-4 text-primary flex-shrink-0" />
+                <a href={`tel:${CONTACT.phoneTel}`} className="text-muted-subtle hover:text-primary-light transition-colors text-sm">
                   {CONTACT.phoneDisplay}
                 </a>
               </div>
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#C5A059] flex-shrink-0" />
-                <a href={`mailto:${CONTACT.email}`} className="text-gray-400 hover:text-[#F5EDD8] transition-colors text-sm">
+                <Mail className="w-4 h-4 text-primary flex-shrink-0" />
+                <a href={`mailto:${CONTACT.email}`} className="text-muted-subtle hover:text-primary-light transition-colors text-sm">
                   {CONTACT.email}
                 </a>
               </div>
@@ -163,26 +163,26 @@ export default function Footer() {
         </div>
 
         {/* Mobile-only contact row */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6 lg:hidden text-[11px] sm:text-xs text-gray-400">
-          <a href={`tel:${CONTACT.phoneTel}`} className="flex items-center gap-1.5 hover:text-white transition-colors">
-            <Phone className="w-3.5 h-3.5 text-[#C5A059]" />
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6 lg:hidden text-[11px] sm:text-xs text-muted-subtle">
+          <a href={`tel:${CONTACT.phoneTel}`} className="flex items-center gap-1.5 hover:text-foreground transition-colors">
+            <Phone className="w-3.5 h-3.5 text-primary" />
             {CONTACT.phoneDisplay}
           </a>
-          <a href={`mailto:${CONTACT.email}`} className="flex items-center gap-1.5 hover:text-white transition-colors">
-            <Mail className="w-3.5 h-3.5 text-[#C5A059]" />
+          <a href={`mailto:${CONTACT.email}`} className="flex items-center gap-1.5 hover:text-foreground transition-colors">
+            <Mail className="w-3.5 h-3.5 text-primary" />
             {CONTACT.email}
           </a>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/10 pt-4 sm:pt-6">
+        <div className="border-t border-foreground/10 pt-4 sm:pt-6">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0">
-            <p className="text-gray-500 text-[10px] sm:text-xs">
+            <p className="text-muted text-[10px] sm:text-xs">
               © {new Date().getFullYear()} YAM-N7 Perfumes. All rights reserved.
             </p>
-            <div className="flex gap-4 text-[10px] sm:text-xs text-gray-500">
-              <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy</Link>
-              <Link href="/terms-conditions" className="hover:text-white transition-colors">Terms</Link>
+            <div className="flex gap-4 text-[10px] sm:text-xs text-muted">
+              <Link href="/privacy-policy" className="hover:text-foreground transition-colors">Privacy</Link>
+              <Link href="/terms-conditions" className="hover:text-foreground transition-colors">Terms</Link>
             </div>
           </div>
         </div>

@@ -32,7 +32,7 @@ export default function Home() {
   const featuredTotal = data?.featured_total ?? featured.length;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
       <HeroSection />
       <StatsSection />

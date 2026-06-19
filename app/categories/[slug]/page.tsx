@@ -35,10 +35,10 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
   const notFound = categories !== null && !category;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-16">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -47,7 +47,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
             className="text-center"
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-4">{category?.name || 'Category'}</h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            <p className="text-xl text-foreground/90 max-w-2xl mx-auto">
               {category && category.product_count > 0
                 ? `${category.product_count} premium ${category.product_count === 1 ? 'product' : 'products'}`
                 : 'Explore our premium products in this category.'}
@@ -57,13 +57,13 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
       </section>
 
       {resolvingMeta ? (
-        <section className="py-12 bg-white">
+        <section className="py-12 bg-card">
           <div className="container mx-auto px-4">
             <Loader size="lg" text="Loading category..." />
           </div>
         </section>
       ) : notFound ? (
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-card">
           <div className="container mx-auto px-4 text-center">
             <p className="text-red-500">Category not found</p>
           </div>

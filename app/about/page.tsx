@@ -10,10 +10,10 @@ import Link from 'next/link';
 
 export default function AboutPage() {
   const stats = [
-    { icon: Award, number: '25+', label: 'Years of Excellence', color: 'bg-[#8E6D31]' },
-    { icon: Users, number: '10K+', label: 'Happy Customers', color: 'bg-[#C5A059]' },
-    { icon: Heart, number: '1400+', label: 'Products Available', color: 'bg-[#1A1A1A]' },
-    { icon: TrendingUp, number: '98%', label: 'Satisfaction Rate', color: 'bg-[#C5A059]' },
+    { icon: Award, number: '25+', label: 'Years of Excellence', color: 'bg-primary-dark' },
+    { icon: Users, number: '10K+', label: 'Happy Customers', color: 'bg-primary' },
+    { icon: Heart, number: '1400+', label: 'Products Available', color: 'bg-surface-elevated' },
+    { icon: TrendingUp, number: '98%', label: 'Satisfaction Rate', color: 'bg-primary' },
   ];
 
   const milestones = [
@@ -23,8 +23,8 @@ export default function AboutPage() {
       title: 'Our Humble Beginnings',
       description: 'YAM-N7 began as a dedicated perfume store with a simple mission: to bring authentic attars and luxury fragrances to customers across Pakistan.',
       icon: Sprout,
-      iconBg: 'linear-gradient(135deg, #C5A059, #8E6D31)',
-      badgeBg: 'linear-gradient(90deg, #C5A059, #8E6D31)',
+      iconBg: 'linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-primary-dark)))',
+      badgeBg: 'linear-gradient(90deg, rgb(var(--color-primary)), rgb(var(--color-primary-dark)))',
     },
     {
       year: '2005',
@@ -32,8 +32,8 @@ export default function AboutPage() {
       title: 'Expanding to 200+ Scents',
       description: 'As word of our quality spread, we expanded our collection to include rare oud blends, designer-inspired fragrances, and traditional attars loved across Pakistan.',
       icon: Package,
-      iconBg: 'linear-gradient(135deg, #8E6D31, #C5A059)',
-      badgeBg: 'linear-gradient(90deg, #8E6D31, #C5A059)',
+      iconBg: 'linear-gradient(135deg, rgb(var(--color-primary-dark)), rgb(var(--color-primary)))',
+      badgeBg: 'linear-gradient(90deg, rgb(var(--color-primary-dark)), rgb(var(--color-primary)))',
     },
     {
       year: '2012',
@@ -41,8 +41,8 @@ export default function AboutPage() {
       title: 'Direct from the Origin',
       description: 'To ensure the YAM-N7 standard, we began sourcing premium oud, essential oils, and fragrance compounds directly from trusted international suppliers.',
       icon: Globe,
-      iconBg: 'linear-gradient(135deg, #1A1A1A, #C5A059)',
-      badgeBg: 'linear-gradient(90deg, #1A1A1A, #C5A059)',
+      iconBg: 'linear-gradient(135deg, rgb(var(--color-surface-elevated)), rgb(var(--color-primary)))',
+      badgeBg: 'linear-gradient(90deg, rgb(var(--color-surface-elevated)), rgb(var(--color-primary)))',
     },
     {
       year: '2018',
@@ -50,8 +50,8 @@ export default function AboutPage() {
       title: 'Serving 500+ Fragrances',
       description: 'By 2018, our catalog grew to over 500 fragrances. Every perfume was tested for longevity, projection, and authenticity under our strict Zero Compromise quality policy.',
       icon: Star,
-      iconBg: 'linear-gradient(135deg, #8E6D31, #C5A059)',
-      badgeBg: 'linear-gradient(90deg, #8E6D31, #C5A059)',
+      iconBg: 'linear-gradient(135deg, rgb(var(--color-primary-dark)), rgb(var(--color-primary)))',
+      badgeBg: 'linear-gradient(90deg, rgb(var(--color-primary-dark)), rgb(var(--color-primary)))',
     },
     {
       year: '2020',
@@ -59,8 +59,8 @@ export default function AboutPage() {
       title: 'Nationwide Delivery',
       description: 'Recognizing demand from customers across Pakistan and abroad, we expanded our online perfume store — bringing 25 years of fragrance expertise to doorsteps nationwide.',
       icon: TrendingUp,
-      iconBg: 'linear-gradient(135deg, #C5A059, #1A1A1A)',
-      badgeBg: 'linear-gradient(90deg, #C5A059, #1A1A1A)',
+      iconBg: 'linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-surface-elevated)))',
+      badgeBg: 'linear-gradient(90deg, rgb(var(--color-primary)), rgb(var(--color-surface-elevated)))',
     },
     {
       year: '2026',
@@ -68,8 +68,8 @@ export default function AboutPage() {
       title: '1400+ Fragrances & Counting',
       description: 'Today, YAM-N7 stands as a leader in premium perfumes and attars. With over 1400 fragrances and a quarter-century of history, we remain committed to the elegance that started it all.',
       icon: Sparkles,
-      iconBg: 'linear-gradient(135deg, #1A1A1A, #C5A059)',
-      badgeBg: 'linear-gradient(90deg, #1A1A1A, #C5A059)',
+      iconBg: 'linear-gradient(135deg, rgb(var(--color-surface-elevated)), rgb(var(--color-primary)))',
+      badgeBg: 'linear-gradient(90deg, rgb(var(--color-surface-elevated)), rgb(var(--color-primary)))',
     },
   ];
 
@@ -78,31 +78,31 @@ export default function AboutPage() {
       icon: Shield,
       title: 'Quality First',
       description: 'We never compromise. Every fragrance is carefully selected and tested to meet the rigorous YAM-N7 standards for longevity and authenticity.',
-      bgColor: 'bg-[#C5A059]',
+      bgColor: 'bg-primary',
     },
     {
       icon: Heart,
       title: 'Customer Trust',
       description: 'Building long-term relationships through honesty and transparency is the foundation of our 25-year fragrance legacy.',
-      bgColor: 'bg-[#8E6D31]',
+      bgColor: 'bg-primary-dark',
     },
     {
       icon: Award,
       title: 'Authenticity',
       description: 'We source exclusively from trusted suppliers, ensuring you receive genuine perfumes, attars, and oud blends every time.',
-      bgColor: 'bg-[#1A1A1A]',
+      bgColor: 'bg-surface-elevated',
     },
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-[#1A1A1A] via-[#C5A059] to-[#1A1A1A] text-white py-14 sm:py-18 md:py-24 overflow-hidden">
+      <section className="relative bg-gradient-to-r from-surface-elevated via-primary to-surface-elevated text-foreground py-14 sm:py-18 md:py-24 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-56 sm:w-72 h-56 sm:h-72 bg-[#F5EDD8] rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-56 sm:w-72 h-56 sm:h-72 bg-[#8E6D31] rounded-full blur-3xl"></div>
+          <div className="absolute top-0 right-0 w-56 sm:w-72 h-56 sm:h-72 bg-surface rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-56 sm:w-72 h-56 sm:h-72 bg-primary-dark rounded-full blur-3xl"></div>
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -111,9 +111,9 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-[#F5EDD8] mx-auto mb-4" />
+            <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-primary-light mx-auto mb-4" />
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">About YAM-N7</h1>
-            <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-foreground/90 leading-relaxed max-w-2xl mx-auto">
               Your trusted destination for luxury perfumes, attars, and exclusive fragrances for over 25 years.
             </p>
           </motion.div>
@@ -121,7 +121,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-10 sm:py-14 md:py-16 bg-gradient-to-b from-white to-[#FBF6EC]/50">
+      <section className="py-10 sm:py-14 md:py-16 bg-gradient-to-b from-background to-surface-muted/50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             {stats.map((stat, index) => {
@@ -134,13 +134,13 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.08 }}
                   whileHover={{ y: -4 }}
-                  className="text-center p-5 sm:p-7 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300"
+                  className="text-center p-5 sm:p-7 bg-card rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300"
                 >
                   <div className={`w-14 h-14 sm:w-16 sm:h-16 ${stat.color} rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm`}>
-                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-foreground" />
                   </div>
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1A1A1A] mb-1">{stat.number}</h3>
-                  <p className="text-[#6B7280] font-medium text-xs sm:text-sm">{stat.label}</p>
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1">{stat.number}</h3>
+                  <p className="text-muted font-medium text-xs sm:text-sm">{stat.label}</p>
                 </motion.div>
               );
             })}
@@ -149,8 +149,8 @@ export default function AboutPage() {
       </section>
 
       {/* Story Section */}
-      <section className="py-14 sm:py-18 md:py-24 bg-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C5A059]/20 to-transparent"></div>
+      <section className="py-14 sm:py-18 md:py-24 bg-card relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
 
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
@@ -162,15 +162,15 @@ export default function AboutPage() {
               transition={{ duration: 0.6 }}
               className="text-center mb-10 sm:mb-14"
             >
-              <span className="inline-block text-[#8E6D31] font-semibold text-xs sm:text-sm tracking-[0.2em] uppercase mb-3">
+              <span className="inline-block text-primary-dark font-semibold text-xs sm:text-sm tracking-[0.2em] uppercase mb-3">
                 Since 2000
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#1A1A1A] mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
                 Our Story
               </h2>
               <div className="flex items-center justify-center gap-2">
-                <div className="w-10 h-0.5 bg-[#C5A059] rounded-full"></div>
-                <div className="w-12 h-0.5 bg-[#8E6D31] rounded-full"></div>
+                <div className="w-10 h-0.5 bg-primary rounded-full"></div>
+                <div className="w-12 h-0.5 bg-primary-dark rounded-full"></div>
               </div>
             </motion.div>
 
@@ -184,9 +184,9 @@ export default function AboutPage() {
                 transition={{ duration: 0.7 }}
                 className="lg:col-span-2 relative"
               >
-                <div className="relative rounded-2xl overflow-hidden" style={{ background: 'linear-gradient(135deg, #1A1A1A, #C5A059)' }}>
+                <div className="relative rounded-2xl overflow-hidden" style={{ background: 'linear-gradient(135deg, rgb(var(--color-surface-elevated)), rgb(var(--color-primary)))' }}>
                   <div className="p-8 sm:p-10 text-center">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-card/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
 
                     <motion.div
                       initial={{ scale: 0.8 }}
@@ -194,23 +194,23 @@ export default function AboutPage() {
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: 0.2 }}
                     >
-                      <p className="text-7xl sm:text-8xl font-bold text-white/10 leading-none select-none">25</p>
-                      <p className="text-2xl sm:text-3xl font-bold text-white -mt-4 relative z-10">25+ Years</p>
-                      <div className="w-10 h-0.5 bg-[#8E6D31] rounded-full mx-auto mt-4 mb-4"></div>
-                      <p className="text-white/70 text-sm sm:text-base leading-relaxed">
+                      <p className="text-7xl sm:text-8xl font-bold text-foreground/10 leading-none select-none">25</p>
+                      <p className="text-2xl sm:text-3xl font-bold text-foreground -mt-4 relative z-10">25+ Years</p>
+                      <div className="w-10 h-0.5 bg-primary-dark rounded-full mx-auto mt-4 mb-4"></div>
+                      <p className="text-foreground/70 text-sm sm:text-base leading-relaxed">
                         Of excellence, trust &amp; heritage in Karachi
                       </p>
                     </motion.div>
 
                     {/* Stats row */}
-                    <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-white/10">
+                    <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-foreground/10">
                       <div>
-                        <p className="text-xl sm:text-2xl font-bold text-[#8E6D31]">1400+</p>
-                        <p className="text-white/60 text-xs sm:text-sm mt-0.5">Products</p>
+                        <p className="text-xl sm:text-2xl font-bold text-primary-dark">1400+</p>
+                        <p className="text-foreground/60 text-xs sm:text-sm mt-0.5">Products</p>
                       </div>
                       <div>
-                        <p className="text-xl sm:text-2xl font-bold text-[#F5EDD8]">10K+</p>
-                        <p className="text-white/60 text-xs sm:text-sm mt-0.5">Happy Customers</p>
+                        <p className="text-xl sm:text-2xl font-bold text-primary-light">10K+</p>
+                        <p className="text-foreground/60 text-xs sm:text-sm mt-0.5">Happy Customers</p>
                       </div>
                     </div>
                   </div>
@@ -226,57 +226,57 @@ export default function AboutPage() {
                 className="lg:col-span-3 space-y-5"
               >
                 {/* Quote */}
-                <div className="relative pl-5 border-l-3 border-[#8E6D31]">
-                  <p className="text-lg sm:text-xl md:text-2xl text-[#1A1A1A] font-medium italic leading-relaxed">
+                <div className="relative pl-5 border-l-3 border-primary-dark">
+                  <p className="text-lg sm:text-xl md:text-2xl text-foreground font-medium italic leading-relaxed">
                     &ldquo;What started as a passion for fine fragrances has grown into one of Pakistan&apos;s most trusted online perfume stores.&rdquo;
                   </p>
                 </div>
 
                 {/* Main paragraphs */}
-                <p className="text-sm sm:text-base text-[#6B7280] leading-relaxed">
-                  YAM-N7 was established in <span className="font-semibold text-[#1A1A1A]">2000</span> in Karachi.
+                <p className="text-sm sm:text-base text-muted leading-relaxed">
+                  YAM-N7 was established in <span className="font-semibold text-foreground">2000</span> in Karachi.
                   What began as a humble mission to bring authentic attars and fine fragrances to our community
                   has blossomed into a legacy spanning over two decades.
                 </p>
 
-                <p className="text-sm sm:text-base text-[#6B7280] leading-relaxed">
-                  Our unwavering commitment to <span className="font-semibold text-[#1A1A1A]">quality, authenticity, and customer satisfaction</span> has
+                <p className="text-sm sm:text-base text-muted leading-relaxed">
+                  Our unwavering commitment to <span className="font-semibold text-foreground">quality, authenticity, and customer satisfaction</span> has
                   been the cornerstone of our growth. We carefully source every fragrance — from rare oud blends
                   to designer-inspired perfumes — directly from the finest suppliers worldwide.
                 </p>
 
-                <p className="text-sm sm:text-base text-[#6B7280] leading-relaxed">
-                  Today, with <span className="font-semibold text-[#1A1A1A]">1400+ fragrances</span> available online, we continue to serve customers across Pakistan with the same passion and &ldquo;Zero Compromise&rdquo; approach to
+                <p className="text-sm sm:text-base text-muted leading-relaxed">
+                  Today, with <span className="font-semibold text-foreground">1400+ fragrances</span> available online, we continue to serve customers across Pakistan with the same passion and &ldquo;Zero Compromise&rdquo; approach to
                   quality that we started with.
                 </p>
 
                 {/* Highlight cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
-                  <div className="flex items-center gap-3 bg-[#FBF6EC]/50 rounded-xl p-4">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #1A1A1A, #C5A059)' }}>
-                      <Shield className="w-5 h-5 text-white" />
+                  <div className="flex items-center gap-3 bg-surface-muted/50 rounded-xl p-4">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, rgb(var(--color-surface-elevated)), rgb(var(--color-primary)))' }}>
+                      <Shield className="w-5 h-5 text-foreground" />
                     </div>
                     <div>
-                      <p className="font-semibold text-[#1A1A1A] text-sm">Zero Compromise</p>
-                      <p className="text-xs text-[#6B7280]">On scent & quality</p>
+                      <p className="font-semibold text-foreground text-sm">Zero Compromise</p>
+                      <p className="text-xs text-muted">On scent & quality</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 bg-[#F5EDD8]/40 rounded-xl p-4">
+                  <div className="flex items-center gap-3 bg-surface/40 rounded-xl p-4">
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #059669, #0D9488)' }}>
-                      <Heart className="w-5 h-5 text-white" />
+                      <Heart className="w-5 h-5 text-foreground" />
                     </div>
                     <div>
-                      <p className="font-semibold text-[#1A1A1A] text-sm">Family Values</p>
-                      <p className="text-xs text-[#6B7280]">Built on trust</p>
+                      <p className="font-semibold text-foreground text-sm">Family Values</p>
+                      <p className="text-xs text-muted">Built on trust</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 bg-[#8E6D31]/5 rounded-xl p-4">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #8E6D31, #ea580c)' }}>
-                      <Award className="w-5 h-5 text-white" />
+                  <div className="flex items-center gap-3 bg-primary-dark/5 rounded-xl p-4">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary-dark)), #ea580c)' }}>
+                      <Award className="w-5 h-5 text-foreground" />
                     </div>
                     <div>
-                      <p className="font-semibold text-[#1A1A1A] text-sm">Heritage Brand</p>
-                      <p className="text-xs text-[#6B7280]">Since 2000</p>
+                      <p className="font-semibold text-foreground text-sm">Heritage Brand</p>
+                      <p className="text-xs text-muted">Since 2000</p>
                     </div>
                   </div>
                 </div>
@@ -287,7 +287,7 @@ export default function AboutPage() {
       </section>
 
       {/* Journey / Timeline Section */}
-      <section className="py-14 sm:py-18 md:py-24 bg-gradient-to-b from-[#FBF6EC]/30 to-white">
+      <section className="py-14 sm:py-18 md:py-24 bg-gradient-to-b from-surface-muted/30 to-background">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -295,15 +295,15 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-10 sm:mb-14"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#1A1A1A] mb-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">
               A Legacy of Fragrance: Our Journey
             </h2>
-            <p className="text-sm sm:text-base md:text-lg text-[#6B7280] max-w-xl mx-auto mb-4">
+            <p className="text-sm sm:text-base md:text-lg text-muted max-w-xl mx-auto mb-4">
               Milestones that define 25 years of fragrance excellence
             </p>
             <div className="flex items-center justify-center gap-2">
-              <div className="w-10 h-0.5 bg-[#C5A059] rounded-full"></div>
-              <div className="w-12 h-0.5 bg-[#8E6D31] rounded-full"></div>
+              <div className="w-10 h-0.5 bg-primary rounded-full"></div>
+              <div className="w-12 h-0.5 bg-primary-dark rounded-full"></div>
             </div>
           </motion.div>
 
@@ -320,35 +320,35 @@ export default function AboutPage() {
                   transition={{ duration: 0.4, delay: index * 0.06 }}
                   className="group"
                 >
-                  <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 h-full flex flex-col">
+                  <div className="bg-card rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-border h-full flex flex-col">
                     {/* Top row: Icon + Year + Badge */}
                     <div className="flex items-center gap-3 mb-4">
                       <div
                         className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform duration-300"
                         style={{ background: milestone.iconBg }}
                       >
-                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
                       </div>
                       <div>
                         <span
-                          className="inline-block text-xs font-bold text-white px-2.5 py-0.5 rounded-full"
+                          className="inline-block text-xs font-bold text-foreground px-2.5 py-0.5 rounded-full"
                           style={{ background: milestone.badgeBg }}
                         >
                           {milestone.year}
                         </span>
-                        <p className="text-[11px] sm:text-xs text-[#9CA3AF] font-medium mt-1 uppercase tracking-wide">
+                        <p className="text-[11px] sm:text-xs text-muted-subtle font-medium mt-1 uppercase tracking-wide">
                           {milestone.badge}
                         </p>
                       </div>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-base sm:text-lg font-bold text-[#1A1A1A] mb-2">
+                    <h3 className="text-base sm:text-lg font-bold text-foreground mb-2">
                       {milestone.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-sm sm:text-[15px] text-[#6B7280] leading-relaxed flex-grow">
+                    <p className="text-sm sm:text-[15px] text-muted leading-relaxed flex-grow">
                       {milestone.description}
                     </p>
                   </div>
@@ -360,7 +360,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="py-14 sm:py-18 md:py-24 bg-gradient-to-b from-white to-[#FBF6EC]/50">
+      <section className="py-14 sm:py-18 md:py-24 bg-gradient-to-b from-background to-surface-muted/50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -368,13 +368,13 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-10 sm:mb-14"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#1A1A1A] mb-3">Our Values</h2>
-            <p className="text-sm sm:text-base md:text-lg text-[#6B7280] max-w-lg mx-auto mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">Our Values</h2>
+            <p className="text-sm sm:text-base md:text-lg text-muted max-w-lg mx-auto mb-4">
               The principles that guide our product selections.
             </p>
             <div className="flex items-center justify-center gap-2">
-              <div className="w-10 h-0.5 bg-[#C5A059] rounded-full"></div>
-              <div className="w-12 h-0.5 bg-[#8E6D31] rounded-full"></div>
+              <div className="w-10 h-0.5 bg-primary rounded-full"></div>
+              <div className="w-12 h-0.5 bg-primary-dark rounded-full"></div>
             </div>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-5 sm:gap-6 max-w-5xl mx-auto">
@@ -388,13 +388,13 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.08 }}
                   whileHover={{ y: -4 }}
-                  className="bg-white rounded-2xl p-6 sm:p-8 text-center shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
+                  className="bg-card rounded-2xl p-6 sm:p-8 text-center shadow-sm hover:shadow-lg transition-all duration-300 border border-border"
                 >
                   <div className={`w-14 h-14 sm:w-16 sm:h-16 ${value.bgColor} rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm`}>
-                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-foreground" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-[#1A1A1A] mb-2">{value.title}</h3>
-                  <p className="text-sm sm:text-base text-[#6B7280] leading-relaxed">{value.description}</p>
+                  <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">{value.title}</h3>
+                  <p className="text-sm sm:text-base text-muted leading-relaxed">{value.description}</p>
                 </motion.div>
               );
             })}
@@ -403,7 +403,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision Section */}
-      <section className="py-14 sm:py-18 md:py-24 bg-white">
+      <section className="py-14 sm:py-18 md:py-24 bg-card">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -411,13 +411,13 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-10 sm:mb-14"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#1A1A1A] mb-3">Mission & Vision</h2>
-            <p className="text-sm sm:text-base md:text-lg text-[#6B7280] max-w-lg mx-auto mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">Mission & Vision</h2>
+            <p className="text-sm sm:text-base md:text-lg text-muted max-w-lg mx-auto mb-4">
               Aligning your goals with community health and premium standards.
             </p>
             <div className="flex items-center justify-center gap-2">
-              <div className="w-10 h-0.5 bg-[#C5A059] rounded-full"></div>
-              <div className="w-12 h-0.5 bg-[#8E6D31] rounded-full"></div>
+              <div className="w-10 h-0.5 bg-primary rounded-full"></div>
+              <div className="w-12 h-0.5 bg-primary-dark rounded-full"></div>
             </div>
           </motion.div>
           <div className="grid md:grid-cols-2 gap-5 sm:gap-6 max-w-5xl mx-auto">
@@ -426,13 +426,13 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
+              className="bg-card rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-border"
             >
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #C5A059, #1A1A1A)' }}>
-                <Target className="w-7 h-7 text-white" />
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-surface-elevated)))' }}>
+                <Target className="w-7 h-7 text-foreground" />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#1A1A1A] mb-3">Our Mission</h3>
-              <p className="text-sm sm:text-base text-[#6B7280] leading-relaxed">
+              <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3">Our Mission</h3>
+              <p className="text-sm sm:text-base text-muted leading-relaxed">
                 To enrich lives through the art of fragrance — providing access to the finest perfumes, attars, 
                 and oud blends. We are committed to making luxury scents accessible to everyone through excellence and transparency.
               </p>
@@ -442,13 +442,13 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
+              className="bg-card rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-border"
             >
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #8E6D31, #ea580c)' }}>
-                <Eye className="w-7 h-7 text-white" />
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary-dark)), #ea580c)' }}>
+                <Eye className="w-7 h-7 text-foreground" />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#1A1A1A] mb-3">Our Vision</h3>
-              <p className="text-sm sm:text-base text-[#6B7280] leading-relaxed">
+              <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3">Our Vision</h3>
+              <p className="text-sm sm:text-base text-muted leading-relaxed">
                 To be Pakistan&apos;s leading perfume house, recognized for our unwavering 
                 commitment to quality and elegance. We envision a future where everyone can 
                 discover their signature scent with confidence.
@@ -459,7 +459,7 @@ export default function AboutPage() {
       </section>
 
       {/* Why Trust Us Section */}
-      <section className="py-14 sm:py-18 md:py-24 bg-gradient-to-b from-[#FBF6EC]/30 to-white">
+      <section className="py-14 sm:py-18 md:py-24 bg-gradient-to-b from-surface-muted/30 to-background">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -467,8 +467,8 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-10 sm:mb-14"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#1A1A1A] mb-3">Why Trust Us?</h2>
-            <p className="text-sm sm:text-base md:text-lg text-[#6B7280] max-w-lg mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">Why Trust Us?</h2>
+            <p className="text-sm sm:text-base md:text-lg text-muted max-w-lg mx-auto">
               We have earned the trust of thousands of customers through our commitment to excellence.
             </p>
           </motion.div>
@@ -487,13 +487,13 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.08 }}
                   whileHover={{ y: -4 }}
-                  className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 text-center border border-gray-100"
+                  className="bg-card p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 text-center border border-border"
                 >
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(135deg, #C5A059, #1A1A1A)' }}>
-                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-surface-elevated)))' }}>
+                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-foreground" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-[#1A1A1A] mb-2">{item.title}</h3>
-                  <p className="text-sm sm:text-base text-[#6B7280] leading-relaxed">{item.desc}</p>
+                  <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">{item.title}</h3>
+                  <p className="text-sm sm:text-base text-muted leading-relaxed">{item.desc}</p>
                 </motion.div>
               );
             })}

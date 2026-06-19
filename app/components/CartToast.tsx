@@ -51,7 +51,7 @@ export default function CartToast() {
       {toasts.map((toast) => (
         <div
           key={toast.id}
-          className="pointer-events-auto bg-white rounded-xl shadow-2xl border border-gray-100 p-3 sm:p-3.5 flex items-center gap-2.5 sm:gap-3 min-w-[260px] max-w-[340px] animate-slide-up"
+          className="pointer-events-auto bg-card rounded-xl shadow-2xl border border-border p-3 sm:p-3.5 flex items-center gap-2.5 sm:gap-3 min-w-[260px] max-w-[340px] animate-slide-up"
         >
           {toast.image ? (
             <img
@@ -60,29 +60,29 @@ export default function CartToast() {
               className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg object-cover flex-shrink-0"
             />
           ) : (
-            <div className="w-10 h-10 sm:w-11 sm:h-11 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 bg-emerald-950/30 rounded-lg flex items-center justify-center flex-shrink-0">
               <ShoppingCart className="w-5 h-5 text-green-600" />
             </div>
           )}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1 mb-0.5">
-              <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+              <CheckCircle className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
               <span className="text-xs font-semibold text-green-600">Added to cart</span>
             </div>
-            <p className="text-xs sm:text-sm text-[#1A1A1A] font-medium truncate">
+            <p className="text-xs sm:text-sm text-foreground font-medium truncate">
               {toast.productName}
             </p>
           </div>
           <div className="flex flex-col items-end gap-1 flex-shrink-0">
             <button
               onClick={() => dismiss(toast.id)}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-muted-subtle hover:text-muted transition-colors"
             >
               <X className="w-3.5 h-3.5" />
             </button>
             <Link
               href="/cart"
-              className="text-[10px] sm:text-xs font-semibold text-[#C5A059] hover:text-[#1A1A1A] transition-colors whitespace-nowrap"
+              className="text-[10px] sm:text-xs font-semibold text-primary hover:text-foreground transition-colors whitespace-nowrap"
             >
               View Cart
             </Link>

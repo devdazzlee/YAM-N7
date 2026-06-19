@@ -34,10 +34,10 @@ export default function OffersPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-20">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -49,18 +49,18 @@ export default function OffersPage() {
               <Tag className="w-12 h-12" />
               <h1 className="text-4xl md:text-5xl font-bold">Special Offers & Promotions</h1>
             </div>
-            <p className="text-xl text-white/90">Limited time deals on premium products</p>
+            <p className="text-xl text-foreground/90">Limited time deals on premium products</p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-card">
         <div className="container mx-auto px-4">
           {loading ? (
             <Loader size="lg" text="Loading offers..." />
           ) : products.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-[#6B7280] text-lg">No offers available at the moment.</p>
+              <p className="text-muted text-lg">No offers available at the moment.</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">

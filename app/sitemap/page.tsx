@@ -74,10 +74,10 @@ export default function SitemapPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-20">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -89,12 +89,12 @@ export default function SitemapPage() {
               <SitemapIcon className="w-12 h-12" />
               <h1 className="text-4xl md:text-5xl font-bold">Sitemap</h1>
             </div>
-            <p className="text-xl text-white/90">Find all pages on our website</p>
+            <p className="text-xl text-foreground/90">Find all pages on our website</p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-card">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {allSections.map((section, index) => (
@@ -104,15 +104,15 @@ export default function SitemapPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-[#FBF6EC] rounded-2xl p-6"
+                className="bg-surface-muted rounded-2xl p-6"
               >
-                <h2 className="text-xl font-bold text-[#1A1A1A] mb-4">{section.title}</h2>
+                <h2 className="text-xl font-bold text-foreground mb-4">{section.title}</h2>
                 <ul className="space-y-2">
                   {section.links.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="text-[#6B7280] hover:text-[#C5A059] transition-colors"
+                        className="text-muted hover:text-primary transition-colors"
                       >
                         {link.name}
                       </Link>

@@ -374,11 +374,11 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
   if (error || !product) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-background">
         <Header />
         <div className="flex flex-col justify-center items-center py-20">
           <p className="text-red-500 mb-4">{error || 'Product not found'}</p>
-          <Link href="/shop" className="text-[#C5A059] hover:underline">
+          <Link href="/shop" className="text-primary hover:underline">
             Back to Shop
           </Link>
         </div>
@@ -387,11 +387,11 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
       {/* Product Details */}
-      <section className="py-4 sm:py-6 md:py-8 bg-white overflow-x-hidden">
+      <section className="py-4 sm:py-6 md:py-8 bg-card overflow-x-hidden">
         <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-10">
             {/* Product Images */}
@@ -411,7 +411,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   className="w-full h-full object-cover object-center"
                 />
                 {discount > 0 && (
-                  <div className="absolute top-2.5 left-2.5 bg-[#8E6D31] text-white px-2.5 py-0.5 rounded-full font-bold text-xs">
+                  <div className="absolute top-2.5 left-2.5 bg-primary-dark text-foreground px-2.5 py-0.5 rounded-full font-bold text-xs">
                     -{discount}%
                   </div>
                 )}
@@ -423,8 +423,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     onClick={() => setSelectedImage(index)}
                     className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
                       selectedImage === index
-                        ? 'border-[#C5A059] shadow-sm'
-                        : 'border-gray-200 hover:border-[#C5A059]/50'
+                        ? 'border-primary shadow-sm'
+                        : 'border-border hover:border-primary/50'
                     }`}
                   >
                     <img src={img} alt={`${product.name} ${index + 1}`} className="w-full h-full object-cover object-center" />
@@ -443,11 +443,11 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             >
               <div>
                 <Link href={`/categories/${(product.category?.name || (product as any).category || '').toLowerCase().replace(/\s+/g, '-')}`}>
-                  <span className="inline-block text-[#C5A059] text-[11px] sm:text-xs font-semibold uppercase tracking-wider mb-1.5 hover:text-[#1A1A1A] transition-colors">
+                  <span className="inline-block text-primary text-[11px] sm:text-xs font-semibold uppercase tracking-wider mb-1.5 hover:text-foreground transition-colors">
                     {product.category?.name || (product as any).category}
                   </span>
                 </Link>
-                <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-[#1A1A1A] mb-2 leading-tight">{product.name}</h1>
+                <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-2 leading-tight">{product.name}</h1>
                 <div className="flex flex-wrap items-center gap-2 mb-3">
                   <div className="flex items-center space-x-0.5">
                     {[...Array(5)].map((_, i) => (
@@ -455,44 +455,44 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                         key={i}
                         className={`w-3.5 h-3.5 ${
                           i < Math.floor((product as any).rating || 4.5)
-                            ? 'fill-[#8E6D31] text-[#8E6D31]'
-                            : 'text-gray-300'
+                            ? 'fill-primary-dark text-primary-dark'
+                            : 'text-muted-subtle'
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="text-[#6B7280] text-xs sm:text-sm">
+                  <span className="text-muted text-xs sm:text-sm">
                     {(product as any).rating || 4.5} ({(product as any).reviews || 0} reviews)
                   </span>
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 p-3 bg-[#FBF6EC]/60 rounded-xl">
-                <span className="text-xl sm:text-2xl font-bold text-[#1A1A1A]">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 p-3 bg-surface-muted/60 rounded-xl">
+                <span className="text-xl sm:text-2xl font-bold text-foreground">
                   Rs. {computedPrice.toLocaleString()}
                 </span>
                 {kgDiscountAmount > 0 && (
-                  <span className="text-sm text-[#9CA3AF] line-through">
+                  <span className="text-sm text-muted-subtle line-through">
                     Rs. {computedPriceBeforeDiscount.toLocaleString()}
                   </span>
                 )}
                 {quantityOptions.length > 0 && selectedQuantityOption && parseFloat(selectedQuantityOption) !== 1 && (
-                  <span className="text-xs text-[#6B7280] bg-white/70 px-2 py-0.5 rounded-full">
+                  <span className="text-xs text-muted bg-card/70 px-2 py-0.5 rounded-full">
                     Rs. {(product.selling_price || product.price || 0).toLocaleString()} / kg
                   </span>
                 )}
                 {kgDiscountAmount <= 0 && product.originalPrice && (
-                  <span className="text-sm text-[#9CA3AF] line-through">
+                  <span className="text-sm text-muted-subtle line-through">
                     Rs. {product.originalPrice.toLocaleString()}
                   </span>
                 )}
                 {discount > 0 && kgDiscountAmount <= 0 && (
-                  <span className="bg-[#8E6D31] text-white px-2 py-0.5 rounded-full text-[11px] font-bold ml-auto">
+                  <span className="bg-primary-dark text-foreground px-2 py-0.5 rounded-full text-[11px] font-bold ml-auto">
                     -{discount}%
                   </span>
                 )}
                 {kgDiscountAmount > 0 && (
-                  <span className="bg-gradient-to-r from-[#e53e3e] to-[#8E6D31] text-white px-2.5 py-0.5 rounded-full text-[11px] font-bold ml-auto animate-pulse">
+                  <span className="bg-gradient-to-r from-destructive to-primary-dark text-foreground px-2.5 py-0.5 rounded-full text-[11px] font-bold ml-auto animate-pulse">
                     🔥 Rs {kgDiscountAmount} OFF
                   </span>
                 )}
@@ -502,15 +502,15 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               {isWeightBasedUnit(product.unit?.name) && (
                 <div className={`flex items-center gap-2 p-2.5 rounded-xl border-2 transition-all ${
                   qualifiesFor1KgDiscount 
-                    ? 'bg-green-50 border-green-300' 
-                    : 'bg-[#FFF5F5] border-[#e53e3e]/20'
+                    ? 'bg-emerald-950/30 border-emerald-800/40' 
+                    : 'bg-destructive/10 border-destructive/20'
                 }`}>
                   <span className="text-lg">🔥</span>
                   <div className="flex-1">
-                    <p className={`text-xs font-bold ${qualifiesFor1KgDiscount ? 'text-green-700' : 'text-[#e53e3e]'}`}>
+                    <p className={`text-xs font-bold ${qualifiesFor1KgDiscount ? 'text-emerald-400' : 'text-destructive'}`}>
                       {qualifiesFor1KgDiscount ? '✅ Rs 300 Discount Applied!' : 'Select 1 KG to get Rs 300 OFF!'}
                     </p>
-                    <p className="text-[10px] text-[#6B7280]">
+                    <p className="text-[10px] text-muted">
                       {qualifiesFor1KgDiscount 
                         ? `You saved Rs ${kgDiscountAmount} on this order` 
                         : 'Special offer on all 1 KG purchases'}
@@ -519,17 +519,17 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </div>
               )}
 
-              <p className="text-sm text-[#6B7280] leading-relaxed">{product.description}</p>
+              <p className="text-sm text-muted leading-relaxed">{product.description}</p>
 
               {/* Key Features */}
               {product.features && product.features.length > 0 && (
-              <div className="bg-[#FBF6EC]/50 rounded-xl p-3 sm:p-4">
-                <h3 className="font-bold text-[#1A1A1A] mb-2 text-sm">Key Features</h3>
+              <div className="bg-surface-muted/50 rounded-xl p-3 sm:p-4">
+                <h3 className="font-bold text-foreground mb-2 text-sm">Key Features</h3>
                 <div className="grid grid-cols-2 gap-1.5">
                   {product.features.map((feature: string, index: number) => (
                     <div key={index} className="flex items-center space-x-1.5">
-                      <CheckCircle className="w-3.5 h-3.5 text-[#C5A059] flex-shrink-0" />
-                      <span className="text-[#6B7280] text-xs sm:text-sm">{feature}</span>
+                      <CheckCircle className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                      <span className="text-muted text-xs sm:text-sm">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -539,16 +539,16 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               {/* Quantity/Unit Selector */}
               {product.unit ? (
                 quantityOptions.length > 0 ? (
-                  <div className="p-3 sm:p-4 bg-white border border-gray-200 rounded-xl space-y-3">
+                  <div className="p-3 sm:p-4 bg-card border border-border rounded-xl space-y-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#1A1A1A] text-sm">Weight</span>
-                        <span className="text-[10px] text-[#C5A059] bg-[#C5A059]/10 px-2 py-0.5 rounded-full font-medium">
+                        <span className="font-bold text-foreground text-sm">Weight</span>
+                        <span className="text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded-full font-medium">
                           {quantityOptions.find(o => o.value === selectedQuantityOption)?.label || ''}
                         </span>
                       </div>
                       {product.stock && (
-                        <span className="text-[#9CA3AF] text-xs">{product.stock} in stock</span>
+                        <span className="text-muted-subtle text-xs">{product.stock} in stock</span>
                       )}
                     </div>
                     <div className="grid grid-cols-4 gap-2">
@@ -569,25 +569,25 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                             }}
                             className={`relative flex flex-col items-center py-2 px-1 rounded-xl font-medium text-xs sm:text-sm transition-all border-2 ${
                               isSelected
-                                ? 'bg-[#1A1A1A] text-white border-[#1A1A1A] shadow-md'
+                                ? 'bg-surface-elevated text-foreground border-surface-elevated shadow-md'
                                 : optionIs1Kg
-                                ? 'bg-[#FFF5F5] text-[#1A1A1A] border-[#e53e3e]/40 hover:border-[#e53e3e]/60'
-                                : 'bg-gray-50 text-[#1A1A1A] border-transparent hover:border-[#C5A059]/40 hover:bg-[#F5EDD8]/50'
+                                ? 'bg-destructive/10 text-foreground border-destructive/40 hover:border-destructive/60'
+                                : 'bg-surface-muted text-foreground border-transparent hover:border-primary/40 hover:bg-surface/50'
                             }`}
                           >
                             {optionIs1Kg && (
-                              <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-[#e53e3e] text-white text-[7px] sm:text-[8px] px-1.5 py-[1px] rounded-full font-bold whitespace-nowrap leading-tight">
+                              <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-destructive text-foreground text-[7px] sm:text-[8px] px-1.5 py-[1px] rounded-full font-bold whitespace-nowrap leading-tight">
                                 Rs {KG_DISCOUNT.amount} OFF
                               </span>
                             )}
                             <span className="font-bold leading-tight">{option.label}</span>
                             {optionDiscount > 0 ? (
-                              <span className={`text-[10px] sm:text-[11px] mt-0.5 ${isSelected ? 'text-white/80' : 'text-[#6B7280]'}`}>
+                              <span className={`text-[10px] sm:text-[11px] mt-0.5 ${isSelected ? 'text-foreground/80' : 'text-muted'}`}>
                                 <span className="line-through mr-0.5">Rs. {optionPrice.toLocaleString()}</span>
                                 <span className={`font-bold ${isSelected ? 'text-green-300' : 'text-green-600'}`}> Rs. {optionFinalPrice.toLocaleString()}</span>
                               </span>
                             ) : (
-                              <span className={`text-[10px] sm:text-[11px] mt-0.5 ${isSelected ? 'text-white/80' : 'text-[#6B7280]'}`}>
+                              <span className={`text-[10px] sm:text-[11px] mt-0.5 ${isSelected ? 'text-foreground/80' : 'text-muted'}`}>
                                 Rs. {optionPrice.toLocaleString()}
                               </span>
                             )}
@@ -602,12 +602,12 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                         }}
                         className={`relative flex flex-col items-center py-2 px-1 rounded-xl font-medium text-xs sm:text-sm transition-all border-2 ${
                           isCustomWeight
-                            ? 'bg-[#C5A059] text-white border-[#C5A059] shadow-md'
-                            : 'bg-gray-50 text-[#1A1A1A] border-transparent hover:border-[#C5A059]/40 hover:bg-[#F5EDD8]/50'
+                            ? 'bg-primary text-foreground border-primary shadow-md'
+                            : 'bg-surface-muted text-foreground border-transparent hover:border-primary/40 hover:bg-surface/50'
                         }`}
                       >
                         <span className="font-bold leading-tight">Custom</span>
-                        <span className={`text-[10px] sm:text-[11px] mt-0.5 ${isCustomWeight ? 'text-white/80' : 'text-[#6B7280]'}`}>
+                        <span className={`text-[10px] sm:text-[11px] mt-0.5 ${isCustomWeight ? 'text-foreground/80' : 'text-muted'}`}>
                           Enter gms
                         </span>
                       </button>
@@ -615,7 +615,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
                     {/* Custom weight input */}
                     {isCustomWeight && (
-                      <div className="flex items-center gap-2 mt-1 p-2 bg-[#F0F7FF] rounded-lg border border-[#C5A059]/20">
+                      <div className="flex items-center gap-2 mt-1 p-2 bg-primary/5 rounded-lg border border-primary/20">
                         <div className="relative flex-1">
                           <input
                             type="number"
@@ -632,13 +632,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                               }
                             }}
                             placeholder="e.g. 300"
-                            className="w-full pl-3 pr-12 py-2 text-sm font-semibold text-[#1A1A1A] bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C5A059]/40 focus:border-[#C5A059] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                            className="w-full pl-3 pr-12 py-2 text-sm font-semibold text-foreground bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             autoFocus
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-[#6B7280]">gms</span>
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-muted">gms</span>
                         </div>
                         {customWeight && parseFloat(customWeight) > 0 && (
-                          <span className="text-sm font-bold text-[#1A1A1A] whitespace-nowrap">
+                          <span className="text-sm font-bold text-foreground whitespace-nowrap">
                             = Rs. {computedPrice.toLocaleString()}
                           </span>
                         )}
@@ -646,47 +646,47 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     )}
                   </div>
                 ) : (
-                  <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl">
-                    <span className="font-semibold text-[#1A1A1A] text-sm">Quantity</span>
-                    <div className="flex items-center bg-gray-100 rounded-lg px-1 py-1">
+                  <div className="flex items-center gap-3 p-3 bg-card border border-border rounded-xl">
+                    <span className="font-semibold text-foreground text-sm">Quantity</span>
+                    <div className="flex items-center bg-subtle-strong rounded-lg px-1 py-1">
                       <button
                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-white transition-colors"
+                        className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-surface-muted transition-colors"
                       >
-                        <Minus className="w-3.5 h-3.5 text-[#1A1A1A]" />
+                        <Minus className="w-3.5 h-3.5 text-foreground" />
                       </button>
-                      <span className="font-bold text-[#1A1A1A] min-w-[50px] text-center text-sm">
+                      <span className="font-bold text-foreground min-w-[50px] text-center text-sm">
                         {quantity} {isPiecesUnit ? product.unit.name : ''}
                       </span>
                       <button
                         onClick={() => setQuantity(quantity + 1)}
-                        className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-white transition-colors"
+                        className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-surface-muted transition-colors"
                       >
-                        <Plus className="w-3.5 h-3.5 text-[#1A1A1A]" />
+                        <Plus className="w-3.5 h-3.5 text-foreground" />
                       </button>
                     </div>
-                    <span className="text-[#9CA3AF] text-xs ml-auto">{product.stock} in stock</span>
+                    <span className="text-muted-subtle text-xs ml-auto">{product.stock} in stock</span>
                   </div>
                 )
               ) : (
-              <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl">
-                <span className="font-semibold text-[#1A1A1A] text-sm">Quantity</span>
-                <div className="flex items-center bg-gray-100 rounded-lg px-1 py-1">
+              <div className="flex items-center gap-3 p-3 bg-card border border-border rounded-xl">
+                <span className="font-semibold text-foreground text-sm">Quantity</span>
+                <div className="flex items-center bg-subtle-strong rounded-lg px-1 py-1">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-white transition-colors"
+                    className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-surface-muted transition-colors"
                   >
-                    <Minus className="w-3.5 h-3.5 text-[#1A1A1A]" />
+                    <Minus className="w-3.5 h-3.5 text-foreground" />
                   </button>
-                  <span className="font-bold text-[#1A1A1A] min-w-[50px] text-center text-sm">{quantity}</span>
+                  <span className="font-bold text-foreground min-w-[50px] text-center text-sm">{quantity}</span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-white transition-colors"
+                    className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-surface-muted transition-colors"
                   >
-                    <Plus className="w-3.5 h-3.5 text-[#1A1A1A]" />
+                    <Plus className="w-3.5 h-3.5 text-foreground" />
                   </button>
                 </div>
-                <span className="text-[#9CA3AF] text-xs ml-auto">{product.stock} in stock</span>
+                <span className="text-muted-subtle text-xs ml-auto">{product.stock} in stock</span>
               </div>
               )}
 
@@ -694,7 +694,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 py-2.5 rounded-lg font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 bg-[#1A1A1A] text-white hover:bg-[#C5A059]"
+                  className="flex-1 py-2.5 rounded-lg font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 bg-surface-elevated text-foreground hover:bg-primary"
                   aria-label="Add to cart"
                 >
                   <ShoppingCart className="w-4 h-4" />
@@ -702,7 +702,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </button>
                 <button
                   onClick={handleBuyNow}
-                  className="flex-1 py-2.5 bg-[#C5A059] text-white rounded-lg font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 hover:bg-[#1A1A1A]"
+                  className="flex-1 py-2.5 bg-primary text-foreground rounded-lg font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 hover:bg-surface-elevated"
                   aria-label="Buy now"
                 >
                   <Zap className="w-4 h-4" />
@@ -712,8 +712,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   onClick={toggleWishlist}
                   className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all border ${
                     isInWishlist
-                      ? 'bg-red-50 border-red-200 text-red-500'
-                      : 'bg-gray-50 border-gray-200 text-gray-500 hover:border-[#C5A059] hover:text-[#C5A059]'
+                      ? 'bg-destructive/10 border-destructive/30 text-red-500'
+                      : 'bg-surface-muted border-border text-muted hover:border-primary hover:text-primary'
                   }`}
                   aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
                 >
@@ -723,13 +723,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
               {/* Service Badges */}
               <div className="grid grid-cols-2 gap-2 pt-2">
-                <div className="flex items-center gap-1.5 p-2 bg-gray-50 rounded-lg">
-                  <Shield className="w-4 h-4 text-[#C5A059] flex-shrink-0" />
-                  <span className="text-[11px] text-[#6B7280] font-medium leading-tight">Secure Payment</span>
+                <div className="flex items-center gap-1.5 p-2 bg-surface-muted rounded-lg">
+                  <Shield className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-[11px] text-muted font-medium leading-tight">Secure Payment</span>
                 </div>
-                <div className="flex items-center gap-1.5 p-2 bg-gray-50 rounded-lg">
-                  <RotateCcw className="w-4 h-4 text-[#C5A059] flex-shrink-0" />
-                  <span className="text-[11px] text-[#6B7280] font-medium leading-tight">Easy Returns</span>
+                <div className="flex items-center gap-1.5 p-2 bg-surface-muted rounded-lg">
+                  <RotateCcw className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-[11px] text-muted font-medium leading-tight">Easy Returns</span>
                 </div>
               </div>
             </motion.div>
@@ -738,18 +738,18 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       </section>
 
       {/* Product Details Tabs */}
-      <section className="py-6 sm:py-8 bg-gray-50 overflow-x-hidden">
+      <section className="py-6 sm:py-8 bg-surface-muted overflow-x-hidden">
         <div className="container mx-auto px-3 sm:px-4 max-w-4xl">
           {/* Tabs */}
-          <div className="flex space-x-1 mb-4 border-b border-gray-200 overflow-x-auto scrollbar-hide">
+          <div className="flex space-x-1 mb-4 border-b border-border overflow-x-auto scrollbar-hide">
             {['description', 'nutrition', 'reviews'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`px-4 py-2 font-medium capitalize transition-all text-sm whitespace-nowrap ${
                   activeTab === tab
-                    ? 'text-[#C5A059] border-b-2 border-[#C5A059]'
-                    : 'text-[#6B7280] hover:text-[#1A1A1A]'
+                    ? 'text-primary border-b-2 border-primary'
+                    : 'text-muted hover:text-foreground'
                 }`}
               >
                 {tab}
@@ -762,27 +762,27 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             key={activeTab}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="bg-white rounded-xl p-4 sm:p-5 shadow-sm"
+            className="bg-card rounded-xl p-4 sm:p-5 shadow-sm"
           >
             {activeTab === 'description' && (
               <div className="space-y-3">
-                <h3 className="text-base sm:text-lg font-bold text-[#1A1A1A]">Product Description</h3>
-                <p className="text-[#6B7280] leading-relaxed text-sm">
+                <h3 className="text-base sm:text-lg font-bold text-foreground">Product Description</h3>
+                <p className="text-muted leading-relaxed text-sm">
                   {(product as any).longDescription || product.description || 'No description available.'}
                 </p>
                 <div className="grid grid-cols-2 gap-3 mt-3">
-                  <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                    <Award className="w-4 h-4 text-[#C5A059]" />
+                  <div className="flex items-center gap-2 p-3 bg-surface-muted rounded-lg">
+                    <Award className="w-4 h-4 text-primary" />
                     <div>
-                      <p className="font-medium text-[#1A1A1A] text-xs">Weight</p>
-                      <p className="text-[#6B7280] text-xs">{(product as any).weight || 'N/A'}</p>
+                      <p className="font-medium text-foreground text-xs">Weight</p>
+                      <p className="text-muted text-xs">{(product as any).weight || 'N/A'}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                    <TrendingUp className="w-4 h-4 text-[#C5A059]" />
+                  <div className="flex items-center gap-2 p-3 bg-surface-muted rounded-lg">
+                    <TrendingUp className="w-4 h-4 text-primary" />
                     <div>
-                      <p className="font-medium text-[#1A1A1A] text-xs">Origin</p>
-                      <p className="text-[#6B7280] text-xs">{(product as any).origin || 'N/A'}</p>
+                      <p className="font-medium text-foreground text-xs">Origin</p>
+                      <p className="text-muted text-xs">{(product as any).origin || 'N/A'}</p>
                     </div>
                   </div>
                 </div>
@@ -791,19 +791,19 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
             {activeTab === 'nutrition' && (
               <div>
-                <h3 className="text-base sm:text-lg font-bold text-[#1A1A1A] mb-3">Nutritional Information</h3>
+                <h3 className="text-base sm:text-lg font-bold text-foreground mb-3">Nutritional Information</h3>
                 {product.nutrition && Array.isArray(product.nutrition) && product.nutrition.length > 0 ? (
                 <div className="grid grid-cols-2 gap-2">
                   {product.nutrition.map((item: any, index: number) => (
-                    <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                      <span className="font-medium text-[#1A1A1A] text-sm">{item.label}</span>
-                      <span className="text-[#6B7280] text-sm">{item.value}</span>
+                    <div key={index} className="flex justify-between items-center p-3 bg-surface-muted rounded-lg">
+                      <span className="font-medium text-foreground text-sm">{item.label}</span>
+                      <span className="text-muted text-sm">{item.value}</span>
                     </div>
                   ))}
                 </div>
                 ) : (
                   <div className="text-center py-6">
-                    <p className="text-[#6B7280] text-sm">Nutritional information not available for this product.</p>
+                    <p className="text-muted text-sm">Nutritional information not available for this product.</p>
                   </div>
                 )}
               </div>
@@ -811,24 +811,24 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
             {activeTab === 'reviews' && (
               <div>
-                <h3 className="text-base sm:text-lg font-bold text-[#1A1A1A] mb-3">Customer Reviews</h3>
+                <h3 className="text-base sm:text-lg font-bold text-foreground mb-3">Customer Reviews</h3>
                 <div className="space-y-2">
                   {[1, 2, 3].map((review) => (
-                    <div key={review} className="p-3 bg-gray-50 rounded-lg">
+                    <div key={review} className="p-3 bg-surface-muted rounded-lg">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 bg-[#C5A059] rounded-full flex items-center justify-center text-white font-bold text-xs">
+                          <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center text-foreground font-bold text-xs">
                             {review}
                           </div>
-                          <span className="font-medium text-[#1A1A1A] text-sm">Customer {review}</span>
+                          <span className="font-medium text-foreground text-sm">Customer {review}</span>
                         </div>
                         <div className="flex items-center space-x-0.5">
                           {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-3 h-3 fill-[#8E6D31] text-[#8E6D31]" />
+                            <Star key={i} className="w-3 h-3 fill-primary-dark text-primary-dark" />
                           ))}
                         </div>
                       </div>
-                      <p className="text-[#6B7280] text-sm">Great product! Highly recommended.</p>
+                      <p className="text-muted text-sm">Great product! Highly recommended.</p>
                     </div>
                   ))}
                 </div>
@@ -839,9 +839,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       </section>
 
       {/* Why Buy This Product */}
-      <section className="py-6 sm:py-8 bg-white overflow-x-hidden">
+      <section className="py-6 sm:py-8 bg-card overflow-x-hidden">
         <div className="container mx-auto px-3 sm:px-4 max-w-4xl">
-          <h2 className="text-lg sm:text-xl font-bold text-[#1A1A1A] text-center mb-4">Why Choose This Product?</h2>
+          <h2 className="text-lg sm:text-xl font-bold text-foreground text-center mb-4">Why Choose This Product?</h2>
           <div className="grid grid-cols-3 gap-3">
             {[
               { icon: Award, title: 'Premium Quality', desc: 'Handpicked & tested' },
@@ -852,13 +852,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               return (
                 <div
                   key={item.title}
-                  className="bg-gray-50 rounded-xl p-4 text-center hover:shadow-sm transition-all"
+                  className="bg-surface-muted rounded-xl p-4 text-center hover:shadow-sm transition-all"
                 >
-                  <div className="w-10 h-10 bg-[#1A1A1A] rounded-lg flex items-center justify-center mx-auto mb-2">
-                    <Icon className="w-5 h-5 text-white" />
+                  <div className="w-10 h-10 bg-surface-elevated rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <Icon className="w-5 h-5 text-foreground" />
                   </div>
-                  <h3 className="text-sm font-bold text-[#1A1A1A] mb-0.5">{item.title}</h3>
-                  <p className="text-[#6B7280] text-xs">{item.desc}</p>
+                  <h3 className="text-sm font-bold text-foreground mb-0.5">{item.title}</h3>
+                  <p className="text-muted text-xs">{item.desc}</p>
                 </div>
               );
             })}
@@ -867,17 +867,17 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       </section>
 
       {/* Special Offer Banner - 1 KG Discount */}
-      <section className="py-4 bg-gradient-to-r from-[#e53e3e] to-[#8E6D31] text-white overflow-x-hidden">
+      <section className="py-4 bg-gradient-to-r from-destructive to-primary-dark text-foreground overflow-x-hidden">
         <div className="container mx-auto px-3 sm:px-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <Sparkles className="w-6 h-6 flex-shrink-0 animate-pulse" />
               <div>
                 <h3 className="text-sm sm:text-base font-bold">🔥 1 KG = Rs 300 OFF!</h3>
-                <p className="text-white/80 text-xs">Buy any item in 1 KG and get flat Rs 300 discount</p>
+                <p className="text-foreground/80 text-xs">Buy any item in 1 KG and get flat Rs 300 discount</p>
               </div>
             </div>
-            <Link href="/shop" className="bg-white text-[#e53e3e] px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm hover:bg-yellow-50 transition-colors whitespace-nowrap">
+            <Link href="/shop" className="bg-card text-destructive px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm hover:bg-surface-muted transition-colors whitespace-nowrap">
               Shop Now
             </Link>
           </div>
@@ -885,11 +885,11 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       </section>
 
       {/* Related Products */}
-      <section className="py-6 sm:py-8 bg-white overflow-x-hidden">
+      <section className="py-6 sm:py-8 bg-card overflow-x-hidden">
         <div className="container mx-auto px-3 sm:px-4">
           <div className="text-center mb-5">
-            <h2 className="text-lg sm:text-xl font-bold text-[#1A1A1A]">You May Also Like</h2>
-            <p className="text-[#6B7280] text-xs sm:text-sm mt-1">Related products you might be interested in</p>
+            <h2 className="text-lg sm:text-xl font-bold text-foreground">You May Also Like</h2>
+            <p className="text-muted text-xs sm:text-sm mt-1">Related products you might be interested in</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 items-stretch">
             {relatedProducts.length > 0 ? relatedProducts.map((product) => (
@@ -913,7 +913,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               </div>
             )) : (
               <div className="col-span-full text-center py-8">
-                <p className="text-[#6B7280]">No related products available.</p>
+                <p className="text-muted">No related products available.</p>
               </div>
             )}
           </div>

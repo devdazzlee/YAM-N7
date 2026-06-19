@@ -55,10 +55,10 @@ export default function ComparePage() {
   );
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-16">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -67,12 +67,12 @@ export default function ComparePage() {
             className="text-center"
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Compare Products</h1>
-            <p className="text-xl text-white/90">Compare features and prices side by side</p>
+            <p className="text-xl text-foreground/90">Compare features and prices side by side</p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-card">
         <div className="container mx-auto px-4">
           {loading ? (
             <Loader size="lg" text="Loading products..." />
@@ -83,7 +83,7 @@ export default function ComparePage() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowSearch(!showSearch)}
-                  className="bg-[#C5A059] hover:bg-[#1A1A1A] text-white px-6 py-3 rounded-full font-semibold transition-colors inline-flex items-center space-x-2"
+                  className="bg-primary hover:bg-surface-elevated text-foreground px-6 py-3 rounded-full font-semibold transition-colors inline-flex items-center space-x-2"
                 >
                   <Search className="w-5 h-5" />
                   <span>Add Product to Compare</span>
@@ -101,16 +101,16 @@ export default function ComparePage() {
                     placeholder="Search products to compare..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
                     autoFocus
                   />
                   {searchQuery && (
-                    <div className="mt-2 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                    <div className="mt-2 bg-card border border-border rounded-xl shadow-lg max-h-60 overflow-y-auto">
                       {filteredProducts.slice(0, 10).map((product) => (
                         <button
                           key={product.id}
                           onClick={() => addProduct(product)}
-                          className="w-full text-left px-4 py-3 hover:bg-[#FBF6EC] transition-colors flex items-center space-x-3 border-b last:border-b-0"
+                          className="w-full text-left px-4 py-3 hover:bg-surface-muted transition-colors flex items-center space-x-3 border-b last:border-b-0"
                         >
                           <img
                             src={product.image}
@@ -118,13 +118,13 @@ export default function ComparePage() {
                             className="w-10 h-10 rounded-lg object-cover"
                           />
                           <div>
-                            <p className="font-semibold text-[#1A1A1A]">{product.name}</p>
-                            <p className="text-sm text-[#6B7280]">Rs. {product.price.toLocaleString()}</p>
+                            <p className="font-semibold text-foreground">{product.name}</p>
+                            <p className="text-sm text-muted">Rs. {product.price.toLocaleString()}</p>
                           </div>
                         </button>
                       ))}
                       {filteredProducts.length === 0 && (
-                        <p className="px-4 py-3 text-[#6B7280]">No products found</p>
+                        <p className="px-4 py-3 text-muted">No products found</p>
                       )}
                     </div>
                   )}
@@ -135,18 +135,18 @@ export default function ComparePage() {
                 <div className="overflow-x-auto">
                   <table className="w-full border-collapse">
                     <thead>
-                      <tr className="bg-[#FBF6EC]">
-                        <th className="p-4 text-left font-semibold text-[#1A1A1A]">Features</th>
+                      <tr className="bg-surface-muted">
+                        <th className="p-4 text-left font-semibold text-foreground">Features</th>
                         {products.map((product) => (
                           <th key={product.id} className="p-4 text-center">
                             <div className="flex flex-col items-center space-y-2">
                               <button
                                 onClick={() => removeProduct(product.id)}
-                                className="ml-auto text-[#6B7280] hover:text-red-500 transition-colors"
+                                className="ml-auto text-muted hover:text-red-500 transition-colors"
                               >
                                 <X className="w-5 h-5" />
                               </button>
-                              <div className="w-32 h-32 rounded-xl overflow-hidden bg-[#FBF6EC]">
+                              <div className="w-32 h-32 rounded-xl overflow-hidden bg-surface-muted">
                                 <img
                                   src={product.image}
                                   alt={product.name}
@@ -155,7 +155,7 @@ export default function ComparePage() {
                               </div>
                               <ProductImageDisclaimer className="text-center max-w-[10rem] px-1" />
                               <Link href={`/products/${product.id}`}>
-                                <h3 className="font-semibold text-[#1A1A1A] hover:text-[#C5A059]">
+                                <h3 className="font-semibold text-foreground hover:text-primary">
                                   {product.name}
                                 </h3>
                               </Link>
@@ -166,15 +166,15 @@ export default function ComparePage() {
                     </thead>
                     <tbody>
                       <tr className="border-b">
-                        <td className="p-4 font-semibold text-[#1A1A1A]">Price</td>
+                        <td className="p-4 font-semibold text-foreground">Price</td>
                         {products.map((product) => (
                           <td key={product.id} className="p-4 text-center">
                             <div>
-                              <span className="text-xl font-bold text-[#1A1A1A]">
+                              <span className="text-xl font-bold text-foreground">
                                 Rs. {product.price.toLocaleString()}
                               </span>
                               {product.originalPrice && (
-                                <span className="block text-sm text-[#6B7280] line-through">
+                                <span className="block text-sm text-muted line-through">
                                   Rs. {product.originalPrice.toLocaleString()}
                                 </span>
                               )}
@@ -182,43 +182,43 @@ export default function ComparePage() {
                           </td>
                         ))}
                       </tr>
-                      <tr className="border-b bg-gray-50">
-                        <td className="p-4 font-semibold text-[#1A1A1A]">Category</td>
+                      <tr className="border-b bg-surface-muted">
+                        <td className="p-4 font-semibold text-foreground">Category</td>
                         {products.map((product) => (
-                          <td key={product.id} className="p-4 text-center text-[#6B7280]">
+                          <td key={product.id} className="p-4 text-center text-muted">
                             {product.category || 'N/A'}
                           </td>
                         ))}
                       </tr>
                       {products.some((p) => p.weight) && (
                         <tr className="border-b">
-                          <td className="p-4 font-semibold text-[#1A1A1A]">Weight</td>
+                          <td className="p-4 font-semibold text-foreground">Weight</td>
                           {products.map((product) => (
-                            <td key={product.id} className="p-4 text-center text-[#6B7280]">
+                            <td key={product.id} className="p-4 text-center text-muted">
                               {product.weight || 'N/A'}
                             </td>
                           ))}
                         </tr>
                       )}
                       {products.some((p) => p.origin) && (
-                        <tr className="border-b bg-gray-50">
-                          <td className="p-4 font-semibold text-[#1A1A1A]">Origin</td>
+                        <tr className="border-b bg-surface-muted">
+                          <td className="p-4 font-semibold text-foreground">Origin</td>
                           {products.map((product) => (
-                            <td key={product.id} className="p-4 text-center text-[#6B7280]">
+                            <td key={product.id} className="p-4 text-center text-muted">
                               {product.origin || 'N/A'}
                             </td>
                           ))}
                         </tr>
                       )}
                       <tr>
-                        <td className="p-4 font-semibold text-[#1A1A1A]">Action</td>
+                        <td className="p-4 font-semibold text-foreground">Action</td>
                         {products.map((product) => (
                           <td key={product.id} className="p-4 text-center">
                             <Link href={`/products/${product.id}`}>
                               <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="bg-[#C5A059] hover:bg-[#1A1A1A] text-white px-6 py-2 rounded-full font-semibold transition-colors flex items-center space-x-2 mx-auto"
+                                className="bg-primary hover:bg-surface-elevated text-foreground px-6 py-2 rounded-full font-semibold transition-colors flex items-center space-x-2 mx-auto"
                               >
                                 <ShoppingCart className="w-4 h-4" />
                                 <span>View Product</span>
@@ -232,14 +232,14 @@ export default function ComparePage() {
                 </div>
               ) : (
                 <div className="text-center py-16">
-                  <p className="text-[#6B7280] text-lg mb-8">
+                  <p className="text-muted text-lg mb-8">
                     No products to compare. Use the button above to add products.
                   </p>
                   <Link href="/shop">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="bg-[#C5A059] hover:bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-semibold transition-colors"
+                      className="bg-primary hover:bg-surface-elevated text-foreground px-8 py-4 rounded-full font-semibold transition-colors"
                     >
                       Start Shopping
                     </motion.button>

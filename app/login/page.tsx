@@ -43,29 +43,29 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
       {/* Login Section */}
-      <section className="py-20 bg-gradient-to-b from-[#FBF6EC] to-white">
+      <section className="py-20 bg-gradient-to-b from-surface-muted to-background">
         <div className="container mx-auto px-4">
           <div className="max-w-md mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="bg-white rounded-2xl shadow-xl p-8 md:p-10"
+              className="bg-card rounded-2xl shadow-xl p-8 md:p-10"
             >
               <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold text-[#1A1A1A] mb-2">Welcome Back</h1>
-                <p className="text-[#6B7280]">Sign in to your account</p>
+                <h1 className="text-3xl font-bold text-foreground mb-2">Welcome Back</h1>
+                <p className="text-muted">Sign in to your account</p>
               </div>
 
               {error && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center space-x-2 mb-4"
+                  className="bg-destructive/10 border border-destructive/30 text-red-700 px-4 py-3 rounded-lg flex items-center space-x-2 mb-4"
                 >
                   <AlertCircle className="w-5 h-5" />
                   <span className="text-sm">{error}</span>
@@ -74,11 +74,11 @@ export default function LoginPage() {
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="email" className="block text-[#1A1A1A] font-medium mb-2">
+                  <label htmlFor="email" className="block text-foreground font-medium mb-2">
                     Email Address
                   </label>
                   <div className="relative">
-                    <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#6B7280]" />
+                    <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted" />
                     <input
                       type="email"
                       id="email"
@@ -86,18 +86,18 @@ export default function LoginPage() {
                       disabled={isLoading}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full pl-12 pr-4 py-3 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="your@email.com"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="password" className="block text-[#1A1A1A] font-medium mb-2">
+                  <label htmlFor="password" className="block text-foreground font-medium mb-2">
                     Password
                   </label>
                   <div className="relative">
-                    <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#6B7280]" />
+                    <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted" />
                     <input
                       type={showPassword ? 'text' : 'password'}
                       id="password"
@@ -105,13 +105,13 @@ export default function LoginPage() {
                       disabled={isLoading}
                       value={formData.password}
                       onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                      className="w-full pl-12 pr-12 py-3 rounded-xl border border-gray-300 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full pl-12 pr-12 py-3 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="••••••••"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#6B7280] hover:text-[#C5A059] transition-colors focus:outline-none"
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted hover:text-primary transition-colors focus:outline-none"
                       aria-label={showPassword ? 'Hide password' : 'Show password'}
                     >
                       {showPassword ? (
@@ -130,13 +130,13 @@ export default function LoginPage() {
                       checked={rememberMe}
                       onChange={(e) => setRememberMe(e.target.checked)}
                       disabled={isLoading}
-                      className="w-4 h-4 text-[#C5A059] border-gray-300 rounded focus:ring-[#C5A059] disabled:opacity-50"
+                      className="w-4 h-4 text-primary border-border-strong rounded focus:ring-primary disabled:opacity-50"
                     />
-                    <span className="text-sm text-[#6B7280]">Remember me</span>
+                    <span className="text-sm text-muted">Remember me</span>
                   </label>
                   <Link
                     href="#"
-                    className="text-sm text-[#C5A059] hover:text-[#1A1A1A] transition-colors"
+                    className="text-sm text-primary hover:text-foreground transition-colors"
                   >
                     Forgot password?
                   </Link>
@@ -147,7 +147,7 @@ export default function LoginPage() {
                   disabled={isLoading}
                   whileHover={{ scale: isLoading ? 1 : 1.02 }}
                   whileTap={{ scale: isLoading ? 1 : 0.98 }}
-                  className="w-full bg-[#C5A059] hover:bg-[#1A1A1A] disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-8 py-4 rounded-full font-semibold transition-colors flex items-center justify-center space-x-2"
+                  className="w-full bg-primary hover:bg-surface-elevated disabled:bg-muted-subtle disabled:cursor-not-allowed text-foreground px-8 py-4 rounded-full font-semibold transition-colors flex items-center justify-center space-x-2"
                 >
                   {isLoading ? (
                     <>
@@ -164,11 +164,11 @@ export default function LoginPage() {
               </form>
 
               <div className="mt-6 text-center">
-                <p className="text-[#6B7280]">
+                <p className="text-muted">
                   Don't have an account?{' '}
                   <Link
                     href="/register"
-                    className="text-[#C5A059] hover:text-[#1A1A1A] font-semibold transition-colors"
+                    className="text-primary hover:text-foreground font-semibold transition-colors"
                   >
                     Sign Up
                   </Link>

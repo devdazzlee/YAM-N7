@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, Users, Award, ShoppingBag } from 'lucide-react';
 import { useProductMetaStore } from '../../lib/store/productMetaStore';
+import { Stagger, StaggerChild } from './motion/reveal';
 
 export default function StatsSection() {
   const [productCount, setProductCount] = useState<string>('1400+');
@@ -22,37 +23,41 @@ export default function StatsSection() {
   }, [getProductCount]);
 
   const stats = [
-    { icon: Users, number: '10K+', label: 'Happy Customers', color: '#C5A059' },
-    { icon: Award, number: '25+', label: 'Years Experience', color: '#8E6D31' },
-    { icon: ShoppingBag, number: productCount, label: 'Products Available', color: '#1A1A1A' },
-    { icon: TrendingUp, number: '98%', label: 'Satisfaction Rate', color: '#C5A059' },
+    { icon: Users, number: '10K+', label: 'Happy Customers', iconClass: 'bg-primary' },
+    { icon: Award, number: '25+', label: 'Years Experience', iconClass: 'bg-primary-dark' },
+    { icon: ShoppingBag, number: productCount, label: 'Products Available', iconClass: 'bg-surface-elevated border border-primary/20' },
+    { icon: TrendingUp, number: '98%', label: 'Satisfaction Rate', iconClass: 'bg-primary' },
   ];
 
   return (
-    <section className="py-10 sm:py-14 md:py-16 bg-white">
+    <section className="py-10 sm:py-14 md:py-16 bg-background">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-          {stats.map((stat, index) => {
+        <Stagger className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          {stats.map((stat) => {
             const Icon = stat.icon;
             return (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                whileHover={{ y: -4 }}
-                className="text-center p-5 sm:p-7 bg-gradient-to-br from-[#FBF6EC]/50 to-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300"
-              >
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm" style={{ background: stat.color }}>
-                  <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
-                </div>
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1A1A1A] mb-1">{stat.number}</h3>
-                <p className="text-[#6B7280] font-medium text-xs sm:text-sm">{stat.label}</p>
-              </motion.div>
+              <StaggerChild key={stat.label}>
+                <motion.div
+                  whileHover={{ y: -6, scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                  className="text-center p-5 sm:p-7 bg-gradient-to-br from-surface-muted/50 to-background rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-transparent hover:border-primary/20"
+                >
+                  <motion.div
+                    whileHover={{ rotate: [0, -8, 8, 0] }}
+                    transition={{ duration: 0.5 }}
+                    className={`w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm ${stat.iconClass}`}
+                  >
+                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary-foreground" />
+                  </motion.div>
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1">
+                    {stat.number}
+                  </h3>
+                  <p className="text-muted font-medium text-xs sm:text-sm">{stat.label}</p>
+                </motion.div>
+              </StaggerChild>
             );
           })}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ShieldCheck, Truck, Sparkles, HeartHandshake } from 'lucide-react';
+import { SectionHeader, Reveal } from './motion/reveal';
 
 const benefits = [
   { icon: ShieldCheck, title: 'Authentic Fragrances', description: 'Every perfume is carefully sourced and verified for quality, longevity, and authenticity.' },
@@ -12,40 +13,39 @@ const benefits = [
 
 export default function BenefitsSection() {
   return (
-    <section className="py-10 sm:py-12 md:py-14 bg-white">
+    <section className="py-10 sm:py-12 md:py-14 bg-background">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-6 sm:mb-8 md:mb-10"
-        >
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1A1A1A] mb-2">
-            The YAM-N7 Standard
-          </h2>
-          <p className="text-[#6B7280] text-xs sm:text-sm md:text-base max-w-xl mx-auto">
-            Experience 25 years of fragrance excellence with our curated luxury scents and dedicated customer care.
-          </p>
-        </motion.div>
+        <SectionHeader
+          title="The YAM-N7 Standard"
+          subtitle="Experience 25 years of fragrance excellence with our curated luxury scents and dedicated customer care."
+        />
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {benefits.map((benefit, index) => {
             const Icon = benefit.icon;
+            const fromLeft = index % 2 === 0;
             return (
-              <motion.div
+              <Reveal
                 key={benefit.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                whileHover={{ y: -5 }}
-                className="bg-gradient-to-br from-[#F5EDD8]/40 to-white p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-center"
+                variant={fromLeft ? 'slideLeft' : 'slideRight'}
+                delay={index * 0.08}
               >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm" style={{ background: 'linear-gradient(135deg, #C5A059, #1A1A1A)' }}>
-                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                </div>
-                <h3 className="text-sm sm:text-base font-bold text-[#1A1A1A] mb-1.5">{benefit.title}</h3>
-                <p className="text-[#6B7280] text-xs sm:text-sm leading-relaxed">{benefit.description}</p>
-              </motion.div>
+                <motion.div
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 22 }}
+                  className="bg-gradient-to-br from-surface/40 to-card p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-xl transition-shadow duration-300 text-center border border-transparent hover:border-primary/15 h-full"
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.12, rotate: -5 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm"
+                    style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-surface-elevated)))' }}
+                  >
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+                  </motion.div>
+                  <h3 className="text-sm sm:text-base font-bold text-foreground mb-1.5">{benefit.title}</h3>
+                  <p className="text-muted text-xs sm:text-sm leading-relaxed">{benefit.description}</p>
+                </motion.div>
+              </Reveal>
             );
           })}
         </div>

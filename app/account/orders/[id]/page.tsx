@@ -46,8 +46,8 @@ export default function OrderDetailsPage({ params }: { params: Promise<{ id: str
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-[#C5A059]" />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -63,15 +63,15 @@ export default function OrderDetailsPage({ params }: { params: Promise<{ id: str
       case 'CANCELLED':
         return 'text-red-600';
       default:
-        return 'text-[#8E6D31]';
+        return 'text-primary-dark';
     }
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-16">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -80,32 +80,32 @@ export default function OrderDetailsPage({ params }: { params: Promise<{ id: str
           >
             <Link
               href="/account/orders"
-              className="inline-flex items-center space-x-2 mb-6 text-white/90 hover:text-white"
+              className="inline-flex items-center space-x-2 mb-6 text-foreground/90 hover:text-foreground"
             >
               <ArrowLeft className="w-5 h-5" />
               <span>Back to Orders</span>
             </Link>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Order Details</h1>
             {order && (
-              <p className="text-xl text-white/90">Order #{order.order_number}</p>
+              <p className="text-xl text-foreground/90">Order #{order.order_number}</p>
             )}
           </motion.div>
         </div>
       </section>
 
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-card">
         <div className="container mx-auto px-4 max-w-6xl">
           {loading ? (
             <Loader size="lg" text="Loading order details..." />
           ) : !order ? (
             <div className="text-center py-16">
-              <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-[#6B7280] text-lg mb-4">Order not found</p>
+              <Package className="w-16 h-16 text-muted-subtle mx-auto mb-4" />
+              <p className="text-muted text-lg mb-4">Order not found</p>
               <Link href="/account/orders">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-[#C5A059] hover:bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-semibold transition-colors"
+                  className="bg-primary hover:bg-surface-elevated text-foreground px-8 py-4 rounded-full font-semibold transition-colors"
                 >
                   Back to Orders
                 </motion.button>
@@ -117,10 +117,10 @@ export default function OrderDetailsPage({ params }: { params: Promise<{ id: str
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white border border-gray-200 rounded-2xl p-6"
+                  className="bg-card border border-border rounded-2xl p-6"
                 >
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-bold text-[#1A1A1A]">Order Items</h2>
+                    <h2 className="text-2xl font-bold text-foreground">Order Items</h2>
                     <span className={`font-semibold ${getStatusColor(order.status)}`}>
                       {order.status}
                     </span>
@@ -129,7 +129,7 @@ export default function OrderDetailsPage({ params }: { params: Promise<{ id: str
                     {order.items.map((item, index) => (
                       <div
                         key={item.id || index}
-                        className="flex items-center space-x-4 p-4 bg-[#FBF6EC] rounded-xl"
+                        className="flex items-center space-x-4 p-4 bg-surface-muted rounded-xl"
                       >
                         {item.product?.image && (
                           <img
@@ -139,12 +139,12 @@ export default function OrderDetailsPage({ params }: { params: Promise<{ id: str
                           />
                         )}
                         <div className="flex-1">
-                          <h3 className="font-semibold text-[#1A1A1A]">
+                          <h3 className="font-semibold text-foreground">
                             {item.product?.name || 'Product'}
                           </h3>
-                          <p className="text-sm text-[#6B7280]">Quantity: {item.quantity}</p>
+                          <p className="text-sm text-muted">Quantity: {item.quantity}</p>
                         </div>
-                        <p className="font-semibold text-[#1A1A1A]">
+                        <p className="font-semibold text-foreground">
                           Rs. {(item.price * item.quantity).toLocaleString()}
                         </p>
                       </div>
@@ -157,28 +157,28 @@ export default function OrderDetailsPage({ params }: { params: Promise<{ id: str
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="bg-[#FBF6EC] rounded-2xl p-6"
+                  className="bg-surface-muted rounded-2xl p-6"
                 >
-                  <h2 className="text-2xl font-bold text-[#1A1A1A] mb-6">Order Summary</h2>
+                  <h2 className="text-2xl font-bold text-foreground mb-6">Order Summary</h2>
                   <div className="space-y-4">
-                    <div className="flex justify-between text-[#6B7280]">
+                    <div className="flex justify-between text-muted">
                       <span>Subtotal</span>
                       <span>Rs. {order.subtotal.toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between text-[#6B7280]">
+                    <div className="flex justify-between text-muted">
                       <span>Shipping</span>
                       <span className={order.shipping === 0 ? 'text-green-600 font-semibold' : ''}>
                         {order.shipping === 0 ? 'Free' : `Rs. ${order.shipping.toLocaleString()}`}
                       </span>
                     </div>
                     {order.tax !== undefined && order.tax > 0 && (
-                      <div className="flex justify-between text-[#6B7280]">
+                      <div className="flex justify-between text-muted">
                         <span>Tax</span>
                         <span>Rs. {order.tax.toLocaleString()}</span>
                       </div>
                     )}
-                    <div className="border-t border-gray-300 pt-4">
-                      <div className="flex justify-between text-xl font-bold text-[#1A1A1A]">
+                    <div className="border-t border-border-strong pt-4">
+                      <div className="flex justify-between text-xl font-bold text-foreground">
                         <span>Total</span>
                         <span>Rs. {order.total.toLocaleString()}</span>
                       </div>
@@ -191,12 +191,12 @@ export default function OrderDetailsPage({ params }: { params: Promise<{ id: str
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-white border border-gray-200 rounded-2xl p-6"
+                    className="bg-card border border-border rounded-2xl p-6"
                   >
-                    <h2 className="text-2xl font-bold text-[#1A1A1A] mb-6">Shipping Address</h2>
-                    <div className="space-y-3 text-[#6B7280]">
+                    <h2 className="text-2xl font-bold text-foreground mb-6">Shipping Address</h2>
+                    <div className="space-y-3 text-muted">
                       <div className="flex items-start space-x-3">
-                        <MapPin className="w-5 h-5 text-[#C5A059] mt-1" />
+                        <MapPin className="w-5 h-5 text-primary mt-1" />
                         <div>
                           <p>{order.shipping_address.address}</p>
                           <p>
@@ -207,7 +207,7 @@ export default function OrderDetailsPage({ params }: { params: Promise<{ id: str
                       </div>
                       {order.shipping_address.phone && (
                         <div className="flex items-center space-x-3">
-                          <Phone className="w-5 h-5 text-[#C5A059]" />
+                          <Phone className="w-5 h-5 text-primary" />
                           <p>{order.shipping_address.phone}</p>
                         </div>
                       )}
@@ -219,10 +219,10 @@ export default function OrderDetailsPage({ params }: { params: Promise<{ id: str
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="bg-white border border-gray-200 rounded-2xl p-6"
+                  className="bg-card border border-border rounded-2xl p-6"
                 >
-                  <h2 className="text-lg font-bold text-[#1A1A1A] mb-4">Order Info</h2>
-                  <div className="space-y-2 text-sm text-[#6B7280]">
+                  <h2 className="text-lg font-bold text-foreground mb-4">Order Info</h2>
+                  <div className="space-y-2 text-sm text-muted">
                     <div className="flex justify-between">
                       <span>Order Date</span>
                       <span>{new Date(order.created_at).toLocaleDateString()}</span>
@@ -233,7 +233,7 @@ export default function OrderDetailsPage({ params }: { params: Promise<{ id: str
                     </div>
                     <div className="flex justify-between">
                       <span>Payment Status</span>
-                      <span className={order.payment_status === 'PAID' ? 'text-green-600 font-semibold' : 'text-[#8E6D31] font-semibold'}>
+                      <span className={order.payment_status === 'PAID' ? 'text-green-600 font-semibold' : 'text-primary-dark font-semibold'}>
                         {order.payment_status}
                       </span>
                     </div>

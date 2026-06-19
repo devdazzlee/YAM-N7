@@ -8,9 +8,9 @@ import { Home, Search } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
-      <section className="py-32 bg-gradient-to-b from-[#FBF6EC] to-white">
+      <section className="py-32 bg-gradient-to-b from-surface-muted to-background">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -18,9 +18,9 @@ export default function NotFound() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-2xl mx-auto"
           >
-            <h1 className="text-9xl font-bold text-[#1A1A1A] mb-4">404</h1>
-            <h2 className="text-4xl font-bold text-[#1A1A1A] mb-4">Page Not Found</h2>
-            <p className="text-xl text-[#6B7280] mb-8">
+            <h1 className="text-9xl font-bold text-foreground mb-4">404</h1>
+            <h2 className="text-4xl font-bold text-foreground mb-4">Page Not Found</h2>
+            <p className="text-xl text-muted mb-8">
               Sorry, the page you are looking for doesn't exist or has been moved.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -28,7 +28,7 @@ export default function NotFound() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-[#C5A059] hover:bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-semibold transition-colors flex items-center space-x-2"
+                  className="bg-primary hover:bg-surface-elevated text-foreground px-8 py-4 rounded-full font-semibold transition-colors flex items-center space-x-2"
                 >
                   <Home className="w-5 h-5" />
                   <span>Go Home</span>
@@ -38,7 +38,7 @@ export default function NotFound() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-white hover:bg-[#F5EDD8] text-[#1A1A1A] px-8 py-4 rounded-full font-semibold transition-colors flex items-center space-x-2 border-2 border-[#1A1A1A]"
+                  className="bg-card hover:bg-surface text-foreground px-8 py-4 rounded-full font-semibold transition-colors flex items-center space-x-2 border-2 border-surface-elevated"
                 >
                   <Search className="w-5 h-5" />
                   <span>Browse Shop</span>

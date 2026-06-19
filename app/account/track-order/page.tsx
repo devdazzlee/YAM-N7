@@ -81,8 +81,8 @@ export default function TrackOrderPage() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-[#C5A059]" />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -96,10 +96,10 @@ export default function TrackOrderPage() {
     : -1;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-16">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -108,34 +108,34 @@ export default function TrackOrderPage() {
             className="text-center max-w-2xl mx-auto"
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Track Your Order</h1>
-            <p className="text-xl text-white/90">Enter your order number to see order status</p>
+            <p className="text-xl text-foreground/90">Enter your order number to see order status</p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-card">
         <div className="container mx-auto px-4 max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-[#FBF6EC] rounded-2xl p-8 mb-8"
+            className="bg-surface-muted rounded-2xl p-8 mb-8"
           >
             <form onSubmit={handleTrack} className="flex gap-4">
               <div className="flex-1 relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#6B7280]" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted" />
                 <input
                   type="text"
                   value={orderNumber}
                   onChange={(e) => setOrderNumber(e.target.value)}
                   placeholder="Enter order number..."
-                  className="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-300 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 outline-none"
+                  className="w-full pl-12 pr-4 py-4 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
                 />
               </div>
               <motion.button
                 type="submit"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-[#C5A059] hover:bg-[#1A1A1A] text-white px-8 py-4 rounded-xl font-semibold transition-colors"
+                className="bg-primary hover:bg-surface-elevated text-foreground px-8 py-4 rounded-xl font-semibold transition-colors"
               >
                 Track Order
               </motion.button>
@@ -148,27 +148,27 @@ export default function TrackOrderPage() {
               animate={{ opacity: 1, y: 0 }}
               className="mb-8"
             >
-              <h3 className="text-lg font-semibold text-[#1A1A1A] mb-4">Your Recent Orders</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-4">Your Recent Orders</h3>
               <div className="space-y-3">
                 {allOrders.slice(0, 5).map((o) => (
                   <button
                     key={o.id}
                     onClick={() => selectOrder(o)}
-                    className="w-full text-left p-4 bg-white border border-gray-200 rounded-xl hover:shadow-md transition-shadow flex items-center justify-between"
+                    className="w-full text-left p-4 bg-card border border-border rounded-xl hover:shadow-md transition-shadow flex items-center justify-between"
                   >
                     <div>
-                      <p className="font-semibold text-[#1A1A1A]">Order #{o.order_number}</p>
-                      <p className="text-sm text-[#6B7280]">
+                      <p className="font-semibold text-foreground">Order #{o.order_number}</p>
+                      <p className="text-sm text-muted">
                         {new Date(o.created_at).toLocaleDateString()}
                       </p>
                     </div>
                     <span
                       className={`text-sm font-semibold px-3 py-1 rounded-full ${
                         o.status === 'DELIVERED'
-                          ? 'bg-green-100 text-green-800'
+                          ? 'bg-emerald-950/40 text-emerald-400'
                           : o.status === 'CANCELLED'
-                          ? 'bg-red-100 text-red-800'
-                          : 'bg-[#F5EDD8] text-[#8E6D31]'
+                          ? 'bg-destructive/15 text-destructive'
+                          : 'bg-surface text-primary-dark'
                       }`}
                     >
                       {o.status}
@@ -185,8 +185,8 @@ export default function TrackOrderPage() {
 
           {searched && !loading && !order && (
             <div className="text-center py-12">
-              <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-[#6B7280] text-lg">
+              <Package className="w-16 h-16 text-muted-subtle mx-auto mb-4" />
+              <p className="text-muted text-lg">
                 No order found with number &ldquo;{orderNumber}&rdquo;
               </p>
             </div>
@@ -196,15 +196,15 @@ export default function TrackOrderPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white border border-gray-200 rounded-2xl p-8"
+              className="bg-card border border-border rounded-2xl p-8"
             >
               <div className="flex items-center space-x-3 mb-8">
-                <Package className="w-6 h-6 text-[#C5A059]" />
+                <Package className="w-6 h-6 text-primary" />
                 <div>
-                  <h2 className="text-2xl font-bold text-[#1A1A1A]">
+                  <h2 className="text-2xl font-bold text-foreground">
                     Order #{order.order_number}
                   </h2>
-                  <p className="text-[#6B7280]">
+                  <p className="text-muted">
                     Placed on {new Date(order.created_at).toLocaleDateString()} · Rs.{' '}
                     {order.total.toLocaleString()}
                   </p>
@@ -213,7 +213,7 @@ export default function TrackOrderPage() {
 
               {order.status === 'CANCELLED' ? (
                 <div className="text-center py-8">
-                  <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 rounded-full bg-destructive/15 flex items-center justify-center mx-auto mb-4">
                     <Package className="w-8 h-8 text-red-500" />
                   </div>
                   <p className="text-lg font-semibold text-red-600">This order has been cancelled</p>
@@ -228,8 +228,8 @@ export default function TrackOrderPage() {
                           <div
                             className={`w-12 h-12 rounded-full flex items-center justify-center ${
                               isCompleted
-                                ? 'bg-[#C5A059] text-white'
-                                : 'bg-gray-200 text-gray-400'
+                                ? 'bg-primary text-foreground'
+                                : 'bg-border text-muted-subtle'
                             }`}
                           >
                             {isCompleted ? (
@@ -241,7 +241,7 @@ export default function TrackOrderPage() {
                           {index < STATUS_STEPS.length - 1 && (
                             <div
                               className={`w-1 h-16 ${
-                                isCompleted ? 'bg-[#C5A059]' : 'bg-gray-200'
+                                isCompleted ? 'bg-primary' : 'bg-border'
                               }`}
                             />
                           )}
@@ -249,13 +249,13 @@ export default function TrackOrderPage() {
                         <div className="flex-1 pb-8">
                           <h3
                             className={`font-semibold mb-1 ${
-                              isCompleted ? 'text-[#1A1A1A]' : 'text-gray-400'
+                              isCompleted ? 'text-foreground' : 'text-muted-subtle'
                             }`}
                           >
                             {getStepLabel(step)}
                           </h3>
                           {isCompleted && index === currentStepIndex && (
-                            <p className="text-sm text-[#6B7280]">Current status</p>
+                            <p className="text-sm text-muted">Current status</p>
                           )}
                         </div>
                       </div>

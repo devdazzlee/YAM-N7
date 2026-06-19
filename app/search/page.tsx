@@ -49,7 +49,7 @@ function SearchContent() {
 
   return (
     <>
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-16">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -59,28 +59,28 @@ function SearchContent() {
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Search Products</h1>
             <form onSubmit={handleSearchSubmit} className="relative">
-              <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-[#6B7280]" />
+              <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-muted" />
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Search for products..."
-                className="w-full pl-14 pr-4 py-4 rounded-xl text-[#1A1A1A] focus:outline-none focus:ring-2 focus:ring-white/20"
+                className="w-full pl-14 pr-4 py-4 rounded-xl text-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20"
               />
             </form>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-card">
         <div className="container mx-auto px-4">
           {!query ? (
-            <p className="text-[#6B7280] mb-6">Enter a search term above</p>
+            <p className="text-muted mb-6">Enter a search term above</p>
           ) : loading && products.length === 0 ? (
             <Loader size="lg" text="Searching products..." />
           ) : (
             <>
-              <p className="text-[#6B7280] mb-6">
+              <p className="text-muted mb-6">
                 {total > 0
                   ? `${total} result${total !== 1 ? 's' : ''} for "${query}"`
                   : `No results found for "${query}"`}
@@ -117,7 +117,7 @@ function SearchContent() {
                         type="button"
                         onClick={() => loadNextPage(bucketKey).catch(() => {})}
                         disabled={loading}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C5A059] text-white font-semibold text-sm hover:bg-[#1A1A1A] transition-colors shadow-sm disabled:opacity-60"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-foreground font-semibold text-sm hover:bg-surface-elevated transition-colors shadow-sm disabled:opacity-60"
                       >
                         {loading ? 'Loading…' : 'Load More'}
                       </button>
@@ -135,7 +135,7 @@ function SearchContent() {
 
 export default function SearchPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
       <Suspense fallback={<Loader size="xl" text="Loading search results..." fullScreen />}>
         <SearchContent />

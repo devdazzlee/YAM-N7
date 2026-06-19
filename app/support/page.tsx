@@ -11,10 +11,10 @@ import { CONTACT } from '../../config/storeInfo';
 
 export default function SupportPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-20">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -24,26 +24,26 @@ export default function SupportPage() {
           >
             <MessageCircle className="w-16 h-16 mx-auto mb-6" />
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Customer Support</h1>
-            <p className="text-xl text-white/90">We're here to help you 24/7</p>
+            <p className="text-xl text-foreground/90">We're here to help you 24/7</p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-[#FBF6EC] rounded-2xl p-8 text-center"
+              className="bg-surface-muted rounded-2xl p-8 text-center"
             >
-              <Phone className="w-12 h-12 text-[#C5A059] mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-[#1A1A1A] mb-2">Phone Support</h3>
-              <p className="text-[#6B7280] mb-4">Call us anytime</p>
+              <Phone className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-foreground mb-2">Phone Support</h3>
+              <p className="text-muted mb-4">Call us anytime</p>
               <a
                 href={`tel:${CONTACT.phoneTel}`}
-                className="text-[#C5A059] hover:text-[#1A1A1A] font-semibold"
+                className="text-primary hover:text-foreground font-semibold"
               >
                 {CONTACT.phoneDisplay}
               </a>
@@ -54,14 +54,14 @@ export default function SupportPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-[#FBF6EC] rounded-2xl p-8 text-center"
+              className="bg-surface-muted rounded-2xl p-8 text-center"
             >
-              <Mail className="w-12 h-12 text-[#C5A059] mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-[#1A1A1A] mb-2">Email Support</h3>
-              <p className="text-[#6B7280] mb-4">Send us an email</p>
+              <Mail className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-foreground mb-2">Email Support</h3>
+              <p className="text-muted mb-4">Send us an email</p>
               <a
                 href={`mailto:${CONTACT.email}`}
-                className="text-[#C5A059] hover:text-[#1A1A1A] font-semibold"
+                className="text-primary hover:text-foreground font-semibold"
               >
                 {CONTACT.email}
               </a>
@@ -72,12 +72,12 @@ export default function SupportPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-[#FBF6EC] rounded-2xl p-8 text-center"
+              className="bg-surface-muted rounded-2xl p-8 text-center"
             >
-              <Clock className="w-12 h-12 text-[#C5A059] mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-[#1A1A1A] mb-2">Business Hours</h3>
-              <p className="text-[#6B7280]">Mon - Sat: 9 AM - 9 PM</p>
-              <p className="text-[#6B7280]">Sunday: 10 AM - 6 PM</p>
+              <Clock className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-foreground mb-2">Business Hours</h3>
+              <p className="text-muted">Mon - Sat: 9 AM - 9 PM</p>
+              <p className="text-muted">Sunday: 10 AM - 6 PM</p>
             </motion.div>
           </div>
 
@@ -86,7 +86,7 @@ export default function SupportPage() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-[#C5A059] hover:bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-semibold transition-colors"
+                className="bg-primary hover:bg-surface-elevated text-foreground px-8 py-4 rounded-full font-semibold transition-colors"
               >
                 Contact Us
               </motion.button>

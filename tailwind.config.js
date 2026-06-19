@@ -4,17 +4,51 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './config/**/*.{js,ts}',
   ],
   theme: {
     extend: {
       colors: {
-        navy: '#1A1A1A',
-        blue: '#C5A059',
-        white: '#FFFFFF',
-        beige: '#FBF6EC',
-        green: '#F5EDD8',
-        grey: '#6B7280',
-        accent: '#8E6D31',
+        background: 'rgb(var(--color-background) / <alpha-value>)',
+        foreground: 'rgb(var(--color-foreground) / <alpha-value>)',
+        surface: {
+          DEFAULT: 'rgb(var(--color-surface) / <alpha-value>)',
+          elevated: 'rgb(var(--color-surface-elevated) / <alpha-value>)',
+          muted: 'rgb(var(--color-surface-muted) / <alpha-value>)',
+        },
+        card: {
+          DEFAULT: 'rgb(var(--color-card) / <alpha-value>)',
+          foreground: 'rgb(var(--color-foreground) / <alpha-value>)',
+        },
+        primary: {
+          DEFAULT: 'rgb(var(--color-primary) / <alpha-value>)',
+          dark: 'rgb(var(--color-primary-dark) / <alpha-value>)',
+          light: 'rgb(var(--color-primary-light) / <alpha-value>)',
+          foreground: 'rgb(var(--color-on-primary) / <alpha-value>)',
+        },
+        muted: {
+          DEFAULT: 'rgb(var(--color-muted) / <alpha-value>)',
+          subtle: 'rgb(var(--color-muted-subtle) / <alpha-value>)',
+          foreground: 'rgb(var(--color-foreground) / <alpha-value>)',
+        },
+        border: {
+          DEFAULT: 'rgb(var(--color-border) / <alpha-value>)',
+          strong: 'rgb(var(--color-border-strong) / <alpha-value>)',
+        },
+        input: 'rgb(var(--color-input) / <alpha-value>)',
+        ring: 'rgb(var(--color-ring) / <alpha-value>)',
+        destructive: 'rgb(var(--color-destructive) / <alpha-value>)',
+        subtle: {
+          DEFAULT: 'rgb(var(--color-subtle) / <alpha-value>)',
+          strong: 'rgb(var(--color-subtle-strong) / <alpha-value>)',
+        },
+        /* Legacy aliases — map to new tokens */
+        navy: 'rgb(var(--color-foreground) / <alpha-value>)',
+        blue: 'rgb(var(--color-primary) / <alpha-value>)',
+        beige: 'rgb(var(--color-surface-muted) / <alpha-value>)',
+        green: 'rgb(var(--color-surface-elevated) / <alpha-value>)',
+        grey: 'rgb(var(--color-muted) / <alpha-value>)',
+        accent: 'rgb(var(--color-primary-dark) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['var(--font-body)', 'DM Sans', 'system-ui', 'sans-serif'],

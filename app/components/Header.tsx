@@ -82,13 +82,15 @@ export default function Header() {
     };
   }, [fetchAllCategories]);
 
-  // Handle scroll effect
+  // Compact sticky header on scroll — top bar slides away, main bar stays pinned
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 24);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   // Get wishlist count from localStorage
@@ -227,34 +229,52 @@ export default function Header() {
 
   return (
     <>
-      {/* Top Bar - Promotional */}
-      <div className="bg-gradient-to-r from-[#C5A059] to-[#1A1A1A] text-white text-xs sm:text-sm py-2 hidden md:block">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <Phone className="w-3 h-3" />
-                <span>{CONTACT.phoneDisplay}</span>
+      <header className="sticky top-0 z-50">
+        {/* Top Bar — slides up and collapses cleanly on scroll (desktop only) */}
+        <div
+          className={`hidden md:block overflow-hidden bg-gradient-to-r from-primary to-surface-elevated text-foreground text-xs sm:text-sm transition-[max-height,opacity] duration-300 ease-out ${
+            isScrolled ? 'max-h-0 opacity-0' : 'max-h-12 opacity-100'
+          }`}
+        >
+          <div className="container mx-auto px-4 py-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Phone className="w-3 h-3 shrink-0" />
+                  <span>{CONTACT.phoneDisplay}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail className="w-3 h-3 shrink-0" />
+                  <span>{CONTACT.email}</span>
+                </div>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="w-3 h-3" />
-                <span>{CONTACT.email}</span>
+                <Sparkles className="w-3 h-3 shrink-0" />
+                <span>Free Shipping on Orders Over Rs. 5000</span>
               </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-3 h-3" />
-              <span>Free Shipping on Orders Over Rs. 5000</span>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Main Header */}
-      <header className={`bg-white sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'shadow-lg border-b border-gray-100' : 'shadow-sm'
-      }`}>
-        <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16 sm:h-18 md:h-20">
+        {/* Main navigation — always sticky, compacts on scroll */}
+        <div
+          className={`relative border-b transition-[background-color,box-shadow,border-color,padding] duration-300 ease-out ${
+            isScrolled
+              ? 'bg-surface/90 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.35)] border-primary/15'
+              : 'bg-surface shadow-sm border-transparent'
+          }`}
+        >
+          <div
+            className={`pointer-events-none absolute inset-x-0 bottom-0 h-[2px] origin-center bg-gradient-to-r from-transparent via-primary to-transparent transition-[transform,opacity] duration-300 ease-out ${
+              isScrolled ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
+            }`}
+          />
+          <div className="container mx-auto px-4 sm:px-6">
+            <div
+              className={`flex items-center justify-between transition-[height] duration-300 ease-out ${
+                isScrolled ? 'h-[4.25rem]' : 'h-16 md:h-20'
+              }`}
+            >
           {/* Logo */}
             <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group flex-shrink-0">
             <motion.div
@@ -265,7 +285,11 @@ export default function Header() {
               <img
                 src="/YAM-N7-Logo.png"
                 alt="YAM-N7"
-                className="h-14 sm:h-16 md:h-[72px] w-auto max-w-[200px] sm:max-w-[240px] object-contain transition-transform duration-300 group-hover:brightness-110"
+                className={`w-auto max-w-[200px] sm:max-w-[240px] object-contain transition-[height,filter] duration-300 ease-out group-hover:brightness-110 ${
+                  isScrolled
+                    ? 'h-10 sm:h-11 md:h-12'
+                    : 'h-14 sm:h-16 md:h-[72px]'
+                }`}
                 width={240}
                 height={72}
               />
@@ -282,15 +306,15 @@ export default function Header() {
                       href={item.href}
                         className={`relative px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${
                           isActive(item.href)
-                            ? 'text-[#C5A059] bg-[#C5A059]/10'
-                            : 'text-[#1A1A1A] hover:text-[#C5A059] hover:bg-gray-50'
+                            ? 'text-primary bg-primary/10'
+                            : 'text-foreground hover:text-primary hover:bg-surface-muted'
                         }`}
                     >
                       {item.name}
                         {isActive(item.href) && (
                           <motion.div
                             layoutId="activeNav"
-                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#C5A059] rounded-full"
+                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
                             transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                           />
                         )}
@@ -304,8 +328,8 @@ export default function Header() {
                     >
                         <button className={`flex items-center gap-1 px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${
                           isCategoriesOpen
-                            ? 'text-[#C5A059] bg-[#C5A059]/10'
-                            : 'text-[#1A1A1A] hover:text-[#C5A059] hover:bg-gray-50'
+                            ? 'text-primary bg-primary/10'
+                            : 'text-foreground hover:text-primary hover:bg-surface-muted'
                         }`}>
                         <span>Products</span>
                         <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isCategoriesOpen ? 'rotate-180' : ''}`} />
@@ -318,16 +342,16 @@ export default function Header() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2 }}
-                              className="absolute top-full left-0 mt-2 w-96 bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100"
+                              className="absolute top-full left-0 mt-2 w-96 bg-card rounded-2xl shadow-2xl overflow-hidden border border-border"
                             >
-                              <div className="p-6 bg-gradient-to-r from-[#C5A059] via-[#1A1A1A] to-[#C5A059]">
-                                <h3 className="text-white font-bold text-xl">Shop by Category</h3>
-                                <p className="text-white/90 text-sm mt-1">Browse our premium collection</p>
+                              <div className="p-6 bg-gradient-to-r from-primary via-surface-elevated to-primary">
+                                <h3 className="text-foreground font-bold text-xl">Shop by Category</h3>
+                                <p className="text-foreground/90 text-sm mt-1">Browse our premium collection</p>
                             </div>
                               <div className="max-h-96 overflow-y-auto p-2">
                                 {categoriesLoading ? (
                                   <div className="flex items-center justify-center py-8">
-                                    <div className="w-6 h-6 border-2 border-[#C5A059] border-t-transparent rounded-full animate-spin"></div>
+                                    <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
                                   </div>
                                 ) : categories.length > 0 ? (
                                   categories.map((category, index) => {
@@ -342,32 +366,32 @@ export default function Header() {
                                       initial={{ opacity: 0, x: -10 }}
                                       animate={{ opacity: 1, x: 0 }}
                                       transition={{ delay: index * 0.03 }}
-                                          className="flex items-center gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-[#F5EDD8] hover:to-[#FBF6EC] transition-all group cursor-pointer"
+                                          className="flex items-center gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-surface hover:to-surface-muted transition-all group cursor-pointer"
                                     >
-                                          <div className="w-14 h-14 bg-gradient-to-br from-[#F5EDD8] to-[#C5A059]/10 rounded-xl flex items-center justify-center group-hover:from-[#C5A059] group-hover:to-[#1A1A1A] transition-all shadow-sm group-hover:shadow-md">
-                                            <Icon className="w-7 h-7 text-[#1A1A1A] group-hover:text-white transition-colors" />
+                                          <div className="w-14 h-14 bg-gradient-to-br from-surface to-primary/10 rounded-xl flex items-center justify-center group-hover:from-primary group-hover:to-surface-elevated transition-all shadow-sm group-hover:shadow-md">
+                                            <Icon className="w-7 h-7 text-foreground group-hover:text-foreground transition-colors" />
                                       </div>
                                       <div className="flex-1">
-                                            <h4 className="font-bold text-[#1A1A1A] group-hover:text-[#C5A059] transition-colors text-base">
+                                            <h4 className="font-bold text-foreground group-hover:text-primary transition-colors text-base">
                                           {category.name}
                                         </h4>
-                                            <p className="text-sm text-gray-600 mt-0.5">{category.description}</p>
+                                            <p className="text-sm text-muted mt-0.5">{category.description}</p>
                                       </div>
-                                          <ChevronDown className="w-5 h-5 text-gray-400 rotate-[-90deg] group-hover:text-[#C5A059] transition-colors" />
+                                          <ChevronDown className="w-5 h-5 text-muted-subtle rotate-[-90deg] group-hover:text-primary transition-colors" />
                                     </motion.div>
                                   </Link>
                                 );
                                   })
                                 ) : (
-                                  <div className="text-center py-8 text-gray-500">
+                                  <div className="text-center py-8 text-muted">
                                     <p>No categories available</p>
                                   </div>
                                 )}
                             </div>
-                              <div className="p-4 bg-gradient-to-r from-[#FBF6EC] to-[#F5EDD8] border-t border-gray-100">
+                              <div className="p-4 bg-gradient-to-r from-surface-muted to-surface border-t border-border">
                               <Link
                                 href="/shop"
-                                  className="block text-center text-[#C5A059] hover:text-[#1A1A1A] font-bold text-sm transition-colors py-2"
+                                  className="block text-center text-primary hover:text-foreground font-bold text-sm transition-colors py-2"
                               >
                                 View All Products →
                               </Link>
@@ -385,15 +409,15 @@ export default function Header() {
                   href={item.href}
                     className={`relative px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${
                       isActive(item.href)
-                        ? 'text-[#C5A059] bg-[#C5A059]/10'
-                        : 'text-[#1A1A1A] hover:text-[#C5A059] hover:bg-gray-50'
+                        ? 'text-primary bg-primary/10'
+                        : 'text-foreground hover:text-primary hover:bg-surface-muted'
                     }`}
                 >
                   {item.name}
                     {isActive(item.href) && (
                       <motion.div
                         layoutId="activeNav"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#C5A059] rounded-full"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                       />
                     )}
@@ -409,11 +433,11 @@ export default function Header() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={handleSearchClick}
-                className="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-50 hover:bg-[#C5A059] hover:text-white rounded-full transition-all duration-300 group"
+                className="hidden md:flex items-center gap-2 px-4 py-2 bg-surface-muted hover:bg-primary hover:text-foreground rounded-full transition-all duration-300 group"
               aria-label="Search"
             >
-                <Search className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" />
-                <span className="text-sm font-medium text-gray-600 group-hover:text-white hidden lg:block">Search</span>
+                <Search className="w-5 h-5 text-muted group-hover:text-foreground transition-colors" />
+                <span className="text-sm font-medium text-muted group-hover:text-foreground hidden lg:block">Search</span>
             </motion.button>
             
               {/* User Account / Profile */}
@@ -423,7 +447,7 @@ export default function Header() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                  className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-[#C5A059] to-[#1A1A1A] text-white rounded-full transition-all duration-300 hover:shadow-lg group"
+                  className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-primary to-surface-elevated text-foreground rounded-full transition-all duration-300 hover:shadow-lg group"
                   aria-label="Profile"
                 >
                   <User className="w-5 h-5" />
@@ -435,26 +459,26 @@ export default function Header() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-100 z-50"
+                      className="absolute right-0 top-full mt-2 w-56 bg-card rounded-xl shadow-2xl overflow-hidden border border-border z-50"
                     >
-                      <div className="p-4 bg-gradient-to-r from-[#C5A059] to-[#1A1A1A] text-white">
+                      <div className="p-4 bg-gradient-to-r from-primary to-surface-elevated text-foreground">
                         <p className="font-semibold truncate">{user?.email}</p>
                         {user?.name && (
-                          <p className="text-sm text-white/90 truncate">{user.name}</p>
+                          <p className="text-sm text-foreground/90 truncate">{user.name}</p>
                         )}
                       </div>
                       <div className="py-2">
                         <Link
                           href="/account/profile"
                           onClick={() => setIsProfileMenuOpen(false)}
-                          className="block px-4 py-2 text-[#1A1A1A] hover:bg-gray-50 transition-colors"
+                          className="block px-4 py-2 text-foreground hover:bg-surface-muted transition-colors"
                         >
                           My Profile
                         </Link>
                         <Link
                           href="/account/orders"
                           onClick={() => setIsProfileMenuOpen(false)}
-                          className="block px-4 py-2 text-[#1A1A1A] hover:bg-gray-50 transition-colors"
+                          className="block px-4 py-2 text-foreground hover:bg-surface-muted transition-colors"
                         >
                           My Orders
                         </Link>
@@ -464,7 +488,7 @@ export default function Header() {
                             setIsProfileMenuOpen(false);
                             router.push('/');
                           }}
-                          className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition-colors"
+                          className="w-full text-left px-4 py-2 text-red-600 hover:bg-destructive/10 transition-colors"
                         >
                           Logout
                         </button>
@@ -478,10 +502,10 @@ export default function Header() {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  className="hidden md:flex items-center justify-center w-10 h-10 bg-gray-50 hover:bg-[#C5A059] hover:text-white rounded-full transition-all duration-300 group"
+                  className="hidden md:flex items-center justify-center w-10 h-10 bg-surface-muted hover:bg-primary hover:text-foreground rounded-full transition-all duration-300 group"
                   aria-label="Account"
                 >
-                  <User className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" />
+                  <User className="w-5 h-5 text-muted group-hover:text-foreground transition-colors" />
                 </motion.button>
               </Link>
             )}
@@ -491,15 +515,15 @@ export default function Header() {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                  className="relative flex items-center justify-center w-10 h-10 bg-gray-50 hover:bg-[#C5A059] hover:text-white rounded-full transition-all duration-300 group"
+                  className="relative flex items-center justify-center w-10 h-10 bg-surface-muted hover:bg-primary hover:text-foreground rounded-full transition-all duration-300 group"
                 aria-label="Wishlist"
               >
-                  <Heart className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" />
+                  <Heart className="w-5 h-5 text-muted group-hover:text-foreground transition-colors" />
                 {wishlistCount > 0 && (
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="absolute -top-1 -right-1 bg-gradient-to-r from-[#8E6D31] to-[#A67C3D] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold shadow-lg"
+                      className="absolute -top-1 -right-1 bg-gradient-to-r from-primary-dark to-primary-dark text-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold shadow-lg"
                     >
                     {wishlistCount > 9 ? '9+' : wishlistCount}
                     </motion.span>
@@ -512,7 +536,7 @@ export default function Header() {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                  className="relative flex items-center justify-center w-10 h-10 bg-gradient-to-r from-[#C5A059] to-[#1A1A1A] text-white rounded-full transition-all duration-300 hover:shadow-lg group"
+                  className="relative flex items-center justify-center w-10 h-10 bg-gradient-to-r from-primary to-surface-elevated text-foreground rounded-full transition-all duration-300 hover:shadow-lg group"
                 aria-label="Shopping Cart"
               >
                   <ShoppingCart className="w-5 h-5" />
@@ -520,7 +544,7 @@ export default function Header() {
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="absolute -top-1 -right-1 bg-gradient-to-r from-[#8E6D31] to-[#A67C3D] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold shadow-lg"
+                      className="absolute -top-1 -right-1 bg-gradient-to-r from-primary-dark to-primary-dark text-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold shadow-lg"
                     >
                       {cartCount > 9 ? '9+' : cartCount}
                     </motion.span>
@@ -533,44 +557,46 @@ export default function Header() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={handleSearchClick}
-                className="lg:hidden flex items-center justify-center w-10 h-10 bg-gray-50 hover:bg-[#C5A059] hover:text-white rounded-full transition-all duration-300"
+                className="lg:hidden flex items-center justify-center w-10 h-10 bg-surface-muted hover:bg-primary hover:text-foreground rounded-full transition-all duration-300"
               aria-label="Search"
             >
-                <Search className="w-5 h-5 text-gray-600" />
+                <Search className="w-5 h-5 text-muted" />
             </motion.button>
 
               {/* Mobile Menu */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden flex items-center justify-center w-10 h-10 bg-gray-50 hover:bg-gray-100 rounded-full transition-all duration-300"
+                className="lg:hidden flex items-center justify-center w-10 h-10 bg-surface-muted hover:bg-subtle-strong rounded-full transition-all duration-300"
               aria-label="Menu"
             >
-                {isMenuOpen ? <X className="w-5 h-5 text-gray-700" /> : <Menu className="w-5 h-5 text-gray-700" />}
+                {isMenuOpen ? <X className="w-5 h-5 text-foreground/90" /> : <Menu className="w-5 h-5 text-foreground/90" />}
             </button>
           </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden bg-white border-t border-gray-100 shadow-lg"
-          >
+        {/* Mobile Menu — inside sticky header so it stays attached */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:hidden overflow-hidden border-t border-border bg-card shadow-lg"
+            >
               <nav className="container mx-auto px-4 py-6 space-y-1">
               {/* Mobile Search */}
-                <form onSubmit={handleSearchSubmit} className="pb-4 mb-4 border-b border-gray-200">
+                <form onSubmit={handleSearchSubmit} className="pb-4 mb-4 border-b border-border">
                 <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-subtle" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search products..."
-                      className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C5A059] focus:border-transparent transition-all"
+                      className="w-full pl-10 pr-4 py-2.5 bg-surface-muted border border-border rounded-full text-foreground placeholder-muted-subtle focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     />
                 </div>
               </form>
@@ -584,8 +610,8 @@ export default function Header() {
                         onClick={() => setIsMenuOpen(false)}
                           className={`block px-4 py-3 rounded-lg font-semibold transition-colors ${
                             isActive(item.href)
-                              ? 'text-[#C5A059] bg-[#C5A059]/10'
-                              : 'text-[#1A1A1A] hover:bg-gray-50'
+                              ? 'text-primary bg-primary/10'
+                              : 'text-foreground hover:bg-surface-muted'
                           }`}
                       >
                         {item.name}
@@ -593,7 +619,7 @@ export default function Header() {
                         <div className="pl-4 mt-1">
                         <button
                           onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
-                            className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-[#1A1A1A] hover:bg-gray-50 transition-colors"
+                            className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-foreground hover:bg-surface-muted transition-colors"
                         >
                           <span>Products</span>
                           <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isCategoriesOpen ? 'rotate-180' : ''}`} />
@@ -608,7 +634,7 @@ export default function Header() {
                             >
                               {categoriesLoading ? (
                                 <div className="flex items-center justify-center py-4">
-                                  <div className="w-5 h-5 border-2 border-[#C5A059] border-t-transparent rounded-full animate-spin"></div>
+                                  <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
                                 </div>
                               ) : categories.length > 0 ? (
                                 categories.map((category) => {
@@ -621,7 +647,7 @@ export default function Header() {
                                       setIsMenuOpen(false);
                                       setIsCategoriesOpen(false);
                                     }}
-                                      className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:text-[#C5A059] hover:bg-gray-50 rounded-lg transition-colors"
+                                      className="flex items-center gap-3 px-4 py-2.5 text-foreground/90 hover:text-primary hover:bg-surface-muted rounded-lg transition-colors"
                                   >
                                       <Icon className="w-5 h-5" />
                                       <span className="font-medium">{category.name}</span>
@@ -629,7 +655,7 @@ export default function Header() {
                                 );
                                 })
                               ) : (
-                                <div className="text-center py-4 text-gray-500 text-sm">
+                                <div className="text-center py-4 text-muted text-sm">
                                   <p>No categories available</p>
                                 </div>
                               )}
@@ -647,8 +673,8 @@ export default function Header() {
                     onClick={() => setIsMenuOpen(false)}
                       className={`block px-4 py-3 rounded-lg font-semibold transition-colors ${
                         isActive(item.href)
-                          ? 'text-[#C5A059] bg-[#C5A059]/10'
-                          : 'text-[#1A1A1A] hover:bg-gray-50'
+                          ? 'text-primary bg-primary/10'
+                          : 'text-foreground hover:bg-surface-muted'
                       }`}
                   >
                     {item.name}
@@ -656,11 +682,11 @@ export default function Header() {
                 );
               })}
 
-                <div className="pt-4 mt-4 border-t border-gray-200 space-y-1">
+                <div className="pt-4 mt-4 border-t border-border space-y-1">
                 <Link
                   href="/login"
                   onClick={() => setIsMenuOpen(false)}
-                    className="block px-4 py-3 rounded-lg font-semibold text-[#1A1A1A] hover:bg-gray-50 transition-colors"
+                    className="block px-4 py-3 rounded-lg font-semibold text-foreground hover:bg-surface-muted transition-colors"
                 >
                   Login / Register
                 </Link>
@@ -668,7 +694,8 @@ export default function Header() {
             </nav>
           </motion.div>
         )}
-      </AnimatePresence>
+        </AnimatePresence>
+      </header>
 
       {/* Search Modal */}
       <AnimatePresence>
@@ -691,30 +718,30 @@ export default function Header() {
               className="fixed inset-0 z-[101] flex items-start justify-center pt-10 sm:pt-20 px-4 pointer-events-none overflow-y-auto"
             >
               <div
-                  className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl pointer-events-auto my-4"
+                  className="bg-card rounded-2xl shadow-2xl w-full max-w-2xl pointer-events-auto my-4"
                 onClick={(e) => e.stopPropagation()}
               >
-                  <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                    <h2 className="text-2xl font-bold text-[#1A1A1A]">Search Products</h2>
+                  <div className="flex items-center justify-between p-6 border-b border-border">
+                    <h2 className="text-2xl font-bold text-foreground">Search Products</h2>
                   <button
                     onClick={closeSearchModal}
-                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                    className="p-2 hover:bg-subtle-strong rounded-full transition-colors"
                     aria-label="Close search"
                   >
-                      <X className="w-6 h-6 text-gray-600" />
+                      <X className="w-6 h-6 text-muted" />
                   </button>
                 </div>
 
                   <form onSubmit={handleSearchSubmit} className="p-6">
                   <div className="relative">
-                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
+                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-muted-subtle" />
                     <input
                       id="header-search-input"
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search for products, categories, or brands..."
-                        className="w-full pl-14 pr-12 py-4 text-lg text-[#1A1A1A] placeholder-gray-400 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 transition-all"
+                        className="w-full pl-14 pr-12 py-4 text-lg text-foreground placeholder-muted-subtle border-2 border-border rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                       autoFocus
                     />
                     {searchQuery && (
@@ -724,10 +751,10 @@ export default function Header() {
                           setSearchQuery('');
                           setSearchResults([]);
                         }}
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-100 rounded-full transition-colors"
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 p-1 hover:bg-subtle-strong rounded-full transition-colors"
                         aria-label="Clear search"
                       >
-                        <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
+                        <X className="w-5 h-5 text-muted-subtle hover:text-muted" />
                       </button>
                     )}
                   </div>
@@ -737,8 +764,8 @@ export default function Header() {
                     <div className="mt-4 max-h-96 overflow-y-auto">
                       {isSearching ? (
                         <div className="flex items-center justify-center py-8">
-                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#C5A059]"></div>
-                          <span className="ml-3 text-gray-600">Searching...</span>
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                          <span className="ml-3 text-muted">Searching...</span>
                         </div>
                       ) : searchResults.length > 0 ? (
                         <div className="space-y-2">
@@ -747,9 +774,9 @@ export default function Header() {
                               key={product.id}
                               type="button"
                               onClick={() => handleProductClick(product)}
-                              className="w-full flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors text-left group"
+                              className="w-full flex items-center gap-4 p-3 hover:bg-surface-muted rounded-lg transition-colors text-left group"
                             >
-                              <div className="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
+                              <div className="flex-shrink-0 w-16 h-16 bg-subtle-strong rounded-lg overflow-hidden">
                                 <img
                                   src={product.image || '/Banner-01.jpg'}
                                   alt={product.name}
@@ -760,26 +787,26 @@ export default function Header() {
                                 />
                               </div>
                               <div className="flex-1 min-w-0">
-                                <h3 className="font-semibold text-[#1A1A1A] truncate group-hover:text-[#C5A059] transition-colors">
+                                <h3 className="font-semibold text-foreground truncate group-hover:text-primary transition-colors">
                                   {product.name}
                                 </h3>
                                 {product.category && (
-                                  <p className="text-sm text-gray-500 truncate">{product.category.name}</p>
+                                  <p className="text-sm text-muted truncate">{product.category.name}</p>
                                 )}
-                                <p className="text-lg font-bold text-[#C5A059] mt-1">
+                                <p className="text-lg font-bold text-primary mt-1">
                                   Rs. {product.price?.toLocaleString() || '0'}
                                 </p>
                               </div>
                               <div className="flex-shrink-0">
-                                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-[#C5A059] transition-colors" />
+                                <ArrowRight className="w-5 h-5 text-muted-subtle group-hover:text-primary transition-colors" />
                               </div>
                             </button>
                           ))}
                         </div>
                       ) : (
                         <div className="text-center py-8">
-                          <p className="text-gray-500">No products found</p>
-                          <p className="text-sm text-gray-400 mt-1">Try a different search term</p>
+                          <p className="text-muted">No products found</p>
+                          <p className="text-sm text-muted-subtle mt-1">Try a different search term</p>
                         </div>
                       )}
                     </div>
@@ -788,7 +815,7 @@ export default function Header() {
                   {/* Popular Searches - Category names from API */}
                   {!searchQuery && categories.length > 0 && (
                     <div className="mt-6">
-                      <p className="text-sm font-semibold text-gray-600 mb-3">Popular Searches</p>
+                      <p className="text-sm font-semibold text-muted mb-3">Popular Searches</p>
                       <div className="flex flex-wrap gap-2">
                         {categories.slice(0, 8).map((cat) => (
                           <button
@@ -797,7 +824,7 @@ export default function Header() {
                             onClick={() => {
                               setSearchQuery(cat.name);
                             }}
-                            className="px-4 py-2 bg-gray-100 hover:bg-gradient-to-r hover:from-[#F5EDD8] hover:to-[#FBF6EC] text-gray-700 hover:text-[#1A1A1A] rounded-full text-sm font-medium transition-all"
+                            className="px-4 py-2 bg-subtle-strong hover:bg-gradient-to-r hover:from-surface hover:to-surface-muted text-foreground/90 hover:text-foreground rounded-full text-sm font-medium transition-all"
                           >
                             {cat.name}
                           </button>
@@ -809,7 +836,7 @@ export default function Header() {
                   {searchQuery && searchResults.length > 0 && (
                     <button
                       type="submit"
-                      className="mt-4 w-full py-3 bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white rounded-xl font-bold hover:from-[#C5A059] hover:to-[#1A1A1A] transition-all shadow-lg hover:shadow-xl"
+                      className="mt-4 w-full py-3 bg-gradient-to-r from-surface-elevated to-primary text-foreground rounded-xl font-bold hover:from-primary hover:to-surface-elevated transition-all shadow-lg hover:shadow-xl"
                     >
                       View All Results
                     </button>
@@ -817,8 +844,8 @@ export default function Header() {
                 </form>
 
                   <div className="px-6 pb-4">
-                  <p className="text-xs text-gray-400 text-center">
-                    Press <kbd className="hidden sm:inline px-2 py-1 bg-gray-100 rounded text-gray-600 font-mono">ESC</kbd><span className="sm:hidden">Tap outside</span> to close
+                  <p className="text-xs text-muted-subtle text-center">
+                    Press <kbd className="hidden sm:inline px-2 py-1 bg-subtle-strong rounded text-muted font-mono">ESC</kbd><span className="sm:hidden">Tap outside</span> to close
                   </p>
                 </div>
               </div>
@@ -826,7 +853,6 @@ export default function Header() {
           </>
         )}
       </AnimatePresence>
-    </header>
     </>
   );
 }

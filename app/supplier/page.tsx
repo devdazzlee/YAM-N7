@@ -24,10 +24,10 @@ export default function SupplierPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-20">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -37,89 +37,89 @@ export default function SupplierPage() {
           >
             <Handshake className="w-16 h-16 mx-auto mb-6" />
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Become a Supplier</h1>
-            <p className="text-xl text-white/90">
+            <p className="text-xl text-foreground/90">
               Partner with us and supply premium quality products to our customers
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-card">
         <div className="container mx-auto px-4 max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white border border-gray-200 rounded-2xl p-8 md:p-12"
+            className="bg-card border border-border rounded-2xl p-8 md:p-12"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-[#1A1A1A] font-medium mb-2">Name *</label>
+                  <label className="block text-foreground font-medium mb-2">Name *</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#1A1A1A] font-medium mb-2">Company *</label>
+                  <label className="block text-foreground font-medium mb-2">Company *</label>
                   <input
                     type="text"
                     required
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
                   />
                 </div>
               </div>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-[#1A1A1A] font-medium mb-2">Email *</label>
+                  <label className="block text-foreground font-medium mb-2">Email *</label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#1A1A1A] font-medium mb-2">Phone *</label>
+                  <label className="block text-foreground font-medium mb-2">Phone *</label>
                   <input
                     type="tel"
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-[#1A1A1A] font-medium mb-2">Products You Supply</label>
+                <label className="block text-foreground font-medium mb-2">Products You Supply</label>
                 <input
                   type="text"
                   value={formData.products}
                   onChange={(e) => setFormData({ ...formData, products: e.target.value })}
                   placeholder="e.g., Perfumes, Attars, Oud, Body Mists"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 outline-none"
+                  className="w-full px-4 py-3 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
                 />
               </div>
               <div>
-                <label className="block text-[#1A1A1A] font-medium mb-2">Message</label>
+                <label className="block text-foreground font-medium mb-2">Message</label>
                 <textarea
                   rows={6}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 outline-none resize-none"
+                  className="w-full px-4 py-3 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none resize-none"
                 />
               </div>
               <motion.button
                 type="submit"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full bg-[#C5A059] hover:bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-semibold transition-colors flex items-center justify-center space-x-2"
+                className="w-full bg-primary hover:bg-surface-elevated text-foreground px-8 py-4 rounded-full font-semibold transition-colors flex items-center justify-center space-x-2"
               >
                 <Send className="w-5 h-5" />
                 <span>Submit Application</span>

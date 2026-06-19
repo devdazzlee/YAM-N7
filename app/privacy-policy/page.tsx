@@ -9,11 +9,11 @@ import { CONTACT } from '../../config/storeInfo';
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
       {/* Page Header */}
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-20">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -22,30 +22,30 @@ export default function PrivacyPolicyPage() {
             className="text-center max-w-3xl mx-auto"
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Privacy Policy</h1>
-            <p className="text-xl text-white/90">YAM-N7 | Privacy Policy</p>
+            <p className="text-xl text-foreground/90">YAM-N7 | Privacy Policy</p>
           </motion.div>
         </div>
       </section>
 
       {/* Privacy Policy Content */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-card">
         <div className="container mx-auto px-4 max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-white rounded-2xl p-8 md:p-12 space-y-8"
+            className="bg-card rounded-2xl p-8 md:p-12 space-y-8"
           >
-            <div className="space-y-8 text-[#6B7280] leading-relaxed">
+            <div className="space-y-8 text-muted leading-relaxed">
               <div>
-                <h2 className="text-2xl font-bold text-[#1A1A1A] mb-4">1. Introduction</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-4">1. Introduction</h2>
                 <p>
                   At YAM-N7, protecting the privacy of our customers is a cornerstone of our 25-year legacy of trust. This policy outlines how we collect, safeguard, and utilize your information when you shop for our premium perfumes, attars, and fragrances. By using our services, you consent to the practices described in this policy.
                 </p>
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold text-[#1A1A1A] mb-4">2. Information We Collect</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-4">2. Information We Collect</h2>
                 <p className="mb-3">We collect only the essential data required to provide you with a seamless shopping experience:</p>
                 <ul className="list-disc list-inside space-y-2 ml-2">
                   <li><strong>Personal Identification:</strong> Name, email address, phone number, and physical shipping address.</li>
@@ -56,7 +56,7 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold text-[#1A1A1A] mb-4">3. How We Use Your Information</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-4">3. How We Use Your Information</h2>
                 <p className="mb-3">Your data is used to ensure the quality and delivery of our products:</p>
                 <ul className="list-disc list-inside space-y-2 ml-2">
                   <li><strong>Order Fulfillment:</strong> To process transactions, manage shipping, and send order updates.</li>
@@ -67,14 +67,14 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold text-[#1A1A1A] mb-4">4. Data Security & Retention</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-4">4. Data Security & Retention</h2>
                 <p>
                   We implement advanced encryption and auditing measures to protect your personal information from unauthorized access. In accordance with PECA 2016, we retain transaction and traffic data for a minimum of one year to comply with local regulatory requirements. While we strive for absolute security, please note that no digital transmission is 100% immune to risks.
                 </p>
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold text-[#1A1A1A] mb-4">5. Your Rights</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-4">5. Your Rights</h2>
                 <p className="mb-3">As a YAM-N7 customer, you hold the following rights regarding your digital identity:</p>
                 <ul className="list-disc list-inside space-y-2 ml-2">
                   <li><strong>Access & Portability:</strong> You may request a copy of the personal data we hold about you.</li>
@@ -85,14 +85,14 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold text-[#1A1A1A] mb-4">6. Third-Party Disclosures</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-4">6. Third-Party Disclosures</h2>
                 <p>
                   We do not sell, rent, or trade your personal information to third-party marketing firms. We only share data with trusted logistics partners to facilitate delivery or when required by Pakistani law enforcement through valid legal processes.
                 </p>
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold text-[#1A1A1A] mb-4">7. Contact Us</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-4">7. Contact Us</h2>
                 <p>
                   For any questions regarding your privacy or to exercise your data rights, please contact us:
                 </p>

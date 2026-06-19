@@ -148,11 +148,11 @@ export default function ProductCard({
         viewport={{ once: true }}
         whileHover={{ y: -4 }}
         transition={{ duration: 0.3 }}
-        className="bg-white rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group flex flex-col"
+        className="bg-card rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group flex flex-col"
       >
         <div className="flex flex-col sm:flex-row min-w-0">
           <Link href={`/products/${id}`} className="flex-shrink-0 w-full sm:w-auto">
-            <div className="relative w-full h-40 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 overflow-hidden bg-gray-100 sm:rounded-l-xl sm:rounded-r-none rounded-t-xl sm:rounded-t-none">
+            <div className="relative w-full h-40 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 overflow-hidden bg-subtle-strong sm:rounded-l-xl sm:rounded-r-none rounded-t-xl sm:rounded-t-none">
             {hasImageSource && !imageFailed && (
               <img
                 src={image}
@@ -169,10 +169,10 @@ export default function ProductCard({
               />
             )}
             {(!hasImageSource || imageFailed || !imageLoaded) && (
-              <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-gray-100 to-gray-200" />
+              <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-subtle-strong to-border" />
             )}
             {discount > 0 && (
-              <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-[#8E6D31] text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-semibold">
+              <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-primary-dark text-foreground px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-semibold">
                 -{discount}%
               </div>
             )}
@@ -181,18 +181,18 @@ export default function ProductCard({
         <div className="flex-1 p-3 sm:p-4 md:p-6 flex flex-col justify-between">
           <div>
             <Link href={`/products/${id}`}>
-              <h3 className="font-semibold text-sm sm:text-base md:text-lg lg:text-xl text-[#1A1A1A] mb-2 sm:mb-3 hover:text-[#C5A059] transition-colors line-clamp-2">
+              <h3 className="font-semibold text-sm sm:text-base md:text-lg lg:text-xl text-foreground mb-2 sm:mb-3 hover:text-primary transition-colors line-clamp-2">
                 {name}
               </h3>
             </Link>
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
             <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 flex-wrap">
-              <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-[#1A1A1A]">
+              <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-foreground">
                 Rs. {displayPrice.toLocaleString()}
               </span>
               {originalPrice && (
-                <span className="text-xs sm:text-sm md:text-base lg:text-lg text-[#6B7280] line-through">
+                <span className="text-xs sm:text-sm md:text-base lg:text-lg text-muted line-through">
                   Rs. {originalPrice.toLocaleString()}
                 </span>
               )}
@@ -202,16 +202,16 @@ export default function ProductCard({
                 onClick={toggleWishlist}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white border-2 border-[#F5EDD8] rounded-full flex items-center justify-center hover:bg-[#F5EDD8] transition-colors flex-shrink-0 ${
-                  isInWishlist ? 'bg-red-50 border-red-200 hover:bg-red-100' : ''
+                className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-card border-2 border-border rounded-full flex items-center justify-center hover:bg-surface transition-colors flex-shrink-0 ${
+                  isInWishlist ? 'bg-destructive/10 border-destructive/30 hover:bg-destructive/20' : ''
                 }`}
                 aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
               >
-                <Heart className={`w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 ${isInWishlist ? 'text-red-500 fill-red-500' : 'text-[#1A1A1A]'}`} />
+                <Heart className={`w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 ${isInWishlist ? 'text-red-500 fill-red-500' : 'text-foreground'}`} />
               </motion.button>
               <button
                 onClick={handleAddToCart}
-                className="px-2 sm:px-3 md:px-4 lg:px-6 py-1.5 sm:py-2 md:py-3 rounded-full flex items-center justify-center transition-colors duration-200 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base flex-1 sm:flex-initial bg-[#C5A059] text-white hover:bg-[#1A1A1A]"
+                className="px-2 sm:px-3 md:px-4 lg:px-6 py-1.5 sm:py-2 md:py-3 rounded-full flex items-center justify-center transition-colors duration-200 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base flex-1 sm:flex-initial bg-primary text-foreground hover:bg-surface-elevated"
                 aria-label="Add to cart"
               >
                 <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-1 sm:mr-1.5 md:mr-2 flex-shrink-0" />
@@ -220,7 +220,7 @@ export default function ProductCard({
               </button>
               <button
                 onClick={handleBuyNow}
-                className="px-2 sm:px-3 md:px-4 lg:px-6 py-1.5 sm:py-2 md:py-3 bg-gradient-to-r from-[#8E6D31] to-[#A67C3D] text-white rounded-full flex items-center justify-center hover:from-[#A67C3D] hover:to-[#8E6D31] transition-colors duration-200 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base shadow-lg hover:shadow-xl flex-1 sm:flex-initial"
+                className="px-2 sm:px-3 md:px-4 lg:px-6 py-1.5 sm:py-2 md:py-3 bg-gradient-to-r from-primary-dark to-primary-dark text-foreground rounded-full flex items-center justify-center hover:from-primary-dark hover:to-primary-dark transition-colors duration-200 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base shadow-lg hover:shadow-xl flex-1 sm:flex-initial"
                 aria-label="Buy now"
               >
                 <Zap className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-1 sm:mr-1.5 md:mr-2 flex-shrink-0" />
@@ -243,7 +243,7 @@ export default function ProductCard({
       viewport={{ once: true }}
       whileHover={{ y: -3 }}
       transition={{ duration: 0.3 }}
-      className="bg-white rounded-xl border border-gray-100 hover:shadow-lg transition-all duration-300 overflow-hidden group h-full flex flex-col"
+      className="bg-card rounded-xl border border-border hover:shadow-lg transition-all duration-300 overflow-hidden group h-full flex flex-col"
     >
       <Link
         href={`/products/${id}`}
@@ -251,7 +251,7 @@ export default function ProductCard({
         onTouchStart={() => prefetchProduct(id)}
         className="block shrink-0"
       >
-        <div className="relative aspect-[4/3] overflow-hidden bg-gray-50">
+        <div className="relative aspect-[4/3] overflow-hidden bg-surface-muted">
           {hasImageSource && !imageFailed && (
             <img
               src={image}
@@ -268,10 +268,10 @@ export default function ProductCard({
             />
           )}
           {(!hasImageSource || imageFailed || !imageLoaded) && (
-            <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-gray-100 to-gray-200" />
+            <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-subtle-strong to-border" />
           )}
           {discount > 0 && (
-            <div className="absolute top-2 left-2 bg-[#8E6D31] text-white px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold">
+            <div className="absolute top-2 left-2 bg-primary-dark text-foreground px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold">
               -{discount}%
             </div>
           )}
@@ -280,28 +280,28 @@ export default function ProductCard({
               onClick={toggleWishlist}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className={`w-7 h-7 sm:w-8 sm:h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-colors ${
-                isInWishlist ? 'bg-red-50 hover:bg-red-100' : ''
+              className={`w-7 h-7 sm:w-8 sm:h-8 bg-card/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-surface-muted transition-colors ${
+                isInWishlist ? 'bg-destructive/10 hover:bg-destructive/20' : ''
               }`}
               aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
             >
-              <Heart className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isInWishlist ? 'text-red-500 fill-red-500' : 'text-gray-600'}`} />
+              <Heart className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isInWishlist ? 'text-red-500 fill-red-500' : 'text-muted'}`} />
             </motion.button>
           </div>
         </div>
       </Link>
       <div className="p-2.5 sm:p-3 flex flex-col flex-grow min-h-0">
         <Link href={`/products/${id}`}>
-          <h3 className="font-semibold text-[#1A1A1A] mb-1.5 sm:mb-2 hover:text-[#C5A059] transition-colors line-clamp-2 text-xs sm:text-sm leading-snug">
+          <h3 className="font-semibold text-foreground mb-1.5 sm:mb-2 hover:text-primary transition-colors line-clamp-2 text-xs sm:text-sm leading-snug">
             {name}
           </h3>
         </Link>
         <div className="flex items-center gap-1.5 mb-2.5 sm:mb-3">
-          <span className="text-sm sm:text-base font-bold text-[#1A1A1A]">
+          <span className="text-sm sm:text-base font-bold text-foreground">
             Rs. {displayPrice.toLocaleString()}
           </span>
           {originalPrice && (
-            <span className="text-[10px] sm:text-xs text-[#9CA3AF] line-through">
+            <span className="text-[10px] sm:text-xs text-muted-subtle line-through">
               Rs. {originalPrice.toLocaleString()}
             </span>
           )}
@@ -309,7 +309,7 @@ export default function ProductCard({
         <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-1.5 mt-auto">
           <button
             onClick={handleAddToCart}
-            className="flex-1 py-2 sm:py-2 rounded-lg flex items-center justify-center font-semibold text-[11px] sm:text-xs transition-colors duration-200 bg-[#1A1A1A] text-white hover:bg-[#C5A059]"
+            className="flex-1 py-2 sm:py-2 rounded-lg flex items-center justify-center font-semibold text-[11px] sm:text-xs transition-colors duration-200 bg-surface-elevated text-foreground hover:bg-primary"
             aria-label="Add to cart"
           >
             <ShoppingCart className="w-3.5 h-3.5 mr-1 flex-shrink-0" />
@@ -317,7 +317,7 @@ export default function ProductCard({
           </button>
           <button
             onClick={handleBuyNow}
-            className="flex-1 py-2 sm:py-2 bg-[#C5A059] text-white rounded-lg flex items-center justify-center hover:bg-[#1A1A1A] transition-colors duration-200 font-semibold text-[11px] sm:text-xs"
+            className="flex-1 py-2 sm:py-2 bg-primary text-foreground rounded-lg flex items-center justify-center hover:bg-surface-elevated transition-colors duration-200 font-semibold text-[11px] sm:text-xs"
             aria-label="Buy now"
           >
             <Zap className="w-3.5 h-3.5 mr-1 flex-shrink-0" />

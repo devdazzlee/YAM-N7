@@ -38,11 +38,11 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
       {/* Page Header */}
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-8 sm:py-10 md:py-14">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-8 sm:py-10 md:py-14">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -54,20 +54,20 @@ export default function WishlistPage() {
               <Heart className="w-5 h-5 sm:w-6 sm:h-6 fill-white" />
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">My Wishlist</h1>
             </div>
-            <p className="text-sm sm:text-base text-white/90">Save your favorite items for later</p>
+            <p className="text-sm sm:text-base text-foreground/90">Save your favorite items for later</p>
           </motion.div>
         </div>
       </section>
 
       {/* Wishlist Items */}
-      <section className="py-6 sm:py-8 bg-gradient-to-b from-white to-[#FBF6EC]">
+      <section className="py-6 sm:py-8 bg-gradient-to-b from-background to-surface-muted">
         <div className="container mx-auto px-4">
           {items.length > 0 ? (
             <>
               {/* Wishlist Summary */}
               <div className="mb-4 sm:mb-6 flex items-center justify-between">
-                <p className="text-[#6B7280] text-xs sm:text-sm">
-                  <span className="font-semibold text-[#1A1A1A]">{items.length}</span> {items.length === 1 ? 'item' : 'items'} in your wishlist
+                <p className="text-muted text-xs sm:text-sm">
+                  <span className="font-semibold text-foreground">{items.length}</span> {items.length === 1 ? 'item' : 'items'} in your wishlist
                 </p>
                 <button
                   onClick={clearAll}
@@ -109,20 +109,20 @@ export default function WishlistPage() {
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-10 sm:py-14"
             >
-              <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-10 max-w-sm mx-auto shadow-md">
+              <div className="bg-card rounded-xl sm:rounded-2xl p-6 sm:p-10 max-w-sm mx-auto shadow-md">
                 <motion.div
                   animate={{ scale: [1, 1.08, 1] }}
                   transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
                 >
-                  <Heart className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3" />
+                  <Heart className="w-12 h-12 sm:w-16 sm:h-16 text-muted-subtle mx-auto mb-3" />
                 </motion.div>
-                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#1A1A1A] mb-2">Your wishlist is empty</h2>
-                <p className="text-[#6B7280] mb-5 text-xs sm:text-sm">Start adding your favorite items to your wishlist!</p>
+                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-2">Your wishlist is empty</h2>
+                <p className="text-muted mb-5 text-xs sm:text-sm">Start adding your favorite items to your wishlist!</p>
                 <Link href="/shop">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="bg-[#C5A059] hover:bg-[#1A1A1A] text-white px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-semibold transition-colors text-sm"
+                    className="bg-primary hover:bg-surface-elevated text-foreground px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-semibold transition-colors text-sm"
                   >
                     Continue Shopping
                   </motion.button>

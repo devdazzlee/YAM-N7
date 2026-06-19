@@ -61,10 +61,10 @@ export default function HerbalRemediesPage() {
   }, [searchQuery, products]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-20">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -76,7 +76,7 @@ export default function HerbalRemediesPage() {
               <Sparkles className="w-12 h-12" />
               <h1 className="text-4xl md:text-5xl font-bold">Attars & Body Mists</h1>
             </div>
-            <p className="text-xl text-white/90">
+            <p className="text-xl text-foreground/90">
               Explore our collection of traditional attars and refreshing body mists for
               everyday elegance
             </p>
@@ -84,17 +84,17 @@ export default function HerbalRemediesPage() {
         </div>
       </section>
 
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-card">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto mb-8">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#6B7280]" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted" />
               <input
                 type="text"
                 placeholder="Search attars and body mists..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-300 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 outline-none"
+                className="w-full pl-12 pr-4 py-4 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
               />
             </div>
           </div>
@@ -103,7 +103,7 @@ export default function HerbalRemediesPage() {
             <Loader size="lg" text="Loading attars & body mists..." />
           ) : filteredProducts.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-[#6B7280] text-lg">No fragrances found.</p>
+              <p className="text-muted text-lg">No fragrances found.</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">

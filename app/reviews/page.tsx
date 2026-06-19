@@ -44,10 +44,10 @@ export default function ReviewsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-20">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -56,7 +56,7 @@ export default function ReviewsPage() {
             className="text-center max-w-3xl mx-auto"
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Customer Reviews</h1>
-            <p className="text-xl text-white/90">See what our customers are saying</p>
+            <p className="text-xl text-foreground/90">See what our customers are saying</p>
             {overallRating > 0 && (
               <div className="mt-6 flex items-center justify-center space-x-3">
                 <div className="flex items-center space-x-1">
@@ -66,26 +66,26 @@ export default function ReviewsPage() {
                       className={`w-6 h-6 ${
                         i < Math.round(overallRating)
                           ? 'fill-yellow-400 text-yellow-400'
-                          : 'text-white/40'
+                          : 'text-foreground/40'
                       }`}
                     />
                   ))}
                 </div>
                 <span className="text-2xl font-bold">{overallRating}</span>
-                <span className="text-white/80">({totalReviews.toLocaleString()} reviews)</span>
+                <span className="text-foreground/80">({totalReviews.toLocaleString()} reviews)</span>
               </div>
             )}
           </motion.div>
         </div>
       </section>
 
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-card">
         <div className="container mx-auto px-4 max-w-4xl">
           {loading ? (
             <Loader size="lg" text="Loading reviews..." />
           ) : reviews.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-[#6B7280] text-lg">No reviews available at the moment.</p>
+              <p className="text-muted text-lg">No reviews available at the moment.</p>
             </div>
           ) : (
             <div className="space-y-6">
@@ -96,7 +96,7 @@ export default function ReviewsPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-white border border-gray-200 rounded-2xl p-6"
+                  className="bg-card border border-border rounded-2xl p-6"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center space-x-3">
@@ -107,16 +107,16 @@ export default function ReviewsPage() {
                           className="w-10 h-10 rounded-full object-cover"
                         />
                       ) : (
-                        <div className="w-10 h-10 rounded-full bg-[#C5A059] flex items-center justify-center text-white font-bold">
+                        <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-foreground font-bold">
                           {review.author_name.charAt(0)}
                         </div>
                       )}
                       <div>
                         <div className="flex items-center space-x-2 mb-1">
-                          <h3 className="font-semibold text-[#1A1A1A]">{review.author_name}</h3>
-                          <Verified className="w-4 h-4 text-[#C5A059]" />
+                          <h3 className="font-semibold text-foreground">{review.author_name}</h3>
+                          <Verified className="w-4 h-4 text-primary" />
                         </div>
-                        <div className="flex items-center space-x-2 text-sm text-[#6B7280]">
+                        <div className="flex items-center space-x-2 text-sm text-muted">
                           <span>{review.relative_time_description}</span>
                           {review.store_name && (
                             <>
@@ -136,14 +136,14 @@ export default function ReviewsPage() {
                           key={i}
                           className={`w-5 h-5 ${
                             i < review.rating
-                              ? 'fill-[#8E6D31] text-[#8E6D31]'
-                              : 'text-gray-300'
+                              ? 'fill-primary-dark text-primary-dark'
+                              : 'text-muted-subtle'
                           }`}
                         />
                       ))}
                     </div>
                   </div>
-                  <p className="text-[#6B7280] leading-relaxed">&ldquo;{review.text}&rdquo;</p>
+                  <p className="text-muted leading-relaxed">&ldquo;{review.text}&rdquo;</p>
                 </motion.div>
               ))}
             </div>

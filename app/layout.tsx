@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import CartToast from "./components/CartToast";
+import PageTransition from "./components/PageTransition";
 
 const poppins = Poppins({
   variable: "--font-body",
@@ -33,6 +34,7 @@ export default function RootLayout({
         className={`${poppins.variable} ${playfair.variable} antialiased`}
         suppressHydrationWarning
       >
+        <PageTransition />
         {children}
         <CartToast />
       </body>

@@ -46,11 +46,11 @@ export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
       {/* Page Header */}
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-20">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -59,7 +59,7 @@ export default function FAQPage() {
             className="text-center max-w-3xl mx-auto"
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Returns & Refunds</h1>
-            <p className="text-xl text-white/90">
+            <p className="text-xl text-foreground/90">
               Your Questions Answered
             </p>
           </motion.div>
@@ -67,7 +67,7 @@ export default function FAQPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-card">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="space-y-4">
             {faqs.map((faq, index) => (
@@ -77,15 +77,15 @@ export default function FAQPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="bg-white border border-gray-200 rounded-2xl overflow-hidden"
+                className="bg-card border border-border rounded-2xl overflow-hidden"
               >
                 <button
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                  className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-[#FBF6EC] transition-colors"
+                  className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-surface-muted transition-colors"
                 >
-                  <span className="font-semibold text-[#1A1A1A] pr-4">{faq.question}</span>
+                  <span className="font-semibold text-foreground pr-4">{faq.question}</span>
                   <ChevronDown
-                    className={`w-5 h-5 text-[#C5A059] flex-shrink-0 transition-transform ${
+                    className={`w-5 h-5 text-primary flex-shrink-0 transition-transform ${
                       openIndex === index ? 'rotate-180' : ''
                     }`}
                   />
@@ -99,7 +99,7 @@ export default function FAQPage() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-5 text-[#6B7280] leading-relaxed">{faq.answer}</div>
+                      <div className="px-6 pb-5 text-muted leading-relaxed">{faq.answer}</div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -110,7 +110,7 @@ export default function FAQPage() {
       </section>
 
       {/* Contact CTA */}
-      <section className="py-16 bg-[#FBF6EC]">
+      <section className="py-16 bg-surface-muted">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -118,13 +118,13 @@ export default function FAQPage() {
             viewport={{ once: true }}
             className="max-w-2xl mx-auto"
           >
-            <h2 className="text-3xl font-bold text-[#1A1A1A] mb-4">Still have questions?</h2>
-            <p className="text-lg text-[#6B7280] mb-8">
+            <h2 className="text-3xl font-bold text-foreground mb-4">Still have questions?</h2>
+            <p className="text-lg text-muted mb-8">
               Can&apos;t find the answer you&apos;re looking for? Contact our friendly team at {CONTACT.phoneDisplay} or email us at {CONTACT.email}
             </p>
             <a
               href="/contact"
-              className="inline-block bg-[#C5A059] hover:bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-semibold transition-colors"
+              className="inline-block bg-primary hover:bg-surface-elevated text-foreground px-8 py-4 rounded-full font-semibold transition-colors"
             >
               Contact Us
             </a>

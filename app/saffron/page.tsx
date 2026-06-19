@@ -32,10 +32,10 @@ export default function SaffronPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-20">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -47,14 +47,14 @@ export default function SaffronPage() {
               <Sparkles className="w-12 h-12" />
               <h1 className="text-4xl md:text-5xl font-bold">Premium Oud Collection</h1>
             </div>
-            <p className="text-xl text-white/90">
+            <p className="text-xl text-foreground/90">
               Luxurious oud fragrances, carefully sourced and authentically crafted
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-16 bg-[#FBF6EC]">
+      <section className="py-16 bg-surface-muted">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -62,8 +62,8 @@ export default function SaffronPage() {
             viewport={{ once: true }}
             className="max-w-4xl mx-auto text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-[#1A1A1A] mb-4">Why Choose Our Oud?</h2>
-            <p className="text-lg text-[#6B7280]">
+            <h2 className="text-3xl font-bold text-foreground mb-4">Why Choose Our Oud?</h2>
+            <p className="text-lg text-muted">
               We source only the finest oud oils and blends from trusted suppliers, ensuring depth,
               longevity, and premium quality in every bottle.
             </p>
@@ -71,13 +71,13 @@ export default function SaffronPage() {
         </div>
       </section>
 
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-card">
         <div className="container mx-auto px-4">
           {loading ? (
             <Loader size="lg" text="Loading oud fragrances..." />
           ) : products.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-[#6B7280] text-lg">No oud fragrances available at the moment.</p>
+              <p className="text-muted text-lg">No oud fragrances available at the moment.</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -27,10 +27,10 @@ const paymentMethods = [
 
 export default function PaymentMethodsPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-20">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -39,12 +39,12 @@ export default function PaymentMethodsPage() {
             className="text-center max-w-3xl mx-auto"
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Payment Methods</h1>
-            <p className="text-xl text-white/90">Secure and convenient payment options</p>
+            <p className="text-xl text-foreground/90">Secure and convenient payment options</p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-card">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="grid md:grid-cols-3 gap-8">
             {paymentMethods.map((method, index) => {
@@ -56,13 +56,13 @@ export default function PaymentMethodsPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-[#FBF6EC] rounded-2xl p-6 text-center"
+                  className="bg-surface-muted rounded-2xl p-6 text-center"
                 >
-                  <div className="w-16 h-16 bg-[#F5EDD8] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Icon className="w-8 h-8 text-[#1A1A1A]" />
+                  <div className="w-16 h-16 bg-surface rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Icon className="w-8 h-8 text-foreground" />
                   </div>
-                  <h3 className="text-xl font-bold text-[#1A1A1A] mb-2">{method.title}</h3>
-                  <p className="text-[#6B7280]">{method.description}</p>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{method.title}</h3>
+                  <p className="text-muted">{method.description}</p>
                 </motion.div>
               );
             })}

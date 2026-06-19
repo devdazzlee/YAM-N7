@@ -15,9 +15,9 @@ export default function ProductImageDisclaimer({
     return (
       <p
         className={[
-          'w-full shrink-0 border-t border-gray-200/90 bg-[#FAFAF9]',
+          'w-full shrink-0 border-t border-border/90 bg-surface-muted',
           'px-3 py-2.5 sm:px-4 md:px-6 sm:py-3',
-          'text-center sm:text-left text-[10px] sm:text-[11px] leading-relaxed text-[#4B5563]',
+          'text-center sm:text-left text-[10px] sm:text-[11px] leading-relaxed text-muted',
           className,
         ]
           .filter(Boolean)
@@ -33,8 +33,8 @@ export default function ProductImageDisclaimer({
     return (
       <p
         className={[
-          'mt-2 sm:mt-2.5 pt-2 sm:pt-2.5 border-t border-gray-200/90',
-          'text-[10px] sm:text-[11px] leading-relaxed text-[#4B5563]',
+          'mt-2 sm:mt-2.5 pt-2 sm:pt-2.5 border-t border-border/90',
+          'text-[10px] sm:text-[11px] leading-relaxed text-muted',
           className,
         ]
           .filter(Boolean)
@@ -48,7 +48,7 @@ export default function ProductImageDisclaimer({
 
   return (
     <p
-      className={['text-[#6B7280] text-[9px] sm:text-[10px] leading-snug', className].filter(Boolean).join(' ')}
+      className={['text-muted text-[9px] sm:text-[10px] leading-snug', className].filter(Boolean).join(' ')}
       role="note"
     >
       {PRODUCT_IMAGE_DISCLAIMER_TEXT}

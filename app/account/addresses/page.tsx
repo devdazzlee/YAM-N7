@@ -23,8 +23,8 @@ export default function AddressesPage() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-[#C5A059]" />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -36,10 +36,10 @@ export default function AddressesPage() {
   const hasAddress = user.address || user.billing_address;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-16">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -48,20 +48,20 @@ export default function AddressesPage() {
             className="text-center"
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Address Book</h1>
-            <p className="text-xl text-white/90">Manage your shipping addresses</p>
+            <p className="text-xl text-foreground/90">Manage your shipping addresses</p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-card">
         <div className="container mx-auto px-4 max-w-6xl">
           {!hasAddress ? (
             <div className="text-center py-16">
-              <MapPin className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-[#6B7280] text-lg mb-4">No addresses saved yet</p>
-              <p className="text-[#6B7280] text-sm mb-6">
+              <MapPin className="w-16 h-16 text-muted-subtle mx-auto mb-4" />
+              <p className="text-muted text-lg mb-4">No addresses saved yet</p>
+              <p className="text-muted text-sm mb-6">
                 You can add your address in your{' '}
-                <a href="/account/profile" className="text-[#C5A059] hover:text-[#1A1A1A] font-semibold">
+                <a href="/account/profile" className="text-primary hover:text-foreground font-semibold">
                   Profile Settings
                 </a>
               </p>
@@ -73,18 +73,18 @@ export default function AddressesPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="border-2 border-[#C5A059] bg-[#FBF6EC] rounded-2xl p-6"
+                  className="border-2 border-primary bg-surface-muted rounded-2xl p-6"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center space-x-2">
-                      <MapPin className="w-5 h-5 text-[#C5A059]" />
-                      <h3 className="font-semibold text-[#1A1A1A]">{user.name || 'Shipping Address'}</h3>
-                      <span className="bg-[#C5A059] text-white text-xs px-3 py-1 rounded-full">
+                      <MapPin className="w-5 h-5 text-primary" />
+                      <h3 className="font-semibold text-foreground">{user.name || 'Shipping Address'}</h3>
+                      <span className="bg-primary text-foreground text-xs px-3 py-1 rounded-full">
                         Default
                       </span>
                     </div>
                   </div>
-                  <div className="space-y-2 text-[#6B7280]">
+                  <div className="space-y-2 text-muted">
                     <p>{user.address}</p>
                     {user.phone_number && <p>{user.phone_number}</p>}
                     {user.mobile_number && <p>{user.mobile_number}</p>}
@@ -97,15 +97,15 @@ export default function AddressesPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className="border-2 border-gray-200 bg-white rounded-2xl p-6"
+                  className="border-2 border-border bg-card rounded-2xl p-6"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center space-x-2">
-                      <MapPin className="w-5 h-5 text-[#C5A059]" />
-                      <h3 className="font-semibold text-[#1A1A1A]">Billing Address</h3>
+                      <MapPin className="w-5 h-5 text-primary" />
+                      <h3 className="font-semibold text-foreground">Billing Address</h3>
                     </div>
                   </div>
-                  <div className="space-y-2 text-[#6B7280]">
+                  <div className="space-y-2 text-muted">
                     <p>{user.billing_address}</p>
                     {user.phone_number && <p>{user.phone_number}</p>}
                   </div>
@@ -119,7 +119,7 @@ export default function AddressesPage() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-[#C5A059] hover:bg-[#1A1A1A] text-white px-6 py-3 rounded-full font-semibold transition-colors inline-flex items-center space-x-2"
+                className="bg-primary hover:bg-surface-elevated text-foreground px-6 py-3 rounded-full font-semibold transition-colors inline-flex items-center space-x-2"
               >
                 <Plus className="w-5 h-5" />
                 <span>Update Address in Profile</span>

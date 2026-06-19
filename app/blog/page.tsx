@@ -31,10 +31,10 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-[#1A1A1A] to-[#C5A059] text-white py-20">
+      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -43,14 +43,14 @@ export default function BlogPage() {
             className="text-center max-w-3xl mx-auto"
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Fragrance Journal</h1>
-            <p className="text-xl text-white/90">
+            <p className="text-xl text-foreground/90">
               Explore our premium perfumes, scent tips, and fragrance inspiration
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-card">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -58,10 +58,10 @@ export default function BlogPage() {
             viewport={{ once: true }}
             className="text-center mb-8"
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-[#1A1A1A] mb-3">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
               Featured Products
             </h2>
-            <p className="text-[#6B7280] max-w-xl mx-auto">
+            <p className="text-muted max-w-xl mx-auto">
               Browse our curated selection of premium perfumes, attars, and luxury fragrances
             </p>
           </motion.div>
@@ -70,7 +70,7 @@ export default function BlogPage() {
             <Loader size="lg" text="Loading products..." />
           ) : products.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-[#6B7280] text-lg">No products available at the moment.</p>
+              <p className="text-muted text-lg">No products available at the moment.</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
