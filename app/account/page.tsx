@@ -109,7 +109,7 @@ export default function AccountPage() {
               <div className="bg-surface-muted rounded-2xl p-6 space-y-4">
                 <Link
                   href="/account"
-                  className="flex items-center space-x-3 p-3 bg-primary text-foreground rounded-xl"
+                  className="flex items-center space-x-3 p-3 bg-primary text-primary-foreground rounded-xl"
                 >
                   <User className="w-5 h-5" />
                   <span>Dashboard</span>

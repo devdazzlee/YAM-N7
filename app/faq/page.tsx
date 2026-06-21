@@ -124,7 +124,7 @@ export default function FAQPage() {
             </p>
             <a
               href="/contact"
-              className="inline-block bg-primary hover:bg-surface-elevated text-foreground px-8 py-4 rounded-full font-semibold transition-colors"
+              className="inline-block bg-primary hover:bg-primary-dark text-primary-foreground px-8 py-4 rounded-full font-semibold transition-colors"
             >
               Contact Us
             </a>

@@ -236,7 +236,7 @@ function ThankYouContent() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full sm:w-auto bg-primary hover:bg-surface-elevated text-foreground px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base"
+                  className="w-full sm:w-auto bg-primary hover:bg-primary-dark text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base"
                 >
                   <Home className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>Continue Shopping</span>

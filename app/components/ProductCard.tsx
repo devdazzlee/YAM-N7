@@ -10,8 +10,6 @@ import { useProductStore } from '../../lib/store/productStore';
 import { showCartToast } from './CartToast';
 import { isWeightBasedUnit } from '../../lib/utils/discount';
 import { getWeightInGramsFromText } from '../../lib/utils/weight';
-import ProductImageDisclaimer from './ProductImageDisclaimer';
-
 interface ProductCardProps {
   id: string;
   name: string;
@@ -211,7 +209,7 @@ export default function ProductCard({
               </motion.button>
               <button
                 onClick={handleAddToCart}
-                className="px-2 sm:px-3 md:px-4 lg:px-6 py-1.5 sm:py-2 md:py-3 rounded-full flex items-center justify-center transition-colors duration-200 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base flex-1 sm:flex-initial bg-primary text-foreground hover:bg-surface-elevated"
+                className="px-2 sm:px-3 md:px-4 lg:px-6 py-1.5 sm:py-2 md:py-3 rounded-full flex items-center justify-center transition-colors duration-200 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base flex-1 sm:flex-initial bg-primary text-primary-foreground hover:bg-primary-dark"
                 aria-label="Add to cart"
               >
                 <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-1 sm:mr-1.5 md:mr-2 flex-shrink-0" />
@@ -231,7 +229,6 @@ export default function ProductCard({
           </div>
         </div>
         </div>
-        <ProductImageDisclaimer variant="cardStrip" />
       </motion.div>
     );
   }
@@ -347,7 +344,6 @@ export default function ProductCard({
             Buy
           </button>
         </div>
-        <ProductImageDisclaimer variant="card" className="mt-3 opacity-60" />
       </div>
     </motion.div>
   );

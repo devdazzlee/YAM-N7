@@ -7,7 +7,6 @@ import Footer from '../components/Footer';
 import Newsletter from '../components/Newsletter';
 import Services from '../components/Services';
 import Loader from '../components/Loader';
-import ProductImageDisclaimer from '../components/ProductImageDisclaimer';
 import { X, ShoppingCart, Star, Search } from 'lucide-react';
 import Link from 'next/link';
 import { productApi } from '../../lib/api/productApi';
@@ -83,7 +82,7 @@ export default function ComparePage() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowSearch(!showSearch)}
-                  className="bg-primary hover:bg-surface-elevated text-foreground px-6 py-3 rounded-full font-semibold transition-colors inline-flex items-center space-x-2"
+                  className="bg-primary hover:bg-primary-dark text-primary-foreground px-6 py-3 rounded-full font-semibold transition-colors inline-flex items-center space-x-2"
                 >
                   <Search className="w-5 h-5" />
                   <span>Add Product to Compare</span>
@@ -153,7 +152,6 @@ export default function ComparePage() {
                                   className="w-full h-full object-cover"
                                 />
                               </div>
-                              <ProductImageDisclaimer className="text-center max-w-[10rem] px-1" />
                               <Link href={`/products/${product.id}`}>
                                 <h3 className="font-semibold text-foreground hover:text-primary">
                                   {product.name}
@@ -218,7 +216,7 @@ export default function ComparePage() {
                               <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="bg-primary hover:bg-surface-elevated text-foreground px-6 py-2 rounded-full font-semibold transition-colors flex items-center space-x-2 mx-auto"
+                                className="bg-primary hover:bg-primary-dark text-primary-foreground px-6 py-2 rounded-full font-semibold transition-colors flex items-center space-x-2 mx-auto"
                               >
                                 <ShoppingCart className="w-4 h-4" />
                                 <span>View Product</span>
@@ -239,7 +237,7 @@ export default function ComparePage() {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="bg-primary hover:bg-surface-elevated text-foreground px-8 py-4 rounded-full font-semibold transition-colors"
+                      className="bg-primary hover:bg-primary-dark text-primary-foreground px-8 py-4 rounded-full font-semibold transition-colors"
                     >
                       Start Shopping
                     </motion.button>

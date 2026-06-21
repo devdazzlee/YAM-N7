@@ -176,7 +176,7 @@ export default function CartPage() {
                   </div>
                   <Link href="/checkout">
                     <button
-                      className="w-full bg-primary hover:bg-surface-elevated text-foreground px-4 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4 rounded-full font-semibold transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 text-sm sm:text-base"
+                      className="w-full bg-primary hover:bg-primary-dark text-primary-foreground px-4 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4 rounded-full font-semibold transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 text-sm sm:text-base"
                     >
                       <span>Proceed to Checkout</span>
                       <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -204,7 +204,7 @@ export default function CartPage() {
               <p className="text-sm sm:text-base text-muted mb-6 sm:mb-8">Start adding items to your cart!</p>
               <Link href="/shop">
                 <button
-                  className="bg-primary hover:bg-surface-elevated text-foreground px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold transition-all duration-200 active:scale-[0.98] text-sm sm:text-base"
+                  className="bg-primary hover:bg-primary-dark text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold transition-all duration-200 active:scale-[0.98] text-sm sm:text-base"
                 >
                   Continue Shopping
                 </button>

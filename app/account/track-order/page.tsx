@@ -135,7 +135,7 @@ export default function TrackOrderPage() {
                 type="submit"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-primary hover:bg-surface-elevated text-foreground px-8 py-4 rounded-xl font-semibold transition-colors"
+                className="bg-primary hover:bg-primary-dark text-primary-foreground px-8 py-4 rounded-xl font-semibold transition-colors"
               >
                 Track Order
               </motion.button>
@@ -228,7 +228,7 @@ export default function TrackOrderPage() {
                           <div
                             className={`w-12 h-12 rounded-full flex items-center justify-center ${
                               isCompleted
-                                ? 'bg-primary text-foreground'
+                                ? 'bg-primary text-primary-foreground'
                                 : 'bg-border text-muted-subtle'
                             }`}
                           >

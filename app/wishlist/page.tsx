@@ -122,7 +122,7 @@ export default function WishlistPage() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="bg-primary hover:bg-surface-elevated text-foreground px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-semibold transition-colors text-sm"
+                    className="bg-primary hover:bg-primary-dark text-primary-foreground px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-semibold transition-colors text-sm"
                   >
                     Continue Shopping
                   </motion.button>

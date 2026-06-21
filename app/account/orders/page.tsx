@@ -101,7 +101,7 @@ export default function OrdersPage() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-primary hover:bg-surface-elevated text-foreground px-8 py-4 rounded-full font-semibold transition-colors"
+                  className="bg-primary hover:bg-primary-dark text-primary-foreground px-8 py-4 rounded-full font-semibold transition-colors"
                 >
                   Start Shopping
                 </motion.button>
@@ -147,7 +147,7 @@ export default function OrdersPage() {
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          className="flex items-center space-x-2 bg-primary hover:bg-surface-elevated text-foreground px-6 py-3 rounded-full font-semibold transition-colors"
+                          className="flex items-center space-x-2 bg-primary hover:bg-primary-dark text-primary-foreground px-6 py-3 rounded-full font-semibold transition-colors"
                         >
                           <Eye className="w-5 h-5" />
                           <span>View Details</span>

@@ -113,7 +113,7 @@ h1, h2, h3, h4, h5, h6 {
     @apply inline-flex items-center justify-center gap-2 px-7 py-3
            bg-primary text-primary-foreground font-semibold text-sm
            rounded-sm transition-all duration-200
-           hover:bg-primary-dark active:scale-[0.98];
+           hover:bg-primary-dark hover:text-primary-foreground active:scale-[0.98];
   }
 
   .luxury-btn-outline {
@@ -146,6 +146,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @layer utilities {
+  /* Solid primary buttons — always white text on bronze */
+  .btn-solid-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary-dark hover:text-primary-foreground;
+  }
+
   .bg-gradient-brand {
     background: linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-primary-dark)));
   }

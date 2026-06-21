@@ -48,7 +48,7 @@ export default function CustomFormulasPage() {
               </p>
               <div className="space-y-4">
                 <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-primary text-foreground rounded-full flex items-center justify-center font-bold flex-shrink-0">
+                  <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold flex-shrink-0">
                     1
                   </div>
                   <div>
@@ -57,7 +57,7 @@ export default function CustomFormulasPage() {
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-primary text-foreground rounded-full flex items-center justify-center font-bold flex-shrink-0">
+                  <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold flex-shrink-0">
                     2
                   </div>
                   <div>
@@ -66,7 +66,7 @@ export default function CustomFormulasPage() {
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-primary text-foreground rounded-full flex items-center justify-center font-bold flex-shrink-0">
+                  <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold flex-shrink-0">
                     3
                   </div>
                   <div>
@@ -80,7 +80,7 @@ export default function CustomFormulasPage() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-primary hover:bg-surface-elevated text-foreground px-8 py-4 rounded-full font-semibold transition-colors flex items-center space-x-2"
+                className="bg-primary hover:bg-primary-dark text-primary-foreground px-8 py-4 rounded-full font-semibold transition-colors flex items-center space-x-2"
               >
                 <span>Get Started</span>
                 <ArrowRight className="w-5 h-5" />

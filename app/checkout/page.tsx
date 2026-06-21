@@ -183,7 +183,7 @@ export default function CheckoutPage() {
                 <div
                   className={`w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center font-semibold text-sm sm:text-base ${
                     step >= 1
-                      ? 'bg-primary text-foreground'
+                      ? 'bg-primary text-primary-foreground'
                       : 'bg-border text-muted'
                   }`}
                 >
@@ -200,7 +200,7 @@ export default function CheckoutPage() {
                 <div
                   className={`w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center font-semibold text-sm sm:text-base ${
                     step >= 2
-                      ? 'bg-primary text-foreground'
+                      ? 'bg-primary text-primary-foreground'
                       : 'bg-border text-muted'
                   }`}
                 >
@@ -426,7 +426,7 @@ export default function CheckoutPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 bg-primary hover:bg-surface-elevated text-foreground px-4 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4 rounded-full font-semibold transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-1.5 sm:gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+                    className="flex-1 bg-primary hover:bg-primary-dark text-primary-foreground px-4 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4 rounded-full font-semibold transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-1.5 sm:gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
                   >
                     {loading ? (
                       <>

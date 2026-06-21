@@ -298,7 +298,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                   onClick={() => setSelectedCategory('All')}
                   className={`px-3 py-1.5 text-xs font-medium transition-all border ${
                     selectedCategory === 'All'
-                      ? 'bg-primary text-foreground border-primary'
+                      ? 'bg-primary text-primary-foreground border-primary'
                       : 'bg-background text-muted border-border hover:border-primary/50 hover:text-primary'
                   }`}
                 >
@@ -310,7 +310,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                     onClick={() => setSelectedCategory(cat.slug)}
                     className={`px-3 py-1.5 text-xs font-medium transition-all border ${
                       selectedCategory === cat.slug
-                        ? 'bg-primary text-foreground border-primary'
+                        ? 'bg-primary text-primary-foreground border-primary'
                         : 'bg-background text-muted border-border hover:border-primary/50 hover:text-primary'
                     }`}
                   >
@@ -333,7 +333,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                         onClick={() => { setSelectedCategory('All'); setShowMobileCategories(false); }}
                         className={`px-3 py-1.5 text-xs font-medium border ${
                           selectedCategory === 'All'
-                            ? 'bg-primary text-foreground border-primary'
+                            ? 'bg-primary text-primary-foreground border-primary'
                             : 'bg-background text-muted border-border'
                         }`}
                       >
@@ -345,7 +345,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                           onClick={() => { setSelectedCategory(cat.slug); setShowMobileCategories(false); }}
                           className={`px-3 py-1.5 text-xs font-medium border ${
                             selectedCategory === cat.slug
-                              ? 'bg-primary text-foreground border-primary'
+                              ? 'bg-primary text-primary-foreground border-primary'
                               : 'bg-background text-muted border-border'
                           }`}
                         >
@@ -381,7 +381,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                   onClick={() => setSelectedPriceTag(tag.id)}
                   className={`px-3 py-1.5 text-xs font-medium transition-all border ${
                     selectedPriceTag === tag.id
-                      ? 'bg-primary text-foreground border-primary'
+                      ? 'bg-primary text-primary-foreground border-primary'
                       : 'bg-background text-muted border-border hover:border-primary/50 hover:text-primary'
                   }`}
                 >
@@ -406,7 +406,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                         onClick={() => { setSelectedPriceTag(tag.id); setShowMobilePrice(false); }}
                         className={`px-3 py-1.5 text-xs font-medium border ${
                           selectedPriceTag === tag.id
-                            ? 'bg-primary text-foreground border-primary'
+                            ? 'bg-primary text-primary-foreground border-primary'
                             : 'bg-background text-muted border-border'
                         }`}
                       >
@@ -500,7 +500,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                   className={`px-3 py-1.5 rounded-lg font-medium transition-all text-sm ${
                     page === 1 || loading
                       ? 'bg-subtle-strong text-muted-subtle cursor-not-allowed'
-                      : 'bg-primary text-foreground hover:bg-surface-elevated'
+                      : 'bg-primary text-primary-foreground hover:bg-surface-elevated'
                   }`}
                 >
                   <ChevronLeft className="w-4 h-4" />
@@ -521,7 +521,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                         disabled={loading}
                         className={`px-3 py-1.5 rounded-lg font-medium transition-all text-sm ${
                           page === pageNum
-                            ? 'bg-primary text-foreground'
+                            ? 'bg-primary text-primary-foreground'
                             : 'bg-subtle-strong text-foreground hover:bg-border'
                         } disabled:opacity-60`}
                       >
@@ -537,7 +537,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                   className={`px-3 py-1.5 rounded-lg font-medium transition-all text-sm ${
                     page === totalPages || loading
                       ? 'bg-subtle-strong text-muted-subtle cursor-not-allowed'
-                      : 'bg-primary text-foreground hover:bg-surface-elevated'
+                      : 'bg-primary text-primary-foreground hover:bg-surface-elevated'
                   }`}
                 >
                   <ChevronRight className="w-4 h-4" />

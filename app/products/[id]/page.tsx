@@ -7,7 +7,6 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Newsletter from '../../components/Newsletter';
 import ProductCard from '../../components/ProductCard';
-import ProductImageDisclaimer from '../../components/ProductImageDisclaimer';
 import { ShoppingCart, Heart, Minus, Plus, Star, Shield, RotateCcw, CheckCircle, Award, Zap, Sparkles } from 'lucide-react';
 import BrandLoader from '../../components/BrandLoader';
 import ProductPageExtras from '../../components/pages/ProductPageExtras';
@@ -436,7 +435,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   className="w-full h-full object-cover object-center"
                 />
                 {discount > 0 && (
-                  <div className="absolute top-2.5 left-2.5 bg-primary-dark text-foreground px-2.5 py-0.5 rounded-full font-bold text-xs">
+                  <div className="absolute top-2.5 left-2.5 bg-primary-dark text-primary-foreground px-2.5 py-0.5 rounded-full font-bold text-xs">
                     -{discount}%
                   </div>
                 )}
@@ -456,7 +455,6 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   </button>
                 ))}
               </div>
-              <ProductImageDisclaimer className="text-[10px] sm:text-xs pt-0.5" />
             </motion.div>
 
             {/* Product Info */}
@@ -512,7 +510,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   </span>
                 )}
                 {discount > 0 && kgDiscountAmount <= 0 && (
-                  <span className="bg-primary-dark text-foreground px-2 py-0.5 rounded-full text-[11px] font-bold ml-auto">
+                  <span className="bg-primary-dark text-primary-foreground px-2 py-0.5 rounded-full text-[11px] font-bold ml-auto">
                     -{discount}%
                   </span>
                 )}
@@ -627,7 +625,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                         }}
                         className={`relative flex flex-col items-center py-2 px-1 rounded-xl font-medium text-xs sm:text-sm transition-all border-2 ${
                           isCustomWeight
-                            ? 'bg-primary text-foreground border-primary shadow-md'
+                            ? 'bg-primary text-primary-foreground border-primary shadow-md'
                             : 'bg-surface-muted text-foreground border-transparent hover:border-primary/40 hover:bg-surface/50'
                         }`}
                       >
@@ -719,7 +717,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 py-2.5 rounded-lg font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 bg-surface-elevated text-foreground hover:bg-primary"
+                  className="flex-1 py-2.5 rounded-lg font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 bg-surface-elevated text-foreground hover:bg-primary hover:text-primary-foreground"
                   aria-label="Add to cart"
                 >
                   <ShoppingCart className="w-4 h-4" />
@@ -727,7 +725,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </button>
                 <button
                   onClick={handleBuyNow}
-                  className="flex-1 py-2.5 bg-primary text-foreground rounded-lg font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 hover:bg-surface-elevated"
+                  className="flex-1 py-2.5 bg-primary text-primary-foreground rounded-lg font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 hover:bg-primary-dark"
                   aria-label="Buy now"
                 >
                   <Zap className="w-4 h-4" />
