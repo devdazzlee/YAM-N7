@@ -1,13 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ShieldCheck, Truck, Sparkles, HeartHandshake } from 'lucide-react';
+import { ShieldCheck, Truck, Gem, HeartHandshake } from 'lucide-react';
 import { SectionHeader, Reveal } from './motion/reveal';
 
 const benefits = [
   { icon: ShieldCheck, title: 'Authentic Fragrances', description: 'Every perfume is carefully sourced and verified for quality, longevity, and authenticity.' },
   { icon: Truck, title: 'Nationwide Delivery', description: 'Enjoy complimentary shipping on all orders over Rs. 5,000 across Pakistan.' },
-  { icon: Sparkles, title: 'Exclusive Collections', description: 'Join the YAM-N7 community for seasonal launches, limited editions, and member-only offers.' },
+  { icon: Gem, title: 'Exclusive Collections', description: 'Join the YAM-N7 community for seasonal launches, limited editions, and member-only offers.' },
   { icon: HeartHandshake, title: 'Expert Guidance', description: 'Our fragrance specialists are here to help you find the perfect scent for every occasion.' },
 ];
 

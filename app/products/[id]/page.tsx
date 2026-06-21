@@ -7,7 +7,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Newsletter from '../../components/Newsletter';
 import ProductCard from '../../components/ProductCard';
-import { ShoppingCart, Heart, Minus, Plus, Star, Shield, RotateCcw, CheckCircle, Award, Zap, Sparkles } from 'lucide-react';
+import { ShoppingCart, Heart, Minus, Plus, Star, Shield, RotateCcw, CheckCircle, Award, Zap, Clock } from 'lucide-react';
 import BrandLoader from '../../components/BrandLoader';
 import ProductPageExtras from '../../components/pages/ProductPageExtras';
 import { SectionHeader, SectionShell, Stagger, StaggerChild, Reveal } from '../../components/motion/reveal';
@@ -812,7 +812,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 bg-surface-muted/60 border border-border">
-                    <Sparkles className="w-5 h-5 text-primary flex-shrink-0" />
+                    <Clock className="w-5 h-5 text-primary flex-shrink-0" />
                     <div>
                       <p className="text-xs uppercase tracking-luxury text-muted-subtle">Longevity</p>
                       <p className="font-medium text-foreground text-sm">6–10 hours (varies by skin)</p>

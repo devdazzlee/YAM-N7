@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Newsletter from '../components/Newsletter';
 import Services from '../components/Services';
-import { Award, Users, Heart, TrendingUp, Shield, Sparkles, Star, Gift, CheckCircle, Target, Eye, Sprout, Globe, Package } from 'lucide-react';
+import { Award, Users, Heart, TrendingUp, Shield, Star, Gift, CheckCircle, Target, Eye, Sprout, Globe, Package } from 'lucide-react';
 import Link from 'next/link';
 import PageHero from '../components/pages/PageHero';
 import PageCTA from '../components/pages/PageCTA';
@@ -63,7 +63,7 @@ export default function AboutPage() {
       badge: 'Today & Tomorrow',
       title: '1400+ Fragrances & Counting',
       description: 'Today, YAM-N7 stands as a leader in premium perfumes and attars. With over 1400 fragrances and a quarter-century of history, we remain committed to the elegance that started it all.',
-      icon: Sparkles,
+      icon: Award,
     },
   ];
 

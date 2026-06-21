@@ -188,7 +188,7 @@ export default function TestimonialsSection() {
                             className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover ring-2 ring-border shadow-sm"
                           />
                         ) : (
-                          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-primary to-surface-elevated flex items-center justify-center text-foreground font-bold text-sm ring-2 ring-border shadow-sm">
+                          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm ring-2 ring-primary/20 shadow-sm">
                             {review.author_name.charAt(0)}
                           </div>
                         )}

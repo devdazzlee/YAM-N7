@@ -147,7 +147,7 @@ export default function LoginPage() {
                   disabled={isLoading}
                   whileHover={{ scale: isLoading ? 1 : 1.02 }}
                   whileTap={{ scale: isLoading ? 1 : 0.98 }}
-                  className="w-full bg-primary hover:bg-surface-elevated disabled:bg-muted-subtle disabled:cursor-not-allowed text-foreground px-8 py-4 rounded-full font-semibold transition-colors flex items-center justify-center space-x-2"
+                  className="w-full bg-primary hover:bg-primary-dark disabled:bg-muted-subtle disabled:cursor-not-allowed text-primary-foreground px-8 py-4 rounded-full font-semibold transition-colors flex items-center justify-center space-x-2"
                 >
                   {isLoading ? (
                     <>

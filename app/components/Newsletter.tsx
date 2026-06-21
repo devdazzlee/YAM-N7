@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Sparkles } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { Reveal, SectionShell } from './motion/reveal';
 
 export default function Newsletter() {
@@ -16,18 +16,14 @@ export default function Newsletter() {
   };
 
   return (
-    <SectionShell className="!py-16 sm:!py-20 bg-surface-muted relative overflow-hidden">
+    <SectionShell className="!pt-20 !pb-16 sm:!pt-24 sm:!pb-20 bg-surface-muted relative">
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-surface to-surface-muted" />
 
-      <div className="relative max-w-3xl mx-auto text-center">
+      <div className="relative max-w-3xl mx-auto text-center px-2">
         <Reveal>
-          <motion.div
-            animate={{ rotate: [0, 6, -6, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-            className="inline-flex mb-5"
-          >
-            <Sparkles className="w-7 h-7 text-primary" strokeWidth={1.5} />
-          </motion.div>
+          <div className="inline-flex mb-6 sm:mb-7 mt-2 w-12 h-12 border border-primary/25 bg-primary/[0.08] items-center justify-center rounded-sm">
+            <Mail className="w-5 h-5 text-primary" strokeWidth={1.5} />
+          </div>
 
           <p className="luxury-label mb-3">Exclusive Access</p>
           <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-light text-foreground mb-4">

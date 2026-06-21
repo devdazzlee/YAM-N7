@@ -36,9 +36,6 @@
   --color-subtle: 245 241 235;
   --color-subtle-strong: 232 226 216;
 
-  /* Logo display — always contrast with page */
-  --color-logo-bg: 255 255 255;
-
   --navy: 31 27 23;
   --blue: 92 74 50;
   --beige: 237 232 224;
@@ -71,6 +68,13 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.01em;
   color: rgb(var(--color-foreground));
   font-weight: 500;
+}
+
+/* Headings stay readable on bronze / primary surfaces */
+.bg-primary :is(h1, h2, h3, h4, h5, h6),
+.bg-gradient-brand :is(h1, h2, h3, h4, h5, h6),
+.text-primary-foreground :is(h1, h2, h3, h4, h5, h6) {
+  color: rgb(var(--color-on-primary));
 }
 
 ::selection {
@@ -124,10 +128,9 @@ h1, h2, h3, h4, h5, h6 {
            hover:border-primary hover:text-primary active:scale-[0.98];
   }
 
-  /* Logo always sits on white so black+gold PNG reads clearly */
+  /* Logo display — no extra box; sits on page background */
   .logo-pedestal {
-    @apply inline-flex items-center justify-center bg-[rgb(var(--color-logo-bg))]
-           rounded-sm shadow-[0_1px_8px_rgba(31,27,23,0.08)] overflow-hidden;
+    @apply inline-flex items-center justify-center overflow-hidden;
   }
 
   /* Light icon container — visible on ivory theme (never dark-on-dark) */

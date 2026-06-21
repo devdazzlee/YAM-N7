@@ -8,7 +8,7 @@ import Newsletter from '../components/Newsletter';
 import Services from '../components/Services';
 import ProductCard from '../components/ProductCard';
 import Loader from '../components/Loader';
-import { Search, Sparkles } from 'lucide-react';
+import { Search, Leaf } from 'lucide-react';
 import { productApi } from '../../lib/api/productApi';
 import { mapApiProducts, DisplayProduct } from '../../lib/utils/productHelpers';
 
@@ -73,7 +73,7 @@ export default function HerbalRemediesPage() {
             className="text-center max-w-3xl mx-auto"
           >
             <div className="flex items-center justify-center space-x-3 mb-6">
-              <Sparkles className="w-12 h-12" />
+              <Leaf className="w-12 h-12" />
               <h1 className="text-4xl md:text-5xl font-bold">Attars & Body Mists</h1>
             </div>
             <p className="text-xl text-foreground/90">

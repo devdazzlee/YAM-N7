@@ -6,12 +6,12 @@ import { Instagram } from 'lucide-react';
 import { Reveal, SectionHeader, Stagger, StaggerChild, SectionShell } from './motion/reveal';
 
 const POSTS = [
-  { id: 1, label: 'Oud Collection', image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=600&q=80' },
-  { id: 2, label: 'Rose Attar', image: 'https://images.unsplash.com/photo-1595425970375-c98d843f8a0e?w=600&q=80' },
-  { id: 3, label: 'Gift Sets', image: 'https://images.unsplash.com/photo-1615634260167-c8ced89d8f66?w=600&q=80' },
-  { id: 4, label: 'Elite Series', image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=600&q=80' },
-  { id: 5, label: 'New Arrivals', image: 'https://images.unsplash.com/photo-1587017539504-3ccfaa1c1b4f?w=600&q=80' },
-  { id: 6, label: 'Signature Scents', image: 'https://images.unsplash.com/photo-1523293182086-7651a89965937?w=600&q=80' },
+  { id: 1, label: 'Oud Collection', image: '/categories-images/Oud.png' },
+  { id: 2, label: 'Attars', image: '/categories-images/Attars.png' },
+  { id: 3, label: 'Gift Sets', image: '/categories-images/Gift Sets.png' },
+  { id: 4, label: 'Elite Series', image: '/categories-images/Elite.png' },
+  { id: 5, label: 'Premium', image: '/categories-images/Premium.png' },
+  { id: 6, label: 'Signature Scents', image: '/categories-images/YAM N-7 Signature.jpg' },
 ];
 
 export default function SocialShowcaseSection() {
@@ -31,10 +31,10 @@ export default function SocialShowcaseSection() {
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.03 }}
-              className="group relative aspect-square overflow-hidden block"
+              className="group relative aspect-square overflow-hidden block border border-border bg-surface-muted"
             >
               <img
-                src={post.image}
+                src={encodeURI(post.image)}
                 alt={post.label}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
@@ -50,12 +50,12 @@ export default function SocialShowcaseSection() {
         ))}
       </Stagger>
 
-      <Reveal className="text-center mt-10">
+      <Reveal className="text-center mt-10 pt-2">
         <Link
           href="https://instagram.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="luxury-btn-outline inline-flex"
+          className="luxury-btn-outline inline-flex items-center gap-2 px-6 py-3"
         >
           <Instagram className="w-4 h-4" />
           Follow on Instagram

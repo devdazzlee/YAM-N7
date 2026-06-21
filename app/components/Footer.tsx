@@ -33,15 +33,13 @@ export default function Footer() {
         {/* Top: Logo + Description + Social */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 sm:gap-8 mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-border">
           <div className="max-w-lg">
-            <div className="logo-pedestal inline-block px-3 py-2 mb-4">
-              <img
-                src="/YAM-N7-Logo.png"
-                alt="YAM-N7"
-                className="h-14 sm:h-16 w-auto object-contain"
-                width={220}
-                height={80}
-              />
-            </div>
+            <img
+              src="/YAM-N7-Logo.png"
+              alt="YAM-N7"
+              className="h-14 sm:h-16 md:h-[4.5rem] w-auto object-contain mb-4"
+              width={220}
+              height={80}
+            />
             <p className="text-muted-subtle text-xs sm:text-sm leading-relaxed mb-3">
               Your destination for premium perfumes, attars, and luxury fragrances. Crafted with elegance since 2000.
             </p>

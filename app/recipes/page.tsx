@@ -8,7 +8,7 @@ import Newsletter from '../components/Newsletter';
 import Services from '../components/Services';
 import ProductCard from '../components/ProductCard';
 import Loader from '../components/Loader';
-import { Sparkles } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
 import { productApi } from '../../lib/api/productApi';
 import { mapApiProducts, DisplayProduct } from '../../lib/utils/productHelpers';
 
@@ -53,7 +53,7 @@ export default function RecipesPage() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <Sparkles className="w-16 h-16 mx-auto mb-6" />
+            <BookOpen className="w-16 h-16 mx-auto mb-6" />
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Fragrance Guide</h1>
             <p className="text-xl text-foreground/90">
               Discover our premium perfumes and learn how to choose your perfect scent

@@ -7,7 +7,7 @@ import {
   Gem,
   Gift,
   Package,
-  Sparkles,
+  Award,
   Star,
   User,
   type LucideIcon,
@@ -17,7 +17,7 @@ const SLUG_ICON_MAP: Record<string, LucideIcon> = {
   'gift-sets-duo-trio': Gift,
   'gift-sets': Gift,
   zodiac: Star,
-  'yam-n7-signature': Sparkles,
+  'yam-n7-signature': Award,
   premium: Gem,
   elite: Crown,
   men: User,
@@ -36,7 +36,7 @@ export function getCategoryIcon(slug: string, name: string): LucideIcon {
   const n = name.toLowerCase();
   if (n.includes('gift') || n.includes('duo') || n.includes('trio')) return Gift;
   if (n.includes('zodiac')) return Star;
-  if (n.includes('signature')) return Sparkles;
+  if (n.includes('signature')) return Award;
   if (n.includes('premium')) return Gem;
   if (n.includes('elite')) return Crown;
   if (n.includes('kid')) return Baby;

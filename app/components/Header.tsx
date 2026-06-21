@@ -237,25 +237,21 @@ export default function Header() {
                 isScrolled ? 'h-[4.25rem]' : 'h-16 md:h-20'
               }`}
             >
-          {/* Logo — white pedestal so black+gold PNG is always visible */}
+          {/* Logo */}
             <Link href="/" className="flex items-center flex-shrink-0 group">
-            <motion.div
+            <motion.img
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="logo-pedestal px-2 py-1"
-            >
-              <img
-                src="/YAM-N7-Logo.png"
-                alt="YAM-N7"
-                className={`w-auto object-contain transition-[height] duration-300 ease-out ${
-                  isScrolled
-                    ? 'h-9 sm:h-10 md:h-11'
-                    : 'h-12 sm:h-14 md:h-16'
-                }`}
-                width={240}
-                height={72}
-              />
-            </motion.div>
+              src="/YAM-N7-Logo.png"
+              alt="YAM-N7"
+              className={`w-auto object-contain transition-[height] duration-300 ease-out ${
+                isScrolled
+                  ? 'h-11 sm:h-12 md:h-14'
+                  : 'h-14 sm:h-16 md:h-[4.5rem]'
+              }`}
+              width={240}
+              height={72}
+            />
           </Link>
 
           {/* Desktop Navigation — centered */}
@@ -398,8 +394,8 @@ export default function Header() {
                 className="hidden md:flex items-center gap-2 px-4 py-2 bg-surface-muted hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300 group"
               aria-label="Search"
             >
-                <Search className="w-5 h-5 text-muted group-hover:text-foreground transition-colors" />
-                <span className="text-sm font-medium text-muted group-hover:text-foreground hidden lg:block">Search</span>
+                <Search className="w-5 h-5 text-muted group-hover:text-primary-foreground transition-colors" />
+                <span className="text-sm font-medium text-muted group-hover:text-primary-foreground hidden lg:block">Search</span>
             </motion.button>
             
               {/* User Account / Profile */}
@@ -409,7 +405,7 @@ export default function Header() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                  className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-primary to-surface-elevated text-foreground rounded-full transition-all duration-300 hover:shadow-lg group"
+                  className="flex items-center justify-center w-10 h-10 bg-primary text-primary-foreground rounded-full transition-all duration-300 hover:bg-primary-dark hover:text-primary-foreground group"
                   aria-label="Profile"
                 >
                   <User className="w-5 h-5" />
@@ -423,10 +419,10 @@ export default function Header() {
                       exit={{ opacity: 0, y: 10 }}
                       className="absolute right-0 top-full mt-2 w-56 bg-card rounded-xl shadow-2xl overflow-hidden border border-border z-50"
                     >
-                      <div className="p-4 bg-gradient-to-r from-primary to-surface-elevated text-foreground">
+                      <div className="p-4 bg-primary text-primary-foreground">
                         <p className="font-semibold truncate">{user?.email}</p>
                         {user?.name && (
-                          <p className="text-sm text-foreground/90 truncate">{user.name}</p>
+                          <p className="text-sm text-primary-foreground/90 truncate">{user.name}</p>
                         )}
                       </div>
                       <div className="py-2">
@@ -467,7 +463,7 @@ export default function Header() {
                   className="hidden md:flex items-center justify-center w-10 h-10 bg-surface-muted hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300 group"
                   aria-label="Account"
                 >
-                  <User className="w-5 h-5 text-muted group-hover:text-foreground transition-colors" />
+                  <User className="w-5 h-5 text-muted group-hover:text-primary-foreground transition-colors" />
                 </motion.button>
               </Link>
             )}
@@ -480,12 +476,12 @@ export default function Header() {
                   className="relative flex items-center justify-center w-10 h-10 bg-surface-muted hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300 group"
                 aria-label="Wishlist"
               >
-                  <Heart className="w-5 h-5 text-muted group-hover:text-foreground transition-colors" />
+                  <Heart className="w-5 h-5 text-muted group-hover:text-primary-foreground transition-colors" />
                 {wishlistCount > 0 && (
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="absolute -top-1 -right-1 bg-gradient-to-r from-primary-dark to-primary-dark text-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold shadow-lg"
+                      className="absolute -top-1 -right-1 bg-primary-dark text-primary-foreground text-xs rounded-full min-w-5 h-5 px-1 flex items-center justify-center font-bold shadow-lg ring-2 ring-surface"
                     >
                     {wishlistCount > 9 ? '9+' : wishlistCount}
                     </motion.span>
@@ -498,7 +494,7 @@ export default function Header() {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                  className="relative flex items-center justify-center w-10 h-10 bg-gradient-to-r from-primary to-surface-elevated text-foreground rounded-full transition-all duration-300 hover:shadow-lg group"
+                  className="relative flex items-center justify-center w-10 h-10 bg-primary text-primary-foreground rounded-full transition-all duration-300 hover:bg-primary-dark hover:text-primary-foreground group"
                 aria-label="Shopping Cart"
               >
                   <ShoppingCart className="w-5 h-5" />
@@ -506,7 +502,7 @@ export default function Header() {
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="absolute -top-1 -right-1 bg-gradient-to-r from-primary-dark to-primary-dark text-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold shadow-lg"
+                      className="absolute -top-1 -right-1 bg-primary-dark text-primary-foreground text-xs rounded-full min-w-5 h-5 px-1 flex items-center justify-center font-bold shadow-lg ring-2 ring-surface"
                     >
                       {cartCount > 9 ? '9+' : cartCount}
                     </motion.span>
@@ -519,10 +515,10 @@ export default function Header() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={handleSearchClick}
-                className="lg:hidden flex items-center justify-center w-10 h-10 bg-surface-muted hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300"
+                className="lg:hidden flex items-center justify-center w-10 h-10 bg-surface-muted hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300 group"
               aria-label="Search"
             >
-                <Search className="w-5 h-5 text-muted" />
+                <Search className="w-5 h-5 text-muted group-hover:text-primary-foreground transition-colors" />
             </motion.button>
 
               {/* Mobile Menu */}

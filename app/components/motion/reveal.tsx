@@ -204,13 +204,27 @@ type SectionShellProps = {
   className?: string;
   id?: string;
   dark?: boolean;
+  tone?: 'default' | 'primary';
 };
 
-export function SectionShell({ children, className = '', id, dark = false }: SectionShellProps) {
+export function SectionShell({
+  children,
+  className = '',
+  id,
+  dark = false,
+  tone = 'default',
+}: SectionShellProps) {
+  const bgClass =
+    tone === 'primary'
+      ? 'bg-gradient-brand text-primary-foreground'
+      : dark
+        ? 'bg-surface'
+        : 'bg-background';
+
   return (
     <section
       id={id}
-      className={`luxury-section ${dark ? 'bg-surface' : 'bg-background'} ${className}`}
+      className={`luxury-section ${bgClass} ${className}`}
     >
       <div className="luxury-container relative z-10">{children}</div>
     </section>

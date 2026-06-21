@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Crown, Gem, Sparkles, Star } from 'lucide-react';
+import { Crown, Gem, Award, Star } from 'lucide-react';
 import { Reveal, SectionHeader, Stagger, StaggerChild, SectionShell } from './motion/reveal';
 
 const COLLECTIONS = [
@@ -21,7 +21,7 @@ const COLLECTIONS = [
     accent: 'from-champagne/15 to-transparent',
   },
   {
-    icon: Sparkles,
+    icon: Award,
     title: 'Premium Series',
     description: 'Elevated everyday luxury with exceptional longevity and projection.',
     href: '/categories/premium',

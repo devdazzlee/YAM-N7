@@ -16,7 +16,7 @@ import {
   Award,
   Truck,
   ShieldCheck,
-  Sparkles,
+  Gem,
   Search,
   Heart,
   Gift,
@@ -132,7 +132,7 @@ export default function ShopPage() {
             description: 'Every fragrance tested for longevity, projection, and authenticity before it reaches our shelves.',
           },
           {
-            icon: Sparkles,
+            icon: Gem,
             title: 'Curated Collections',
             description: 'From rare oud to designer-inspired scents — organised into lines that make discovery effortless.',
           },

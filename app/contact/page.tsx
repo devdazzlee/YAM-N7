@@ -21,7 +21,6 @@ import {
   CheckCircle,
   MapPin,
   Headphones,
-  Sparkles,
 } from 'lucide-react';
 import { CONTACT, BRAND } from '../../config/storeInfo';
 
@@ -114,7 +113,7 @@ export default function ContactPage() {
         items={[
           { icon: Clock, label: 'Response Time', value: '<24h' },
           { icon: Headphones, label: 'Support', value: 'Expert' },
-          { icon: Sparkles, label: 'Consultations', value: 'Free' },
+          { icon: Headphones, label: 'Consultations', value: 'Free' },
           { icon: MapPin, label: 'Delivery', value: 'Pakistan' },
         ]}
       />
@@ -295,7 +294,7 @@ export default function ContactPage() {
         title="How We Can Help"
         items={[
           {
-            icon: Sparkles,
+            icon: Headphones,
             title: 'Fragrance Consultation',
             description: 'Not sure which scent suits you? Our experts recommend based on occasion, season, and personal preference.',
           },

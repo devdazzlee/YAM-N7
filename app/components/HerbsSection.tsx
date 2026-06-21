@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Leaf } from 'lucide-react';
 import { Reveal, ease, viewport } from './motion/reveal';
 
 interface HerbsCategoryLike {
@@ -65,7 +65,7 @@ export default function HerbsSection({ categories }: HerbsSectionProps) {
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               className="inline-block mb-3"
             >
-              <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-primary-light mx-auto" />
+              <Leaf className="w-8 h-8 sm:w-10 sm:h-10 text-primary-light mx-auto" />
             </motion.div>
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3">
               Explore {featured.name}

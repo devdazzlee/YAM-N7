@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Flower2, Leaf, Droplets, Wind, Shield, Truck, RotateCcw, Sparkles } from 'lucide-react';
+import { Flower2, Leaf, Droplets, Wind, Shield, Truck, RotateCcw } from 'lucide-react';
 import { Reveal, SectionHeader, SectionShell, Stagger, StaggerChild } from '../motion/reveal';
 
 const NOTES = [
@@ -69,7 +69,7 @@ export default function ProductPageExtras({ productName, categoryName }: Product
             <div className="grid grid-cols-2 gap-4">
               {[
                 { icon: Wind, title: 'Pulse Points', desc: 'Wrists, neck, chest' },
-                { icon: Sparkles, title: 'Less is More', desc: '2–3 sprays max' },
+                { icon: Droplets, title: 'Less is More', desc: '2–3 sprays max' },
                 { icon: Shield, title: 'Store Cool', desc: 'Away from sunlight' },
                 { icon: Droplets, title: 'Layer Smart', desc: 'Match your mood' },
               ].map((tip) => {
