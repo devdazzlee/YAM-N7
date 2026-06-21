@@ -1,26 +1,27 @@
 import type { Metadata } from "next";
-import { Poppins, Playfair_Display } from "next/font/google";
+import { DM_Sans, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import CartToast from "./components/CartToast";
 import PageTransition from "./components/PageTransition";
 
-const poppins = Poppins({
+const dmSans = DM_Sans({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant_Garamond({
   variable: "--font-heading",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "YAM-N7 - Premium Perfumes, Attars & Fragrances",
-  description: "Shop luxury perfumes, attars, oud, body mists, and exclusive fragrances. Curated scents crafted for elegance and lasting impression.",
+  title: "YAM-N7 — Luxury Perfumes, Attars & Fragrances",
+  description:
+    "Discover curated luxury perfumes, rare attars, and exclusive oud blends. YAM-N7 — twenty-five years of fragrance excellence.",
 };
 
 export default function RootLayout({
@@ -31,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppins.variable} ${playfair.variable} antialiased`}
+        className={`${dmSans.variable} ${cormorant.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
         <PageTransition />

@@ -7,7 +7,7 @@ import { ArrowRight } from 'lucide-react';
 import ProductCard from './ProductCard';
 import { WebProduct } from '../../lib/api/webApi';
 import { useWebProductListStore } from '../../lib/store/webProductListStore';
-import { SectionHeader, Stagger, StaggerChild, Reveal } from './motion/reveal';
+import { SectionHeader, Stagger, StaggerChild, Reveal, SectionShell } from './motion/reveal';
 
 const BUCKET_KEY = 'home:featured';
 const PAGE_SIZE = 8;
@@ -63,89 +63,71 @@ export default function FeaturedProductsSection({
   const loading = bucket?.loading ?? false;
   const error = bucket?.error ?? null;
 
-  const handleLoadMore = () => loadNextPage(BUCKET_KEY);
-
   return (
-    <section className="py-10 sm:py-12 md:py-14 bg-gradient-to-b from-surface-muted/60 to-background">
-      <div className="container mx-auto px-4">
-        <SectionHeader
-          title="YAM-N7 Signature Scents"
-          subtitle="Discover the bestselling perfumes and exclusive fragrances that define our legacy."
-        />
+    <SectionShell id="featured" className="bg-gradient-to-b from-surface/40 via-background to-background">
+      <SectionHeader
+        accent="House Favourites"
+        title="Featured Perfumes"
+        subtitle="The scents our clients return to — bestselling signatures and timeless classics."
+      />
 
-        {initialLoading && products.length === 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 items-stretch">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={`featured-skel-${i}`} className="bg-card rounded-xl border border-border overflow-hidden">
-                <div className="aspect-[4/3] animate-pulse bg-gradient-to-br from-subtle-strong to-border" />
-                <div className="p-2.5 sm:p-3 space-y-2">
-                  <div className="h-3 sm:h-4 w-4/5 rounded bg-border animate-pulse" />
-                  <div className="h-4 sm:h-5 w-2/5 rounded bg-border animate-pulse" />
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : products.length === 0 ? (
-          <Reveal className="text-center py-12">
-            <p className="text-muted">No featured products available at the moment.</p>
-          </Reveal>
-        ) : (
-          <Stagger className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 items-stretch">
-            {products.map((product) => (
-              <StaggerChild key={product.id} className="h-full">
-                <motion.div
-                  whileHover={{ y: -6 }}
-                  transition={{ type: 'spring', stiffness: 380, damping: 24 }}
-                  className="h-full"
-                >
-                  <ProductCard
-                    id={product.id}
-                    name={product.name}
-                    price={product.price}
-                    originalPrice={product.original_price}
-                    image={product.image || '/Banner-01.jpg'}
-                    category={product.category?.name}
-                    unitName={product.unit?.name}
-                    sales_rate_inc_dis_and_tax={product.price}
-                    sales_rate_exc_dis_and_tax={product.base_price}
-                    selling_price={product.price}
-                  />
-                </motion.div>
-              </StaggerChild>
-            ))}
-          </Stagger>
-        )}
-
-        {error && (
-          <div className="text-center mt-4">
-            <p className="text-red-500 text-xs">{error}</p>
-          </div>
-        )}
-
-        <Reveal className="flex flex-col items-center gap-3 mt-8" delay={0.15}>
-          {hasMore && (
-            <motion.button
-              type="button"
-              onClick={handleLoadMore}
-              disabled={loading}
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-foreground font-semibold text-sm hover:bg-surface-elevated transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-              {loading ? 'Loading…' : 'Load More Products'}
-            </motion.button>
-          )}
-          <Link
-            href="/shop"
-            className="inline-flex items-center space-x-2 text-primary hover:text-foreground font-semibold text-sm group"
-          >
-            <span>View All Products</span>
-            <motion.span whileHover={{ x: 6 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }}>
-              <ArrowRight className="w-5 h-5" />
-            </motion.span>
-          </Link>
+      {initialLoading && products.length === 0 ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={`featured-skel-${i}`} className="luxury-card overflow-hidden">
+              <div className="aspect-[3/4] animate-pulse bg-gradient-to-br from-subtle-strong to-border" />
+            </div>
+          ))}
+        </div>
+      ) : products.length === 0 ? (
+        <Reveal className="text-center py-16">
+          <p className="text-muted font-light">No featured products available at the moment.</p>
         </Reveal>
-      </div>
-    </section>
+      ) : (
+        <Stagger className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 items-stretch">
+          {products.map((product) => (
+            <StaggerChild key={product.id} className="h-full">
+              <ProductCard
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                originalPrice={product.original_price}
+                image={product.image || ''}
+                category={product.category?.name}
+                unitName={product.unit?.name}
+                sales_rate_inc_dis_and_tax={product.price}
+                sales_rate_exc_dis_and_tax={product.base_price}
+                selling_price={product.price}
+              />
+            </StaggerChild>
+          ))}
+        </Stagger>
+      )}
+
+      {error && (
+        <div className="text-center mt-4">
+          <p className="text-red-500 text-xs">{error}</p>
+        </div>
+      )}
+
+      <Reveal className="flex flex-col items-center gap-4 mt-12 sm:mt-14" delay={0.15}>
+        {hasMore && (
+          <motion.button
+            type="button"
+            onClick={() => loadNextPage(BUCKET_KEY)}
+            disabled={loading}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="luxury-btn-outline disabled:opacity-50"
+          >
+            {loading ? 'Loading…' : 'Load More'}
+          </motion.button>
+        )}
+        <Link href="/shop" className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary-light transition-colors tracking-editorial uppercase group">
+          View All Products
+          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+        </Link>
+      </Reveal>
+    </SectionShell>
   );
 }

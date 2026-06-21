@@ -1,31 +1,26 @@
 /**
- * YAM-N7 Design Tokens
- * ────────────────────
- * CANONICAL SOURCE: app/globals.css `:root` CSS variables.
- * This file mirrors values for use in TypeScript (inline styles, etc.).
- * To retheme the site, edit globals.css first, then sync values here.
- *
- * Tailwind classes: bg-background, text-foreground, bg-primary, text-muted, etc.
+ * YAM-N7 Design Tokens — sync with app/globals.css `:root`
  */
 export const theme = {
   colors: {
-    background: '#0a0a0a',
-    foreground: '#f0ebe0',
-    surface: '#141414',
-    surfaceElevated: '#1c1c1c',
-    surfaceMuted: '#222222',
-    primary: '#c5a059',
-    primaryDark: '#8e6d31',
-    primaryLight: '#e8d5a3',
-    onPrimary: '#0a0a0a',
-    muted: '#9a958c',
-    mutedSubtle: '#6b6760',
-    border: '#2e2a26',
-    borderStrong: '#3d3830',
-    card: '#161616',
-    input: '#1a1a1a',
-    ring: '#c5a059',
-    destructive: '#ef4444',
+    background: '#f7f4ef',
+    foreground: '#1f1b17',
+    surface: '#ffffff',
+    surfaceElevated: '#faf7f2',
+    surfaceMuted: '#ede8e0',
+    primary: '#5c4a32',
+    primaryDark: '#3d3228',
+    primaryLight: '#8b7355',
+    onPrimary: '#ffffff',
+    muted: '#6b6258',
+    mutedSubtle: '#8c847a',
+    border: '#ddd6cc',
+    borderStrong: '#c4baac',
+    card: '#ffffff',
+    input: '#ffffff',
+    ring: '#5c4a32',
+    destructive: '#b93a3a',
+    logoBg: '#ffffff',
   },
 } as const;
 

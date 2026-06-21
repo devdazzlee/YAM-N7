@@ -238,25 +238,25 @@ export default function ProductCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      whileHover={{ y: -3 }}
-      transition={{ duration: 0.3 }}
-      className="bg-card rounded-xl border border-border hover:shadow-lg transition-all duration-300 overflow-hidden group h-full flex flex-col"
+      viewport={{ once: true, margin: '-40px' }}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.45 }}
+      className="group luxury-card luxury-card-hover overflow-hidden h-full flex flex-col"
     >
       <Link
         href={`/products/${id}`}
         onMouseEnter={() => prefetchProduct(id)}
         onTouchStart={() => prefetchProduct(id)}
-        className="block shrink-0"
+        className="block shrink-0 relative"
       >
-        <div className="relative aspect-[4/3] overflow-hidden bg-surface-muted">
+        <div className="relative aspect-[3/4] overflow-hidden bg-surface-muted">
           {hasImageSource && !imageFailed && (
             <img
               src={image}
               alt={name}
-              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
               ref={(node) => {
                 imageRef.current = node;
                 if (node?.complete && node.naturalWidth > 0) {
@@ -268,63 +268,86 @@ export default function ProductCard({
             />
           )}
           {(!hasImageSource || imageFailed || !imageLoaded) && (
-            <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-subtle-strong to-border" />
-          )}
-          {discount > 0 && (
-            <div className="absolute top-2 left-2 bg-primary-dark text-foreground px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold">
-              -{discount}%
+            <div className="absolute inset-0 bg-gradient-to-br from-subtle-strong via-surface-muted to-border flex items-center justify-center">
+              <span className="font-heading text-2xl text-primary/30">N7</span>
             </div>
           )}
-          <div className="absolute top-2 right-2 z-10">
+
+          {/* Hover overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+
+          {category && (
+            <span className="absolute top-3 left-3 luxury-label text-[9px] bg-background/60 backdrop-blur-sm px-2 py-1">
+              {category}
+            </span>
+          )}
+
+          {discount > 0 && (
+            <div className="absolute top-3 right-3 bg-primary text-primary-foreground px-2 py-0.5 text-[10px] font-semibold tracking-wide z-10">
+              −{discount}%
+            </div>
+          )}
+
+          <div className={`absolute z-10 ${discount > 0 ? 'top-10 right-3' : 'top-3 right-3'}`}>
             <motion.button
               onClick={toggleWishlist}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className={`w-7 h-7 sm:w-8 sm:h-8 bg-card/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-surface-muted transition-colors ${
-                isInWishlist ? 'bg-destructive/10 hover:bg-destructive/20' : ''
+              className={`w-8 h-8 bg-background/70 backdrop-blur-md flex items-center justify-center transition-colors opacity-0 group-hover:opacity-100 ${
+                isInWishlist ? 'opacity-100 !bg-destructive/20' : ''
               }`}
               aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
             >
-              <Heart className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isInWishlist ? 'text-red-500 fill-red-500' : 'text-muted'}`} />
+              <Heart className={`w-3.5 h-3.5 ${isInWishlist ? 'text-red-400 fill-red-400' : 'text-foreground'}`} />
             </motion.button>
+          </div>
+
+          {/* Quick add on hover */}
+          <div className="absolute bottom-0 inset-x-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-400 ease-out">
+            <button
+              onClick={handleAddToCart}
+              className="w-full py-2.5 bg-primary/95 backdrop-blur-sm text-primary-foreground text-xs font-semibold uppercase tracking-editorial hover:bg-primary transition-colors flex items-center justify-center gap-1.5"
+            >
+              <ShoppingCart className="w-3.5 h-3.5" />
+              Quick Add
+            </button>
           </div>
         </div>
       </Link>
-      <div className="p-2.5 sm:p-3 flex flex-col flex-grow min-h-0">
+
+      <div className="p-4 sm:p-5 flex flex-col flex-grow min-h-0 border-t border-border/40">
         <Link href={`/products/${id}`}>
-          <h3 className="font-semibold text-foreground mb-1.5 sm:mb-2 hover:text-primary transition-colors line-clamp-2 text-xs sm:text-sm leading-snug">
+          <h3 className="font-heading text-base sm:text-lg text-foreground mb-2 hover:text-primary-light transition-colors line-clamp-2 leading-snug font-normal">
             {name}
           </h3>
         </Link>
-        <div className="flex items-center gap-1.5 mb-2.5 sm:mb-3">
-          <span className="text-sm sm:text-base font-bold text-foreground">
+        <div className="flex items-baseline gap-2 mb-4 mt-auto">
+          <span className="font-heading text-lg sm:text-xl text-foreground">
             Rs. {displayPrice.toLocaleString()}
           </span>
           {originalPrice && (
-            <span className="text-[10px] sm:text-xs text-muted-subtle line-through">
+            <span className="text-xs text-muted-subtle line-through">
               Rs. {originalPrice.toLocaleString()}
             </span>
           )}
         </div>
-        <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-1.5 mt-auto">
+        <div className="flex gap-2">
           <button
             onClick={handleAddToCart}
-            className="flex-1 py-2 sm:py-2 rounded-lg flex items-center justify-center font-semibold text-[11px] sm:text-xs transition-colors duration-200 bg-surface-elevated text-foreground hover:bg-primary"
-            aria-label="Add to cart"
+            className="flex-1 py-2 text-[11px] sm:text-xs font-medium uppercase tracking-editorial border border-border/60 text-foreground hover:border-primary hover:text-primary transition-colors duration-300 flex items-center justify-center gap-1"
           >
-            <ShoppingCart className="w-3.5 h-3.5 mr-1 flex-shrink-0" />
-            <span>Add to Cart</span>
+            <ShoppingCart className="w-3.5 h-3.5" />
+            Add
           </button>
           <button
             onClick={handleBuyNow}
-            className="flex-1 py-2 sm:py-2 bg-primary text-foreground rounded-lg flex items-center justify-center hover:bg-surface-elevated transition-colors duration-200 font-semibold text-[11px] sm:text-xs"
-            aria-label="Buy now"
+            className="flex-1 py-2 text-[11px] sm:text-xs font-medium uppercase tracking-editorial bg-primary text-primary-foreground hover:bg-primary-dark transition-colors duration-300 flex items-center justify-center gap-1"
           >
-            <Zap className="w-3.5 h-3.5 mr-1 flex-shrink-0" />
-            <span>Buy Now</span>
+            <Zap className="w-3.5 h-3.5" />
+            Buy
           </button>
         </div>
-        <ProductImageDisclaimer variant="card" className="mt-2.5 sm:mt-3" />
+        <ProductImageDisclaimer variant="card" className="mt-3 opacity-60" />
       </div>
     </motion.div>
   );

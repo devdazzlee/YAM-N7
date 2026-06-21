@@ -3,50 +3,48 @@
 @tailwind utilities;
 
 /*
- * YAM-N7 Dark Luxury Theme
- * ─────────────────────────
- * All site colors live here. Tailwind tokens in tailwind.config.js map to these vars.
- * To retheme: edit this block only (keep tailwind.config.js in sync).
+ * YAM-N7 Boutique Theme
+ * Warm ivory site · logo keeps its own black + gold
+ * UI accent = espresso bronze (NOT logo gold — so the mark stays visible)
  */
 :root {
-  /* Base */
-  --color-background: 10 10 10;
-  --color-foreground: 240 235 224;
+  --color-background: 247 244 239;
+  --color-foreground: 31 27 23;
+  --color-cream: 253 251 247;
+  --color-champagne: 184 150 90;
 
-  /* Surfaces */
-  --color-surface: 20 20 20;
-  --color-surface-elevated: 28 28 28;
-  --color-surface-muted: 34 34 34;
-  --color-card: 22 22 22;
+  --color-surface: 255 255 255;
+  --color-surface-elevated: 250 247 242;
+  --color-surface-muted: 237 232 224;
+  --color-card: 255 255 255;
 
-  /* Brand gold */
-  --color-primary: 197 160 89;
-  --color-primary-dark: 142 109 49;
-  --color-primary-light: 232 213 163;
-  --color-on-primary: 10 10 10;
+  /* UI accent — matte bronze, separate from logo metallics */
+  --color-primary: 92 74 50;
+  --color-primary-dark: 61 50 40;
+  --color-primary-light: 139 115 85;
+  --color-on-primary: 255 255 255;
 
-  /* Text */
-  --color-muted: 154 149 140;
-  --color-muted-subtle: 107 103 96;
+  --color-muted: 107 98 88;
+  --color-muted-subtle: 140 132 122;
 
-  /* UI chrome */
-  --color-border: 46 42 38;
-  --color-border-strong: 61 56 48;
-  --color-input: 26 26 26;
-  --color-ring: 197 160 89;
-  --color-destructive: 239 68 68;
+  --color-border: 221 214 204;
+  --color-border-strong: 196 186 172;
+  --color-input: 255 255 255;
+  --color-ring: 92 74 50;
+  --color-destructive: 185 58 58;
 
-  /* Subtle fills (replaces gray-50/100 on dark) */
-  --color-subtle: 30 30 30;
-  --color-subtle-strong: 38 38 38;
+  --color-subtle: 245 241 235;
+  --color-subtle-strong: 232 226 216;
 
-  /* Legacy aliases — deprecated, use semantic tokens */
-  --navy: 240 235 224;
-  --blue: 197 160 89;
-  --beige: 34 34 34;
-  --green: 28 28 28;
-  --grey: 154 149 140;
-  --accent: 142 109 49;
+  /* Logo display — always contrast with page */
+  --color-logo-bg: 255 255 255;
+
+  --navy: 31 27 23;
+  --blue: 92 74 50;
+  --beige: 237 232 224;
+  --green: 250 247 242;
+  --grey: 107 98 88;
+  --accent: 61 50 40;
 }
 
 * {
@@ -58,8 +56,8 @@
 body {
   background: rgb(var(--color-background));
   color: rgb(var(--color-foreground));
-  font-family: var(--font-body), 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.6;
+  font-family: var(--font-body), 'DM Sans', system-ui, sans-serif;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -69,18 +67,91 @@ html {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading), 'Playfair Display', Georgia, serif;
-  letter-spacing: -0.02em;
+  font-family: var(--font-heading), 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: -0.01em;
   color: rgb(var(--color-foreground));
+  font-weight: 500;
+}
+
+::selection {
+  background: rgb(var(--color-primary) / 0.18);
+  color: rgb(var(--color-foreground));
+}
+
+@layer components {
+  .luxury-container {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  .luxury-section {
+    @apply py-16 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden;
+  }
+
+  .luxury-card {
+    @apply bg-card rounded-xl border border-border
+           shadow-[0_2px_20px_rgba(31,27,23,0.06)] transition-all duration-300;
+  }
+
+  .luxury-card-hover {
+    @apply hover:border-border-strong hover:shadow-[0_8px_32px_rgba(31,27,23,0.1)]
+           hover:-translate-y-0.5;
+  }
+
+  .luxury-glass {
+    @apply bg-surface/90 backdrop-blur-md border border-border shadow-sm;
+  }
+
+  .luxury-divider {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-border-strong to-transparent;
+  }
+
+  .luxury-label {
+    @apply text-[10px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-primary;
+  }
+
+  .luxury-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3
+           bg-primary text-primary-foreground font-semibold text-sm
+           rounded-sm transition-all duration-200
+           hover:bg-primary-dark active:scale-[0.98];
+  }
+
+  .luxury-btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3
+           bg-transparent text-foreground font-medium text-sm
+           rounded-sm border border-border-strong
+           transition-all duration-200
+           hover:border-primary hover:text-primary active:scale-[0.98];
+  }
+
+  /* Logo always sits on white so black+gold PNG reads clearly */
+  .logo-pedestal {
+    @apply inline-flex items-center justify-center bg-[rgb(var(--color-logo-bg))]
+           rounded-sm shadow-[0_1px_8px_rgba(31,27,23,0.08)] overflow-hidden;
+  }
+
+  /* Light icon container — visible on ivory theme (never dark-on-dark) */
+  .luxury-icon-box {
+    @apply flex items-center justify-center rounded-xl
+           border border-primary/20 bg-primary/[0.08];
+  }
+
+  .luxury-icon-box-sm {
+    @apply w-11 h-11 sm:w-12 sm:h-12 luxury-icon-box;
+  }
+
+  .luxury-icon-box-md {
+    @apply w-14 h-14 sm:w-16 sm:h-16 luxury-icon-box;
+  }
 }
 
 @layer utilities {
   .bg-gradient-brand {
-    background: linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-surface-elevated)));
+    background: linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-primary-dark)));
   }
 
   .bg-gradient-brand-h {
-    background: linear-gradient(to right, rgb(var(--color-primary)), rgb(var(--color-surface-elevated)));
+    background: linear-gradient(to right, rgb(var(--color-surface-muted)), rgb(var(--color-surface)));
   }
 
   .bg-gradient-surface {
@@ -88,61 +159,33 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .bg-gradient-card {
-    background: linear-gradient(to bottom right, rgb(var(--color-surface-muted) / 0.5), rgb(var(--color-card)));
+    background: linear-gradient(to bottom right, rgb(var(--color-surface)), rgb(var(--color-surface-muted)));
   }
 
   .text-gradient-gold {
-    background: linear-gradient(135deg, rgb(var(--color-primary-light)), rgb(var(--color-primary)));
+    background: linear-gradient(135deg, rgb(var(--color-primary-dark)), rgb(var(--color-primary)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-}
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+  .shadow-luxury {
+    box-shadow: 0 4px 24px rgba(31, 27, 23, 0.08);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .shadow-luxury-hover {
+    box-shadow: 0 12px 40px rgba(31, 27, 23, 0.12);
   }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out;
 }
 
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
+.scrollbar-hide::-webkit-scrollbar { display: none; }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-.animate-slide-up {
-  animation: slideUp 0.25s ease-out;
-}
+.animate-slide-up { animation: slideUp 0.3s ease-out; }

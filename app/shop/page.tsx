@@ -1,86 +1,167 @@
 'use client';
 
+import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Newsletter from '../components/Newsletter';
-import Services from '../components/Services';
 import ProductBrowser from '../components/ProductBrowser';
-import { Star, Gift, Zap, Sparkles } from 'lucide-react';
+import LuxuryCollectionsSection from '../components/LuxuryCollectionsSection';
+import PageHero from '../components/pages/PageHero';
+import TrustStrip from '../components/pages/TrustStrip';
+import FeatureShowcase from '../components/pages/FeatureShowcase';
+import PageFAQ from '../components/pages/PageFAQ';
+import PageCTA from '../components/pages/PageCTA';
+import { SectionHeader, SectionShell, Reveal } from '../components/motion/reveal';
+import {
+  Award,
+  Truck,
+  ShieldCheck,
+  Sparkles,
+  Search,
+  Heart,
+  Gift,
+  Clock,
+  Layers,
+} from 'lucide-react';
 
 const SHOP_BUCKET = 'shop';
+
+const SHOP_FAQ = [
+  {
+    q: 'Are all fragrances authentic?',
+    a: 'Yes. YAM-N7 sources exclusively from verified suppliers. Every product in our catalog meets our Zero Compromise standard for authenticity and longevity.',
+  },
+  {
+    q: 'How do I choose the right scent?',
+    a: 'Start with a collection that matches your style — woody oud for evening, fresh citrus for daytime, or floral attars for special occasions. Our team is available via WhatsApp for personalised recommendations.',
+  },
+  {
+    q: 'Do you offer gift packaging?',
+    a: 'Many items include premium packaging. Explore our Gift Sets/Duo/Trio collection for ready-to-gift options with elegant presentation.',
+  },
+  {
+    q: 'What is your delivery timeline?',
+    a: 'Orders across Pakistan typically arrive within 3–7 business days depending on your city. Free shipping applies on orders above Rs. 5,000.',
+  },
+];
 
 export default function ShopPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Page Header */}
-      <section className="relative bg-gradient-to-r from-surface-elevated to-primary text-foreground py-8 sm:py-10 md:py-14 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-48 h-48 sm:w-96 sm:h-96 bg-surface rounded-full blur-3xl"></div>
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3">Shop</h1>
-            <p className="text-sm sm:text-base md:text-lg text-foreground/90">Discover our premium collection</p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        label="The Collection"
+        title="Shop Fragrances"
+        subtitle="Over 1,400 curated perfumes, attars, and oud blends — each selected for authenticity, projection, and lasting impression."
+        image="/banners/New-Banner.jpg"
+        imageAlt="YAM-N7 fragrance collection"
+      >
+        <Link href="#products" className="luxury-btn-primary">
+          Browse All Products
+        </Link>
+      </PageHero>
 
-      {/* Filters + product grid + pagination */}
-      <ProductBrowser bucketKey={SHOP_BUCKET} />
+      <TrustStrip
+        items={[
+          { icon: Award, label: 'Years of Craft', value: '25+' },
+          { icon: Layers, label: 'Fragrances', value: '1400+' },
+          { icon: Truck, label: 'Delivery', value: 'Nationwide' },
+          { icon: ShieldCheck, label: 'Authentic', value: '100%' },
+        ]}
+      />
 
-      {/* Banner */}
-      <section className="py-4 sm:py-6 bg-gradient-to-r from-primary-dark to-primary text-foreground">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-5">
-            <div className="flex items-center space-x-3">
-              <Gift className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 flex-shrink-0" />
-              <div>
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold">Special Offer!</h3>
-                <p className="text-foreground/90 text-xs sm:text-sm">Get Rs. 500 off on orders above Rs. 2000</p>
-              </div>
-            </div>
-            <button className="bg-card text-foreground px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-bold text-sm sm:text-base hover:bg-surface transition-colors shadow-xl w-full md:w-auto hover:scale-[1.05] active:scale-[0.95]">
-              Shop Now
-            </button>
-          </div>
-        </div>
-      </section>
+      {/* Main product grid */}
+      <div id="products">
+        <ProductBrowser bucketKey={SHOP_BUCKET} />
+      </div>
 
-      {/* Why Shop With Us */}
-      <section className="py-10 sm:py-14 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8 sm:mb-10">
-            <Sparkles className="w-8 h-8 sm:w-9 sm:h-9 text-primary-dark mx-auto mb-3" />
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3">Why Shop With Us?</h2>
-            <p className="text-muted text-sm sm:text-base max-w-2xl mx-auto">
-              Experience the difference with our premium service
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
-            {[
-              { icon: Zap, title: 'Fast Delivery', desc: 'Quick and reliable shipping' },
-              { icon: Star, title: 'Premium Quality', desc: 'Handpicked products' },
-              { icon: Gift, title: 'Best Prices', desc: 'Competitive pricing' },
-            ].map((item) => {
-              const Icon = item.icon;
-              return (
-                <div key={item.title} className="bg-gradient-to-br from-surface-muted to-background p-5 sm:p-7 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-center">
-                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-surface-elevated rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <Icon className="w-6 h-6 text-foreground" />
-                  </div>
-                  <h3 className="text-base sm:text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                  <p className="text-muted text-xs sm:text-sm">{item.desc}</p>
+      <LuxuryCollectionsSection />
+
+      {/* How to choose */}
+      <SectionShell className="bg-surface-muted/30">
+        <SectionHeader
+          accent="Guide"
+          title="How to Choose Your Signature Scent"
+          subtitle="A simple framework used by our fragrance consultants."
+        />
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {[
+            {
+              step: '01',
+              icon: Search,
+              title: 'Identify the Occasion',
+              desc: 'Daytime calls for fresh, light compositions. Evenings suit deeper oud, amber, and musk profiles.',
+            },
+            {
+              step: '02',
+              icon: Heart,
+              title: 'Know Your Notes',
+              desc: 'Prefer florals, woods, or spices? Filter by collection — Elite, Premium, Zodiac, or Signature.',
+            },
+            {
+              step: '03',
+              icon: Gift,
+              title: 'Try & Discover',
+              desc: 'Start with smaller bottles or gift sets. Build your wardrobe of scents for every season.',
+            },
+          ].map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <Reveal key={item.step} delay={i * 0.1}>
+                <div className="luxury-card p-6 sm:p-7 h-full relative">
+                  <span className="absolute top-4 right-4 font-heading text-3xl text-primary/15">{item.step}</span>
+                  <Icon className="w-5 h-5 text-primary mb-4" strokeWidth={1.5} />
+                  <h3 className="font-heading text-xl text-foreground mb-2">{item.title}</h3>
+                  <p className="text-muted text-sm leading-relaxed">{item.desc}</p>
                 </div>
-              );
-            })}
-          </div>
+              </Reveal>
+            );
+          })}
         </div>
-      </section>
+      </SectionShell>
+
+      <FeatureShowcase
+        accent="The YAM-N7 Promise"
+        title="Why Shop With Us"
+        subtitle="Twenty-five years of fragrance expertise, delivered to your door."
+        items={[
+          {
+            icon: ShieldCheck,
+            title: 'Zero Compromise Quality',
+            description: 'Every fragrance tested for longevity, projection, and authenticity before it reaches our shelves.',
+          },
+          {
+            icon: Sparkles,
+            title: 'Curated Collections',
+            description: 'From rare oud to designer-inspired scents — organised into lines that make discovery effortless.',
+          },
+          {
+            icon: Truck,
+            title: 'Secure Delivery',
+            description: 'Expertly packaged to preserve every note. Free shipping on orders over Rs. 5,000.',
+          },
+          {
+            icon: Clock,
+            title: 'Expert Support',
+            description: 'Reach us via phone, email, or WhatsApp for personalised fragrance recommendations.',
+          },
+        ]}
+        columns={4}
+      />
+
+      <PageFAQ accent="Shop FAQ" title="Shopping Questions" items={SHOP_FAQ} />
+
+      <PageCTA
+        title="Not Sure Where to Start?"
+        subtitle="Speak with our fragrance team — we'll help you find a scent that matches your personality and occasion."
+        primaryHref="/contact"
+        primaryLabel="Get Expert Advice"
+        secondaryHref="/about"
+        secondaryLabel="Our Story"
+      />
 
       <Newsletter />
-      <Services />
       <Footer />
     </div>
   );

@@ -103,8 +103,8 @@ export default function TestimonialsSection() {
   }
 
   return (
-    <section className="py-10 sm:py-12 md:py-14 bg-background overflow-hidden">
-      <div className="container mx-auto px-4">
+    <section className="luxury-section bg-background overflow-hidden">
+      <div className="luxury-container">
         <SectionHeader
           title="What Our Customers Say"
           subtitle="Real reviews from our valued customers"

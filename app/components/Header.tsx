@@ -3,25 +3,14 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { ShoppingCart, Menu, X, Search, User, ChevronDown, Droplets, Flame, Sparkles, Package, Heart, Phone, Mail, MapPin, Box, ArrowRight, FlaskConical, Wind, Gift } from 'lucide-react';
+import { ShoppingCart, Menu, X, Search, User, ChevronDown, Phone, Mail, MapPin, ArrowRight, Sparkles, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { webApi, WebCategory, WebSearchSuggestion } from '../../lib/api/webApi';
 import { cartUtils } from '../../lib/utils/cart';
+import { getCategoryIcon, getCategoryDescription } from '../../lib/utils/categoryIcons';
 import { useWebCategoryStore } from '../../lib/store/webCategoryStore';
 import { useAuthStore } from '../../lib/store/authStore';
 import { CONTACT } from '../../config/storeInfo';
-
-// Icon mapping function - maps category names to icons
-const getCategoryIcon = (categoryName: string) => {
-  const name = categoryName.toLowerCase();
-  if (name.includes('perfume') || name.includes('fragrance') || name.includes('scent')) return Sparkles;
-  if (name.includes('attar') || name.includes('oud')) return Flame;
-  if (name.includes('mist') || name.includes('body')) return Droplets;
-  if (name.includes('essential') || name.includes('oil')) return FlaskConical;
-  if (name.includes('gift') || name.includes('set')) return Gift;
-  if (name.includes('men') || name.includes('women')) return User;
-  return Wind;
-};
 
 export default function Header() {
   const router = useRouter();
@@ -66,8 +55,8 @@ export default function Header() {
           .filter((cat) => cat.is_active)
           .map((cat) => ({
             ...cat,
-            icon: getCategoryIcon(cat.name),
-            description: `Browse our ${cat.name.toLowerCase()} collection`,
+            icon: getCategoryIcon(cat.slug, cat.name),
+            description: getCategoryDescription(cat.name),
           }));
         setCategories(mapped);
       })
@@ -232,7 +221,7 @@ export default function Header() {
       <header className="sticky top-0 z-50">
         {/* Top Bar — slides up and collapses cleanly on scroll (desktop only) */}
         <div
-          className={`hidden md:block overflow-hidden bg-gradient-to-r from-primary to-surface-elevated text-foreground text-xs sm:text-sm transition-[max-height,opacity] duration-300 ease-out ${
+          className={`hidden md:block overflow-hidden bg-surface-muted text-foreground text-xs sm:text-sm border-b border-border transition-[max-height,opacity] duration-300 ease-out ${
             isScrolled ? 'max-h-0 opacity-0' : 'max-h-12 opacity-100'
           }`}
         >
@@ -258,15 +247,15 @@ export default function Header() {
 
         {/* Main navigation — always sticky, compacts on scroll */}
         <div
-          className={`relative border-b transition-[background-color,box-shadow,border-color,padding] duration-300 ease-out ${
+          className={`relative border-b border-border transition-[background-color,box-shadow,padding] duration-300 ease-out ${
             isScrolled
-              ? 'bg-surface/90 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.35)] border-primary/15'
-              : 'bg-surface shadow-sm border-transparent'
+              ? 'bg-surface/95 backdrop-blur-md shadow-[0_2px_16px_rgba(31,27,23,0.06)]'
+              : 'bg-surface shadow-sm'
           }`}
         >
           <div
-            className={`pointer-events-none absolute inset-x-0 bottom-0 h-[2px] origin-center bg-gradient-to-r from-transparent via-primary to-transparent transition-[transform,opacity] duration-300 ease-out ${
-              isScrolled ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
+            className={`pointer-events-none absolute inset-x-0 bottom-0 h-px bg-border transition-opacity duration-300 ${
+              isScrolled ? 'opacity-100' : 'opacity-60'
             }`}
           />
           <div className="container mx-auto px-4 sm:px-6">
@@ -275,20 +264,20 @@ export default function Header() {
                 isScrolled ? 'h-[4.25rem]' : 'h-16 md:h-20'
               }`}
             >
-          {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group flex-shrink-0">
+          {/* Logo — white pedestal so black+gold PNG is always visible */}
+            <Link href="/" className="flex items-center flex-shrink-0 group">
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-                className="relative"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="logo-pedestal px-2 py-1"
             >
               <img
                 src="/YAM-N7-Logo.png"
                 alt="YAM-N7"
-                className={`w-auto max-w-[200px] sm:max-w-[240px] object-contain transition-[height,filter] duration-300 ease-out group-hover:brightness-110 ${
+                className={`w-auto object-contain transition-[height] duration-300 ease-out ${
                   isScrolled
-                    ? 'h-10 sm:h-11 md:h-12'
-                    : 'h-14 sm:h-16 md:h-[72px]'
+                    ? 'h-9 sm:h-10 md:h-11'
+                    : 'h-12 sm:h-14 md:h-16'
                 }`}
                 width={240}
                 height={72}
@@ -342,11 +331,11 @@ export default function Header() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2 }}
-                              className="absolute top-full left-0 mt-2 w-96 bg-card rounded-2xl shadow-2xl overflow-hidden border border-border"
+                              className="absolute top-full left-0 mt-2 w-96 bg-card rounded-xl shadow-luxury overflow-hidden border border-border"
                             >
-                              <div className="p-6 bg-gradient-to-r from-primary via-surface-elevated to-primary">
-                                <h3 className="text-foreground font-bold text-xl">Shop by Category</h3>
-                                <p className="text-foreground/90 text-sm mt-1">Browse our premium collection</p>
+                              <div className="px-5 py-4 bg-primary">
+                                <h3 className="text-primary-foreground font-heading text-xl font-medium">Shop by Category</h3>
+                                <p className="text-primary-foreground/80 text-sm mt-0.5">Browse our premium collection</p>
                             </div>
                               <div className="max-h-96 overflow-y-auto p-2">
                                 {categoriesLoading ? (
@@ -366,10 +355,10 @@ export default function Header() {
                                       initial={{ opacity: 0, x: -10 }}
                                       animate={{ opacity: 1, x: 0 }}
                                       transition={{ delay: index * 0.03 }}
-                                          className="flex items-center gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-surface hover:to-surface-muted transition-all group cursor-pointer"
+                                          className="flex items-center gap-3 p-3 rounded-lg hover:bg-surface-muted transition-all group cursor-pointer"
                                     >
-                                          <div className="w-14 h-14 bg-gradient-to-br from-surface to-primary/10 rounded-xl flex items-center justify-center group-hover:from-primary group-hover:to-surface-elevated transition-all shadow-sm group-hover:shadow-md">
-                                            <Icon className="w-7 h-7 text-foreground group-hover:text-foreground transition-colors" />
+                                          <div className="luxury-icon-box-sm flex-shrink-0 group-hover:border-primary/40 transition-colors">
+                                            <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
                                       </div>
                                       <div className="flex-1">
                                             <h4 className="font-bold text-foreground group-hover:text-primary transition-colors text-base">
@@ -649,7 +638,9 @@ export default function Header() {
                                     }}
                                       className="flex items-center gap-3 px-4 py-2.5 text-foreground/90 hover:text-primary hover:bg-surface-muted rounded-lg transition-colors"
                                   >
-                                      <Icon className="w-5 h-5" />
+                                      <span className="luxury-icon-box w-8 h-8 flex-shrink-0">
+                                        <Icon className="w-4 h-4 text-primary" strokeWidth={1.5} />
+                                      </span>
                                       <span className="font-medium">{category.name}</span>
                                   </Link>
                                 );

@@ -7,48 +7,48 @@ export const ease = [0.22, 1, 0.36, 1] as const;
 
 export const viewport = {
   once: true,
-  margin: '-60px 0px -40px 0px',
-  amount: 0.15,
+  margin: '-80px 0px -60px 0px',
+  amount: 0.12,
 } as const;
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40, filter: 'blur(10px)' },
+  hidden: { opacity: 0, y: 48, filter: 'blur(12px)' },
   visible: {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.65, ease },
+    transition: { duration: 0.75, ease },
   },
 };
 
 export const fadeScale: Variants = {
-  hidden: { opacity: 0, scale: 0.94, y: 28, filter: 'blur(8px)' },
+  hidden: { opacity: 0, scale: 0.92, y: 32, filter: 'blur(10px)' },
   visible: {
     opacity: 1,
     scale: 1,
     y: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.7, ease },
+    transition: { duration: 0.8, ease },
   },
 };
 
 export const slideLeft: Variants = {
-  hidden: { opacity: 0, x: -36, filter: 'blur(6px)' },
+  hidden: { opacity: 0, x: -48, filter: 'blur(8px)' },
   visible: {
     opacity: 1,
     x: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.6, ease },
+    transition: { duration: 0.7, ease },
   },
 };
 
 export const slideRight: Variants = {
-  hidden: { opacity: 0, x: 36, filter: 'blur(6px)' },
+  hidden: { opacity: 0, x: 48, filter: 'blur(8px)' },
   visible: {
     opacity: 1,
     x: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.6, ease },
+    transition: { duration: 0.7, ease },
   },
 };
 
@@ -56,18 +56,18 @@ export const staggerContainer: Variants = {
   hidden: { opacity: 1 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.09, delayChildren: 0.08 },
+    transition: { staggerChildren: 0.1, delayChildren: 0.06 },
   },
 };
 
 export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 36, scale: 0.94, filter: 'blur(8px)' },
+  hidden: { opacity: 0, y: 40, scale: 0.95, filter: 'blur(8px)' },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
     filter: 'blur(0px)',
-    transition: { duration: 0.55, ease },
+    transition: { duration: 0.6, ease },
   },
 };
 
@@ -142,6 +142,7 @@ type SectionHeaderProps = {
   subtitle?: string;
   accent?: string;
   className?: string;
+  align?: 'center' | 'left';
   light?: boolean;
 };
 
@@ -150,25 +151,27 @@ export function SectionHeader({
   subtitle,
   accent,
   className = '',
+  align = 'center',
   light = false,
 }: SectionHeaderProps) {
+  const alignClass = align === 'left' ? 'text-left' : 'text-center';
+  const subtitleClass = align === 'left' ? 'max-w-xl' : 'mx-auto max-w-2xl';
+
   return (
-    <Reveal className={`text-center mb-6 sm:mb-8 md:mb-10 ${className}`}>
+    <Reveal className={`mb-10 sm:mb-12 md:mb-16 ${alignClass} ${className}`}>
       {accent && (
         <motion.p
-          initial={{ opacity: 0, letterSpacing: '0.5em' }}
-          whileInView={{ opacity: 1, letterSpacing: '0.35em' }}
+          initial={{ opacity: 0, letterSpacing: '0.45em' }}
+          whileInView={{ opacity: 1, letterSpacing: '0.28em' }}
           viewport={viewport}
-          transition={{ duration: 0.8, ease }}
-          className={`mb-2 text-xs font-semibold uppercase sm:text-sm ${
-            light ? 'text-primary-light' : 'text-primary-dark'
-          }`}
+          transition={{ duration: 0.9, ease }}
+          className={`luxury-label mb-3 sm:mb-4 ${light ? 'text-primary-light' : ''}`}
         >
           {accent}
         </motion.p>
       )}
       <h2
-        className={`text-xl font-bold sm:text-2xl md:text-3xl mb-2 ${
+        className={`font-heading text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-3 sm:mb-4 ${
           light ? 'text-foreground' : 'text-foreground'
         }`}
       >
@@ -176,8 +179,8 @@ export function SectionHeader({
       </h2>
       {subtitle && (
         <p
-          className={`mx-auto max-w-xl text-xs sm:text-sm md:text-base ${
-            light ? 'text-foreground/85' : 'text-muted'
+          className={`${subtitleClass} text-sm sm:text-base md:text-lg leading-relaxed ${
+            light ? 'text-foreground/80' : 'text-muted'
           }`}
         >
           {subtitle}
@@ -187,9 +190,29 @@ export function SectionHeader({
         initial={{ scaleX: 0, opacity: 0 }}
         whileInView={{ scaleX: 1, opacity: 1 }}
         viewport={viewport}
-        transition={{ duration: 0.7, delay: 0.15, ease }}
-        className="mx-auto mt-4 h-[2px] w-16 origin-center rounded-full bg-gradient-to-r from-transparent via-primary to-transparent sm:w-20"
+        transition={{ duration: 0.8, delay: 0.12, ease }}
+        className={`mt-6 h-px w-20 sm:w-24 origin-center bg-gradient-to-r from-transparent via-primary to-transparent ${
+          align === 'center' ? 'mx-auto' : ''
+        }`}
       />
     </Reveal>
+  );
+}
+
+type SectionShellProps = {
+  children: ReactNode;
+  className?: string;
+  id?: string;
+  dark?: boolean;
+};
+
+export function SectionShell({ children, className = '', id, dark = false }: SectionShellProps) {
+  return (
+    <section
+      id={id}
+      className={`luxury-section ${dark ? 'bg-surface' : 'bg-background'} ${className}`}
+    >
+      <div className="luxury-container relative z-10">{children}</div>
+    </section>
   );
 }

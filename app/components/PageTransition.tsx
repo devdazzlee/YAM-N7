@@ -4,9 +4,9 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import BrandLoader from './BrandLoader';
-import { getLoadingMessage, getPageTitleFromPath } from '../../lib/utils/pageTitles';
 
-const MIN_ROUTE_LOADER_MS = 700;
+const MIN_ROUTE_LOADER_MS = 400;
+const SPLASH_MS = 1600;
 
 function isInternalLink(href: string | null, pathname: string) {
   if (!href) return false;
@@ -30,10 +30,9 @@ export default function PageTransition() {
   const navigationStartedAt = useRef(0);
   const isNavigatingRef = useRef(false);
 
-  const [showSplash, setShowSplash] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
   const [isNavigating, setIsNavigating] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [targetPath, setTargetPath] = useState(pathname);
 
   const clearTimers = useCallback(() => {
     if (progressTimer.current) clearInterval(progressTimer.current);
@@ -49,14 +48,11 @@ export default function PageTransition() {
     isNavigatingRef.current = true;
     navigationStartedAt.current = Date.now();
     setIsNavigating(true);
-    setProgress(15);
+    setProgress(12);
 
     progressTimer.current = setInterval(() => {
-      setProgress((p) => {
-        if (p >= 90) return p;
-        return p + Math.random() * 8 + 2;
-      });
-    }, 140);
+      setProgress((p) => (p >= 92 ? p : p + Math.random() * 10 + 3));
+    }, 120);
   }, [clearTimers]);
 
   const finishNavigation = useCallback(() => {
@@ -70,26 +66,20 @@ export default function PageTransition() {
       isNavigatingRef.current = false;
       setIsNavigating(false);
       setProgress(0);
-    }, wait + 280);
+    }, wait + 180);
   }, [clearTimers]);
 
-  // Initial splash on every full page load
   useEffect(() => {
-    setShowSplash(true);
-    const timer = setTimeout(() => setShowSplash(false), 2400);
+    const timer = setTimeout(() => setShowSplash(false), SPLASH_MS);
     return () => clearTimeout(timer);
   }, []);
 
-  // Show loader immediately when internal links are clicked
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       const anchor = (event.target as HTMLElement).closest('a');
       if (!anchor || anchor.target === '_blank') return;
       const href = anchor.getAttribute('href');
       if (!isInternalLink(href, pathname)) return;
-
-      const nextPath = href!.split('?')[0].split('#')[0];
-      setTargetPath(nextPath);
       startNavigation();
     };
 
@@ -97,15 +87,11 @@ export default function PageTransition() {
     return () => document.removeEventListener('click', handleClick, true);
   }, [pathname, startNavigation]);
 
-  // Finish loader when the route actually changes
   useEffect(() => {
     if (prevPath.current === pathname) return;
     prevPath.current = pathname;
-    setTargetPath(pathname);
 
-    if (!isNavigatingRef.current) {
-      startNavigation();
-    }
+    if (!isNavigatingRef.current) startNavigation();
     finishNavigation();
   }, [pathname, startNavigation, finishNavigation]);
 
@@ -119,31 +105,16 @@ export default function PageTransition() {
             key="splash"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           >
             <BrandLoader variant="splash" />
           </motion.div>
         )}
       </AnimatePresence>
 
-      <AnimatePresence mode="wait">
-        {isNavigating && !showSplash && (
-          <motion.div
-            key="route-loader"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <BrandLoader
-              variant="route"
-              text={getLoadingMessage(targetPath)}
-              pageTitle={getPageTitleFromPath(targetPath)}
-              progress={progress}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isNavigating && !showSplash && (
+        <BrandLoader variant="route" progress={progress} />
+      )}
     </>
   );
 }

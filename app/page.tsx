@@ -7,11 +7,16 @@ import Newsletter from './components/Newsletter';
 import HeroSection from './components/HeroSection';
 import StatsSection from './components/StatsSection';
 import CategoriesSection from './components/CategoriesSection';
+import LuxuryCollectionsSection from './components/LuxuryCollectionsSection';
 import WhyChooseUsSection from './components/WhyChooseUsSection';
 import FeaturedProductsSection from './components/FeaturedProductsSection';
+import ProductShowcaseSection from './components/ProductShowcaseSection';
+import NewArrivalsSection from './components/NewArrivalsSection';
+import BrandStorySection from './components/BrandStorySection';
 import BenefitsSection from './components/BenefitsSection';
-import HerbsSection from './components/HerbsSection';
+import FragranceNotesSection from './components/FragranceNotesSection';
 import TestimonialsSection from './components/TestimonialsSection';
+import SocialShowcaseSection from './components/SocialShowcaseSection';
 import { useWebHomeStore } from '../lib/store/webHomeStore';
 
 export default function Home() {
@@ -20,13 +25,12 @@ export default function Home() {
   const error = useWebHomeStore((s) => s.error);
   const fetch = useWebHomeStore((s) => s.fetch);
 
-  // Single bundled request for everything the homepage needs.
-  // Cached for 5 min via the store; cached for 5 min via Redis on the backend.
   useEffect(() => {
     fetch().catch(() => {});
   }, [fetch]);
 
   const featured = data?.featuredProducts ?? [];
+  const bestSellers = data?.bestSellingProducts ?? [];
   const categories = data?.categories ?? [];
   const categoriesTotal = data?.categories_total ?? categories.length;
   const featuredTotal = data?.featured_total ?? featured.length;
@@ -42,22 +46,32 @@ export default function Home() {
         initialLoading={loading && !data}
         error={error}
       />
-      <WhyChooseUsSection />
+      <LuxuryCollectionsSection />
       <FeaturedProductsSection
         initialProducts={featured}
         initialTotal={featuredTotal}
         initialLoading={loading && !data}
       />
+      <ProductShowcaseSection
+        id="best-sellers"
+        accent="Client Favourites"
+        title="Best Sellers"
+        subtitle="The fragrances our community loves most — proven performers with exceptional reviews."
+        products={bestSellers}
+        loading={loading && !data}
+        viewAllHref="/best-sellers"
+        viewAllLabel="Shop Best Sellers"
+        dark
+      />
+      <NewArrivalsSection />
+      <BrandStorySection />
+      <WhyChooseUsSection />
+      <FragranceNotesSection />
       <BenefitsSection />
-      <HerbsSection categories={categories} />
       <TestimonialsSection />
+      <SocialShowcaseSection />
       <Newsletter />
       <Footer />
-
-      {/* The initial loading skeleton is intentionally inside CategoriesSection /
-          FeaturedProductsSection so the rest of the page (hero, banners, footer)
-          renders immediately without waiting on data. */}
-      {loading && !data && null}
     </div>
   );
 }

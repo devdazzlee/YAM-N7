@@ -98,11 +98,12 @@ export default function CategoriesSection({
   };
 
   return (
-    <section className="py-10 sm:py-12 md:py-14 bg-gradient-to-b from-background to-surface-muted/60">
-      <div className="container mx-auto px-4">
+    <section className="luxury-section bg-gradient-to-b from-background to-surface/30">
+      <div className="luxury-container">
         <SectionHeader
+          accent="Collections"
           title="Shop by Category"
-          subtitle="Explore our wide range of premium products"
+          subtitle="From rare attars to contemporary designer scents — find your olfactory identity."
         />
 
         {initialLoading && categories.length === 0 ? (
@@ -124,13 +125,13 @@ export default function CategoriesSection({
                 >
                   <motion.div whileHover={{ y: -8 }} transition={{ type: 'spring', stiffness: 380, damping: 24 }} className="w-full">
                     <Link href={`/categories/${category.slug}`} className="w-full flex flex-col">
-                      <div className="bg-card rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col h-full border border-border hover:border-primary/40">
+                      <div className="luxury-card luxury-card-hover overflow-hidden cursor-pointer group flex flex-col h-full">
                         <div className="relative aspect-square overflow-hidden flex-shrink-0 bg-subtle-strong">
                           <CategoryImage category={category} />
                           <div className="absolute inset-0 bg-gradient-to-t from-surface-elevated/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                         </div>
-                        <div className="p-2.5 sm:p-3 text-center flex items-center justify-center min-h-[48px] sm:min-h-[52px] flex-grow">
-                          <h3 className="font-semibold text-foreground text-xs sm:text-sm group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+                        <div className="p-3 sm:p-4 text-center flex items-center justify-center min-h-[52px] flex-grow border-t border-border/30">
+                          <h3 className="font-heading text-sm sm:text-base text-foreground group-hover:text-primary-light transition-colors line-clamp-2 leading-tight font-normal">
                             {category.name}
                           </h3>
                         </div>
@@ -155,7 +156,7 @@ export default function CategoriesSection({
                   disabled={pageLoading}
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:bg-surface-elevated transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="luxury-btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {pageLoading ? 'Loading…' : 'Load More'}
                 </motion.button>

@@ -196,18 +196,19 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
 
   return (
     <div ref={rootRef}>
-      {/* Toolbar */}
-      <section className="py-4 sm:py-5 md:py-6 bg-card border-b border-border">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
+      {/* Toolbar — scrolls with page (not sticky) */}
+      <section className="py-5 sm:py-6 bg-surface border-y border-border">
+        <div className="luxury-container">
+          {/* Search + sort row */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-subtle pointer-events-none" />
               <input
                 type="text"
-                placeholder="Search products..."
+                placeholder="Search fragrances..."
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                className="w-full pl-9 pr-8 py-2.5 bg-surface-muted border border-border rounded-xl text-sm text-foreground placeholder:text-muted-subtle focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                className="w-full pl-9 pr-8 py-2.5 bg-background border border-border text-sm text-foreground placeholder:text-muted-subtle focus:outline-none focus:ring-1 focus:ring-primary/40 focus:border-primary transition-all"
               />
               {searchInput && (
                 <button onClick={() => setSearchInput('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-subtle hover:text-muted">
@@ -216,117 +217,106 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
               )}
             </div>
 
-            {/* Sort */}
-            <div className="relative">
-              <button
-                onClick={(e) => { e.stopPropagation(); setShowSortMenu(!showSortMenu); }}
-                className="flex items-center gap-1.5 px-3 py-2.5 bg-surface-muted border border-border rounded-xl text-sm text-foreground hover:border-primary/40 transition-all whitespace-nowrap"
-              >
-                <ArrowUpDown className="w-3.5 h-3.5 text-muted" />
-                <span className="hidden sm:inline text-xs sm:text-sm font-medium">
-                  {SORT_OPTIONS.find((s) => s.id === sortBy)?.label ?? 'Sort'}
-                </span>
-                <ChevronDown className={`w-3.5 h-3.5 text-muted-subtle transition-transform ${showSortMenu ? 'rotate-180' : ''}`} />
-              </button>
-              <AnimatePresence>
-                {showSortMenu && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute right-0 top-full mt-1 w-48 bg-card rounded-xl shadow-lg border border-border py-1 z-40"
-                  >
-                    {SORT_OPTIONS.map((option) => (
-                      <button
-                        key={option.id}
-                        onClick={() => { setSortBy(option.id); setShowSortMenu(false); }}
-                        className={`w-full text-left px-3.5 py-2.5 text-xs sm:text-sm transition-colors ${
-                          sortBy === option.id
-                            ? 'bg-primary/10 text-primary font-semibold'
-                            : 'text-muted hover:bg-surface-muted'
-                        }`}
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              {/* Sort */}
+              <div className="relative flex-1 sm:flex-none">
+                <button
+                  onClick={(e) => { e.stopPropagation(); setShowSortMenu(!showSortMenu); }}
+                  className="flex items-center gap-1.5 w-full sm:w-auto px-3 py-2.5 bg-background border border-border text-sm text-foreground hover:border-primary/40 transition-all whitespace-nowrap"
+                >
+                  <ArrowUpDown className="w-3.5 h-3.5 text-muted" />
+                  <span className="text-xs sm:text-sm font-medium truncate max-w-[140px] sm:max-w-none">
+                    {SORT_OPTIONS.find((s) => s.id === sortBy)?.label ?? 'Sort'}
+                  </span>
+                  <ChevronDown className={`w-3.5 h-3.5 text-muted-subtle transition-transform ${showSortMenu ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {showSortMenu && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 top-full mt-1 w-48 bg-card shadow-lg border border-border py-1 z-20"
+                    >
+                      {SORT_OPTIONS.map((option) => (
+                        <button
+                          key={option.id}
+                          onClick={() => { setSortBy(option.id); setShowSortMenu(false); }}
+                          className={`w-full text-left px-3.5 py-2.5 text-xs sm:text-sm transition-colors ${
+                            sortBy === option.id
+                              ? 'bg-primary/10 text-primary font-semibold'
+                              : 'text-muted hover:bg-surface-muted'
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
-            {/* View Toggle */}
-            <div className="hidden sm:flex items-center gap-0.5 bg-surface-muted border border-border rounded-xl p-0.5">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-lg transition-all duration-200 ${viewMode === 'grid' ? 'bg-card text-foreground shadow-sm' : 'text-muted-subtle hover:text-muted'}`}
-                aria-label="Grid view"
-              >
-                <Grid className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={`p-2 rounded-lg transition-all duration-200 ${viewMode === 'list' ? 'bg-card text-foreground shadow-sm' : 'text-muted-subtle hover:text-muted'}`}
-                aria-label="List view"
-              >
-                <List className="w-4 h-4" />
-              </button>
+              {/* View Toggle */}
+              <div className="hidden sm:flex items-center gap-0.5 bg-background border border-border p-0.5">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`p-2 transition-all duration-200 ${viewMode === 'grid' ? 'bg-primary/10 text-primary' : 'text-muted-subtle hover:text-muted'}`}
+                  aria-label="Grid view"
+                >
+                  <Grid className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`p-2 transition-all duration-200 ${viewMode === 'list' ? 'bg-primary/10 text-primary' : 'text-muted-subtle hover:text-muted'}`}
+                  aria-label="List view"
+                >
+                  <List className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Categories — hidden when the browser is locked to one category. */}
+          {/* Categories — hidden when locked to one category */}
           {!categoryLocked && (
-            <div className="mb-4 sm:mb-5">
+            <div className="mb-4">
               <button
                 onClick={() => setShowMobileCategories(!showMobileCategories)}
-                className="flex items-center gap-2 mb-0 sm:mb-2.5 w-full sm:pointer-events-none"
+                className="flex items-center gap-2 mb-2.5 w-full sm:hidden"
               >
                 <LayoutGrid className="w-4 h-4 text-primary flex-shrink-0" />
-                <h3 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wider">Browse by Category</h3>
+                <span className="text-xs font-medium text-foreground">Categories</span>
                 {selectedCategory !== 'All' && (
-                  <span className="text-[10px] bg-primary text-foreground px-1.5 py-0.5 rounded-full font-semibold">{selectedCategoryLabel}</span>
+                  <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 font-medium">{selectedCategoryLabel}</span>
                 )}
-                <div className="flex-1 h-px bg-border" />
-                {selectedCategory !== 'All' && (
-                  <span
-                    onClick={(e) => { e.stopPropagation(); setSelectedCategory('All'); }}
-                    className="text-[11px] sm:text-xs text-primary hover:text-foreground font-medium transition-colors flex items-center gap-0.5 whitespace-nowrap cursor-pointer"
-                  >
-                    <X className="w-3 h-3" /> Reset
-                  </span>
-                )}
-                <ChevronDown className={`w-4 h-4 text-muted-subtle sm:hidden transition-transform duration-200 flex-shrink-0 ${showMobileCategories ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-muted-subtle ml-auto transition-transform ${showMobileCategories ? 'rotate-180' : ''}`} />
               </button>
 
-              <div className="hidden sm:block relative mt-2.5">
-                <div className="overflow-x-auto scrollbar-hide pb-1">
-                  <div className="flex gap-2 min-w-max">
-                    <button
-                      onClick={() => setSelectedCategory('All')}
-                      className={`px-4 py-2 rounded-full font-medium transition-all duration-200 text-sm whitespace-nowrap border ${
-                        selectedCategory === 'All'
-                          ? 'bg-surface-elevated text-foreground border-surface-elevated shadow-md'
-                          : 'bg-card text-muted border-border hover:border-primary hover:text-primary'
-                      }`}
-                    >
-                      All Products
-                    </button>
-                    {categories.map((cat) => (
-                      <button
-                        key={cat.id}
-                        onClick={() => setSelectedCategory(cat.slug)}
-                        className={`px-4 py-2 rounded-full font-medium transition-all duration-200 text-sm whitespace-nowrap border ${
-                          selectedCategory === cat.slug
-                            ? 'bg-surface-elevated text-foreground border-surface-elevated shadow-md'
-                            : 'bg-card text-muted border-border hover:border-primary hover:text-primary'
-                        }`}
-                      >
-                        {cat.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="absolute right-0 top-0 bottom-1 w-10 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+              <p className="hidden sm:block text-xs text-muted-subtle mb-2">Category</p>
+              <div className="hidden sm:flex flex-wrap gap-2">
+                <button
+                  onClick={() => setSelectedCategory('All')}
+                  className={`px-3 py-1.5 text-xs font-medium transition-all border ${
+                    selectedCategory === 'All'
+                      ? 'bg-primary text-foreground border-primary'
+                      : 'bg-background text-muted border-border hover:border-primary/50 hover:text-primary'
+                  }`}
+                >
+                  All Products
+                </button>
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.slug)}
+                    className={`px-3 py-1.5 text-xs font-medium transition-all border ${
+                      selectedCategory === cat.slug
+                        ? 'bg-primary text-foreground border-primary'
+                        : 'bg-background text-muted border-border hover:border-primary/50 hover:text-primary'
+                    }`}
+                  >
+                    {cat.name}
+                  </button>
+                ))}
               </div>
 
               <AnimatePresence>
@@ -338,13 +328,13 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                     transition={{ duration: 0.2, ease: 'easeInOut' }}
                     className="overflow-hidden sm:hidden"
                   >
-                    <div className="flex flex-wrap gap-2 pt-2.5">
+                    <div className="flex flex-wrap gap-2 pt-1">
                       <button
                         onClick={() => { setSelectedCategory('All'); setShowMobileCategories(false); }}
-                        className={`px-3 py-1.5 rounded-full font-medium transition-all text-xs border ${
+                        className={`px-3 py-1.5 text-xs font-medium border ${
                           selectedCategory === 'All'
-                            ? 'bg-surface-elevated text-foreground border-surface-elevated shadow-md'
-                            : 'bg-card text-muted border-border active:border-primary active:text-primary'
+                            ? 'bg-primary text-foreground border-primary'
+                            : 'bg-background text-muted border-border'
                         }`}
                       >
                         All
@@ -353,10 +343,10 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                         <button
                           key={cat.id}
                           onClick={() => { setSelectedCategory(cat.slug); setShowMobileCategories(false); }}
-                          className={`px-3 py-1.5 rounded-full font-medium transition-all text-xs border ${
+                          className={`px-3 py-1.5 text-xs font-medium border ${
                             selectedCategory === cat.slug
-                              ? 'bg-surface-elevated text-foreground border-surface-elevated shadow-md'
-                              : 'bg-card text-muted border-border active:border-primary active:text-primary'
+                              ? 'bg-primary text-foreground border-primary'
+                              : 'bg-background text-muted border-border'
                           }`}
                         >
                           {cat.name}
@@ -369,38 +359,30 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
             </div>
           )}
 
-          {/* Price */}
+          {/* Price filters */}
           <div className="mb-3">
             <button
               onClick={() => setShowMobilePrice(!showMobilePrice)}
-              className="flex items-center gap-2 mb-0 sm:mb-2.5 w-full sm:pointer-events-none"
+              className="flex items-center gap-2 mb-2.5 w-full sm:hidden"
             >
-              <SlidersHorizontal className="w-4 h-4 text-primary-dark flex-shrink-0" />
-              <h3 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wider">Filter by Price</h3>
+              <SlidersHorizontal className="w-4 h-4 text-primary flex-shrink-0" />
+              <span className="text-xs font-medium text-foreground">Price</span>
               {selectedPriceTag !== 'all' && (
-                <span className="text-[10px] bg-primary-dark text-foreground px-1.5 py-0.5 rounded-full font-semibold">{activeTag.label}</span>
+                <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 font-medium">{activeTag.label}</span>
               )}
-              <div className="flex-1 h-px bg-border" />
-              {selectedPriceTag !== 'all' && (
-                <span
-                  onClick={(e) => { e.stopPropagation(); setSelectedPriceTag('all'); }}
-                  className="text-[11px] sm:text-xs text-primary hover:text-foreground font-medium transition-colors flex items-center gap-0.5 whitespace-nowrap cursor-pointer"
-                >
-                  <X className="w-3 h-3" /> Reset
-                </span>
-              )}
-              <ChevronDown className={`w-4 h-4 text-muted-subtle sm:hidden transition-transform duration-200 flex-shrink-0 ${showMobilePrice ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-4 h-4 text-muted-subtle ml-auto transition-transform ${showMobilePrice ? 'rotate-180' : ''}`} />
             </button>
 
-            <div className="hidden sm:flex flex-wrap gap-2 mt-2.5">
+            <p className="hidden sm:block text-xs text-muted-subtle mb-2">Price range</p>
+            <div className="hidden sm:flex flex-wrap gap-2">
               {PRICE_TAGS.map((tag) => (
                 <button
                   key={tag.id}
                   onClick={() => setSelectedPriceTag(tag.id)}
-                  className={`px-3.5 py-2 rounded-lg font-medium transition-all duration-200 text-xs whitespace-nowrap border ${
+                  className={`px-3 py-1.5 text-xs font-medium transition-all border ${
                     selectedPriceTag === tag.id
-                      ? 'bg-primary text-foreground border-primary shadow-md'
-                      : 'bg-card text-muted border-border hover:border-primary/50 hover:text-primary'
+                      ? 'bg-primary text-foreground border-primary'
+                      : 'bg-background text-muted border-border hover:border-primary/50 hover:text-primary'
                   }`}
                 >
                   {tag.label}
@@ -417,15 +399,15 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                   transition={{ duration: 0.2, ease: 'easeInOut' }}
                   className="overflow-hidden sm:hidden"
                 >
-                  <div className="flex flex-wrap gap-1.5 pt-2.5">
+                  <div className="flex flex-wrap gap-2 pt-1">
                     {PRICE_TAGS.map((tag) => (
                       <button
                         key={tag.id}
                         onClick={() => { setSelectedPriceTag(tag.id); setShowMobilePrice(false); }}
-                        className={`px-3 py-1.5 rounded-lg font-medium transition-all duration-200 text-[11px] whitespace-nowrap border ${
+                        className={`px-3 py-1.5 text-xs font-medium border ${
                           selectedPriceTag === tag.id
-                            ? 'bg-primary text-foreground border-primary shadow-md'
-                            : 'bg-card text-muted border-border active:border-primary active:text-primary'
+                            ? 'bg-primary text-foreground border-primary'
+                            : 'bg-background text-muted border-border'
                         }`}
                       >
                         {tag.label}
@@ -437,20 +419,18 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
             </AnimatePresence>
           </div>
 
-          <div className="flex items-center justify-between pt-3 border-t border-border">
-            <p className="text-muted-subtle text-[11px] sm:text-xs">
-              <span className="font-semibold text-foreground">{total}</span> {total === 1 ? 'product' : 'products'} found
-              {!categoryLocked && selectedCategory !== 'All' && <span> in <span className="text-foreground font-medium">{selectedCategoryLabel}</span></span>}
-              {selectedPriceTag !== 'all' && <span> · <span className="text-primary font-medium">{activeTag.label}</span></span>}
-              {searchQuery && <span> · &ldquo;<span className="text-foreground font-medium">{searchQuery}</span>&rdquo;</span>}
+          <div className="flex items-center justify-between pt-3 border-t border-border/60">
+            <p className="text-muted-subtle text-xs">
+              <span className="font-semibold text-foreground">{total}</span> {total === 1 ? 'product' : 'products'}
+              {!categoryLocked && selectedCategory !== 'All' && <span> in {selectedCategoryLabel}</span>}
             </p>
             {hasActiveFilters && (
               <button
                 onClick={clearAll}
-                className="flex items-center gap-1 px-2.5 py-1 text-[11px] sm:text-xs text-red-500 hover:text-red-700 font-medium whitespace-nowrap transition-colors"
+                className="flex items-center gap-1 px-2 py-1 text-xs text-red-600 hover:text-red-700 font-medium transition-colors"
               >
                 <X className="w-3 h-3" />
-                Clear All
+                Clear filters
               </button>
             )}
           </div>

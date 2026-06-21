@@ -5,15 +5,21 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Newsletter from '../components/Newsletter';
 import Services from '../components/Services';
-import { Award, Users, Heart, TrendingUp, Shield, Sparkles, Star, Gift, CheckCircle, Target, Eye, Sprout, Globe, Package, Leaf } from 'lucide-react';
+import { Award, Users, Heart, TrendingUp, Shield, Sparkles, Star, Gift, CheckCircle, Target, Eye, Sprout, Globe, Package } from 'lucide-react';
 import Link from 'next/link';
+import PageHero from '../components/pages/PageHero';
+import PageCTA from '../components/pages/PageCTA';
+import TrustStrip from '../components/pages/TrustStrip';
+import PageFAQ from '../components/pages/PageFAQ';
+import FragranceNotesSection from '../components/FragranceNotesSection';
+import LuxuryCollectionsSection from '../components/LuxuryCollectionsSection';
 
 export default function AboutPage() {
   const stats = [
-    { icon: Award, number: '25+', label: 'Years of Excellence', color: 'bg-primary-dark' },
-    { icon: Users, number: '10K+', label: 'Happy Customers', color: 'bg-primary' },
-    { icon: Heart, number: '1400+', label: 'Products Available', color: 'bg-surface-elevated' },
-    { icon: TrendingUp, number: '98%', label: 'Satisfaction Rate', color: 'bg-primary' },
+    { icon: Award, number: '25+', label: 'Years of Excellence' },
+    { icon: Users, number: '10K+', label: 'Happy Customers' },
+    { icon: Heart, number: '1400+', label: 'Products Available' },
+    { icon: TrendingUp, number: '98%', label: 'Satisfaction Rate' },
   ];
 
   const milestones = [
@@ -23,8 +29,6 @@ export default function AboutPage() {
       title: 'Our Humble Beginnings',
       description: 'YAM-N7 began as a dedicated perfume store with a simple mission: to bring authentic attars and luxury fragrances to customers across Pakistan.',
       icon: Sprout,
-      iconBg: 'linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-primary-dark)))',
-      badgeBg: 'linear-gradient(90deg, rgb(var(--color-primary)), rgb(var(--color-primary-dark)))',
     },
     {
       year: '2005',
@@ -32,8 +36,6 @@ export default function AboutPage() {
       title: 'Expanding to 200+ Scents',
       description: 'As word of our quality spread, we expanded our collection to include rare oud blends, designer-inspired fragrances, and traditional attars loved across Pakistan.',
       icon: Package,
-      iconBg: 'linear-gradient(135deg, rgb(var(--color-primary-dark)), rgb(var(--color-primary)))',
-      badgeBg: 'linear-gradient(90deg, rgb(var(--color-primary-dark)), rgb(var(--color-primary)))',
     },
     {
       year: '2012',
@@ -41,8 +43,6 @@ export default function AboutPage() {
       title: 'Direct from the Origin',
       description: 'To ensure the YAM-N7 standard, we began sourcing premium oud, essential oils, and fragrance compounds directly from trusted international suppliers.',
       icon: Globe,
-      iconBg: 'linear-gradient(135deg, rgb(var(--color-surface-elevated)), rgb(var(--color-primary)))',
-      badgeBg: 'linear-gradient(90deg, rgb(var(--color-surface-elevated)), rgb(var(--color-primary)))',
     },
     {
       year: '2018',
@@ -50,8 +50,6 @@ export default function AboutPage() {
       title: 'Serving 500+ Fragrances',
       description: 'By 2018, our catalog grew to over 500 fragrances. Every perfume was tested for longevity, projection, and authenticity under our strict Zero Compromise quality policy.',
       icon: Star,
-      iconBg: 'linear-gradient(135deg, rgb(var(--color-primary-dark)), rgb(var(--color-primary)))',
-      badgeBg: 'linear-gradient(90deg, rgb(var(--color-primary-dark)), rgb(var(--color-primary)))',
     },
     {
       year: '2020',
@@ -59,8 +57,6 @@ export default function AboutPage() {
       title: 'Nationwide Delivery',
       description: 'Recognizing demand from customers across Pakistan and abroad, we expanded our online perfume store — bringing 25 years of fragrance expertise to doorsteps nationwide.',
       icon: TrendingUp,
-      iconBg: 'linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-surface-elevated)))',
-      badgeBg: 'linear-gradient(90deg, rgb(var(--color-primary)), rgb(var(--color-surface-elevated)))',
     },
     {
       year: '2026',
@@ -68,8 +64,6 @@ export default function AboutPage() {
       title: '1400+ Fragrances & Counting',
       description: 'Today, YAM-N7 stands as a leader in premium perfumes and attars. With over 1400 fragrances and a quarter-century of history, we remain committed to the elegance that started it all.',
       icon: Sparkles,
-      iconBg: 'linear-gradient(135deg, rgb(var(--color-surface-elevated)), rgb(var(--color-primary)))',
-      badgeBg: 'linear-gradient(90deg, rgb(var(--color-surface-elevated)), rgb(var(--color-primary)))',
     },
   ];
 
@@ -78,19 +72,16 @@ export default function AboutPage() {
       icon: Shield,
       title: 'Quality First',
       description: 'We never compromise. Every fragrance is carefully selected and tested to meet the rigorous YAM-N7 standards for longevity and authenticity.',
-      bgColor: 'bg-primary',
     },
     {
       icon: Heart,
       title: 'Customer Trust',
       description: 'Building long-term relationships through honesty and transparency is the foundation of our 25-year fragrance legacy.',
-      bgColor: 'bg-primary-dark',
     },
     {
       icon: Award,
       title: 'Authenticity',
       description: 'We source exclusively from trusted suppliers, ensuring you receive genuine perfumes, attars, and oud blends every time.',
-      bgColor: 'bg-surface-elevated',
     },
   ];
 
@@ -98,27 +89,26 @@ export default function AboutPage() {
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-surface-elevated via-primary to-surface-elevated text-foreground py-14 sm:py-18 md:py-24 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-56 sm:w-72 h-56 sm:h-72 bg-surface rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-56 sm:w-72 h-56 sm:h-72 bg-primary-dark rounded-full blur-3xl"></div>
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-primary-light mx-auto mb-4" />
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">About YAM-N7</h1>
-            <p className="text-base sm:text-lg md:text-xl text-foreground/90 leading-relaxed max-w-2xl mx-auto">
-              Your trusted destination for luxury perfumes, attars, and exclusive fragrances for over 25 years.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        label="Our Heritage"
+        title="About YAM-N7"
+        subtitle="Your trusted destination for luxury perfumes, attars, and exclusive fragrances — crafting memorable scents since 2000."
+        image="/banners/New-Banner.jpg"
+        imageAlt="YAM-N7 heritage"
+      >
+        <Link href="/shop" className="luxury-btn-primary">
+          Explore Collection
+        </Link>
+      </PageHero>
+
+      <TrustStrip
+        items={[
+          { icon: Award, label: 'Established', value: '2000' },
+          { icon: Users, label: 'Customers', value: '10K+' },
+          { icon: Heart, label: 'Fragrances', value: '1400+' },
+          { icon: TrendingUp, label: 'Satisfaction', value: '98%' },
+        ]}
+      />
 
       {/* Stats Section */}
       <section className="py-10 sm:py-14 md:py-16 bg-gradient-to-b from-background to-surface-muted/50">
@@ -134,12 +124,12 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.08 }}
                   whileHover={{ y: -4 }}
-                  className="text-center p-5 sm:p-7 bg-card rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300"
+                  className="text-center p-5 sm:p-7 luxury-card luxury-card-hover"
                 >
-                  <div className={`w-14 h-14 sm:w-16 sm:h-16 ${stat.color} rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm`}>
-                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-foreground" />
+                  <div className="luxury-icon-box-md mx-auto mb-3">
+                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary" strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1">{stat.number}</h3>
+                  <h3 className="font-heading text-2xl sm:text-3xl md:text-4xl text-foreground mb-1">{stat.number}</h3>
                   <p className="text-muted font-medium text-xs sm:text-sm">{stat.label}</p>
                 </motion.div>
               );
@@ -184,9 +174,8 @@ export default function AboutPage() {
                 transition={{ duration: 0.7 }}
                 className="lg:col-span-2 relative"
               >
-                <div className="relative rounded-2xl overflow-hidden" style={{ background: 'linear-gradient(135deg, rgb(var(--color-surface-elevated)), rgb(var(--color-primary)))' }}>
+                <div className="relative rounded-2xl overflow-hidden border border-border bg-surface-muted/50">
                   <div className="p-8 sm:p-10 text-center">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-card/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
 
                     <motion.div
                       initial={{ scale: 0.8 }}
@@ -252,27 +241,27 @@ export default function AboutPage() {
 
                 {/* Highlight cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
-                  <div className="flex items-center gap-3 bg-surface-muted/50 rounded-xl p-4">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, rgb(var(--color-surface-elevated)), rgb(var(--color-primary)))' }}>
-                      <Shield className="w-5 h-5 text-foreground" />
+                  <div className="flex items-center gap-3 bg-surface-muted/50 rounded-xl p-4 border border-border">
+                    <div className="luxury-icon-box w-10 h-10 flex-shrink-0">
+                      <Shield className="w-5 h-5 text-primary" strokeWidth={1.5} />
                     </div>
                     <div>
                       <p className="font-semibold text-foreground text-sm">Zero Compromise</p>
                       <p className="text-xs text-muted">On scent & quality</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 bg-surface/40 rounded-xl p-4">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #059669, #0D9488)' }}>
-                      <Heart className="w-5 h-5 text-foreground" />
+                  <div className="flex items-center gap-3 bg-surface-muted/50 rounded-xl p-4 border border-border">
+                    <div className="luxury-icon-box w-10 h-10 flex-shrink-0">
+                      <Heart className="w-5 h-5 text-primary" strokeWidth={1.5} />
                     </div>
                     <div>
                       <p className="font-semibold text-foreground text-sm">Family Values</p>
                       <p className="text-xs text-muted">Built on trust</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 bg-primary-dark/5 rounded-xl p-4">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary-dark)), #ea580c)' }}>
-                      <Award className="w-5 h-5 text-foreground" />
+                  <div className="flex items-center gap-3 bg-surface-muted/50 rounded-xl p-4 border border-border">
+                    <div className="luxury-icon-box w-10 h-10 flex-shrink-0">
+                      <Award className="w-5 h-5 text-primary" strokeWidth={1.5} />
                     </div>
                     <div>
                       <p className="font-semibold text-foreground text-sm">Heritage Brand</p>
@@ -320,20 +309,13 @@ export default function AboutPage() {
                   transition={{ duration: 0.4, delay: index * 0.06 }}
                   className="group"
                 >
-                  <div className="bg-card rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-border h-full flex flex-col">
-                    {/* Top row: Icon + Year + Badge */}
+                  <div className="luxury-card luxury-card-hover p-5 sm:p-6 h-full flex flex-col">
                     <div className="flex items-center gap-3 mb-4">
-                      <div
-                        className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform duration-300"
-                        style={{ background: milestone.iconBg }}
-                      >
-                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+                      <div className="luxury-icon-box-sm flex-shrink-0">
+                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" strokeWidth={1.5} />
                       </div>
                       <div>
-                        <span
-                          className="inline-block text-xs font-bold text-foreground px-2.5 py-0.5 rounded-full"
-                          style={{ background: milestone.badgeBg }}
-                        >
+                        <span className="inline-block text-xs font-semibold text-primary-foreground bg-primary px-2.5 py-0.5 rounded-full">
                           {milestone.year}
                         </span>
                         <p className="text-[11px] sm:text-xs text-muted-subtle font-medium mt-1 uppercase tracking-wide">
@@ -388,12 +370,12 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.08 }}
                   whileHover={{ y: -4 }}
-                  className="bg-card rounded-2xl p-6 sm:p-8 text-center shadow-sm hover:shadow-lg transition-all duration-300 border border-border"
+                  className="luxury-card luxury-card-hover p-6 sm:p-8 text-center"
                 >
-                  <div className={`w-14 h-14 sm:w-16 sm:h-16 ${value.bgColor} rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm`}>
-                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-foreground" />
+                  <div className="luxury-icon-box-md mx-auto mb-4">
+                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary" strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">{value.title}</h3>
+                  <h3 className="font-heading text-lg sm:text-xl text-foreground mb-2">{value.title}</h3>
                   <p className="text-sm sm:text-base text-muted leading-relaxed">{value.description}</p>
                 </motion.div>
               );
@@ -426,12 +408,12 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-card rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-border"
+              className="luxury-card luxury-card-hover p-6 sm:p-8"
             >
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-surface-elevated)))' }}>
-                <Target className="w-7 h-7 text-foreground" />
+              <div className="luxury-icon-box-md mb-4">
+                <Target className="w-7 h-7 text-primary" strokeWidth={1.5} />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3">Our Mission</h3>
+              <h3 className="font-heading text-xl sm:text-2xl text-foreground mb-3">Our Mission</h3>
               <p className="text-sm sm:text-base text-muted leading-relaxed">
                 To enrich lives through the art of fragrance — providing access to the finest perfumes, attars, 
                 and oud blends. We are committed to making luxury scents accessible to everyone through excellence and transparency.
@@ -442,12 +424,12 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-card rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-border"
+              className="luxury-card luxury-card-hover p-6 sm:p-8"
             >
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary-dark)), #ea580c)' }}>
-                <Eye className="w-7 h-7 text-foreground" />
+              <div className="luxury-icon-box-md mb-4">
+                <Eye className="w-7 h-7 text-primary" strokeWidth={1.5} />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3">Our Vision</h3>
+              <h3 className="font-heading text-xl sm:text-2xl text-foreground mb-3">Our Vision</h3>
               <p className="text-sm sm:text-base text-muted leading-relaxed">
                 To be Pakistan&apos;s leading perfume house, recognized for our unwavering 
                 commitment to quality and elegance. We envision a future where everyone can 
@@ -487,12 +469,12 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.08 }}
                   whileHover={{ y: -4 }}
-                  className="bg-card p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 text-center border border-border"
+                  className="luxury-card luxury-card-hover p-6 sm:p-8 text-center"
                 >
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-surface-elevated)))' }}>
-                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-foreground" />
+                  <div className="luxury-icon-box-md mx-auto mb-4">
+                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary" strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">{item.title}</h3>
+                  <h3 className="font-heading text-lg sm:text-xl text-foreground mb-2">{item.title}</h3>
                   <p className="text-sm sm:text-base text-muted leading-relaxed">{item.desc}</p>
                 </motion.div>
               );
@@ -500,6 +482,41 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <FragranceNotesSection />
+      <LuxuryCollectionsSection />
+
+      <PageFAQ
+        accent="About YAM-N7"
+        title="Frequently Asked"
+        items={[
+          {
+            q: 'Where is YAM-N7 based?',
+            a: 'YAM-N7 was founded in Karachi, Pakistan in 2000. Today we serve customers nationwide through our online store with secure delivery across the country.',
+          },
+          {
+            q: 'What makes YAM-N7 different?',
+            a: 'Our Zero Compromise policy means every fragrance is tested for authenticity, longevity, and projection before it enters our catalog. With 25+ years of expertise, we curate rather than simply stock.',
+          },
+          {
+            q: 'Do you sell original perfumes and attars?',
+            a: 'Yes. We source exclusively from verified suppliers and stand behind the authenticity of every product we sell.',
+          },
+          {
+            q: 'Can I visit a physical store?',
+            a: 'We operate primarily as an online perfume destination. Contact us via WhatsApp or phone for product availability and personalised recommendations.',
+          },
+        ]}
+      />
+
+      <PageCTA
+        title="Experience YAM-N7"
+        subtitle="Discover over 1,400 fragrances curated with the same passion that started our journey in 2000."
+        primaryHref="/shop"
+        primaryLabel="Shop Fragrances"
+        secondaryHref="/contact"
+        secondaryLabel="Contact Us"
+      />
 
       <Newsletter />
       <Services />

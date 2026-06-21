@@ -30,31 +30,26 @@ export default function WhyChooseUsSection() {
   ];
 
   return (
-    <section className="py-10 sm:py-12 md:py-14 bg-background">
-      <div className="container mx-auto px-4">
+    <section className="luxury-section bg-background">
+      <div className="luxury-container">
         <SectionHeader
-          title="Why Choose YAM-N7?"
           accent="The Heritage Choice"
+          title="Why Choose YAM-N7?"
         />
-        <Stagger className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        <Stagger className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
               <StaggerChild key={feature.title}>
                 <motion.div
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  transition={{ type: 'spring', stiffness: 380, damping: 22 }}
-                  className="bg-gradient-to-br from-surface-muted/50 to-background p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-xl transition-shadow duration-300 text-center border border-transparent hover:border-primary/15 h-full"
+                  whileHover={{ y: -6 }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 26 }}
+                  className="luxury-card luxury-card-hover p-5 sm:p-6 text-center h-full"
                 >
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 18 }}
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm"
-                    style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-surface-elevated)))' }}
-                  >
-                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-                  </motion.div>
-                  <h3 className="text-sm sm:text-base font-bold text-foreground mb-1.5">{feature.title}</h3>
+                  <div className="w-10 h-10 border border-primary/30 flex items-center justify-center mx-auto mb-4">
+                    <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="font-heading text-lg sm:text-xl text-foreground mb-2 font-normal">{feature.title}</h3>
                   <p className="text-muted text-xs sm:text-sm leading-relaxed">{feature.description}</p>
                 </motion.div>
               </StaggerChild>

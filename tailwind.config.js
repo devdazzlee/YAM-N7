@@ -11,6 +11,8 @@ module.exports = {
       colors: {
         background: 'rgb(var(--color-background) / <alpha-value>)',
         foreground: 'rgb(var(--color-foreground) / <alpha-value>)',
+        cream: 'rgb(var(--color-cream) / <alpha-value>)',
+        champagne: 'rgb(var(--color-champagne) / <alpha-value>)',
         surface: {
           DEFAULT: 'rgb(var(--color-surface) / <alpha-value>)',
           elevated: 'rgb(var(--color-surface-elevated) / <alpha-value>)',
@@ -42,7 +44,6 @@ module.exports = {
           DEFAULT: 'rgb(var(--color-subtle) / <alpha-value>)',
           strong: 'rgb(var(--color-subtle-strong) / <alpha-value>)',
         },
-        /* Legacy aliases — map to new tokens */
         navy: 'rgb(var(--color-foreground) / <alpha-value>)',
         blue: 'rgb(var(--color-primary) / <alpha-value>)',
         beige: 'rgb(var(--color-surface-muted) / <alpha-value>)',
@@ -53,6 +54,17 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-body)', 'DM Sans', 'system-ui', 'sans-serif'],
         heading: ['var(--font-heading)', 'Cormorant Garamond', 'Georgia', 'serif'],
+      },
+      letterSpacing: {
+        luxury: '0.28em',
+        editorial: '0.12em',
+      },
+      animation: {
+        float: 'float 4s ease-in-out infinite',
+        shimmer: 'shimmer 3s linear infinite',
+      },
+      backgroundSize: {
+        shimmer: '200% auto',
       },
     },
   },

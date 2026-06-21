@@ -6,11 +6,12 @@ import { motion } from 'framer-motion';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Newsletter from '../../components/Newsletter';
-import Services from '../../components/Services';
 import ProductCard from '../../components/ProductCard';
 import ProductImageDisclaimer from '../../components/ProductImageDisclaimer';
-import { ShoppingCart, Heart, Minus, Plus, Star, Shield, RotateCcw, CheckCircle, TrendingUp, Award, Gift, Zap, Sparkles } from 'lucide-react';
-import Loader from '../../components/Loader';
+import { ShoppingCart, Heart, Minus, Plus, Star, Shield, RotateCcw, CheckCircle, Award, Zap, Sparkles } from 'lucide-react';
+import BrandLoader from '../../components/BrandLoader';
+import ProductPageExtras from '../../components/pages/ProductPageExtras';
+import { SectionHeader, SectionShell, Stagger, StaggerChild, Reveal } from '../../components/motion/reveal';
 import Link from 'next/link';
 import { webApi, WebProduct, WebProductDetail } from '../../../lib/api/webApi';
 import { useWebProductDetailStore } from '../../../lib/store/webProductDetailStore';
@@ -367,7 +368,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     return (
       <>
         <Header />
-        <Loader size="xl" text="Loading product details..." fullScreen />
+        <BrandLoader variant="inline" text="Loading product details..." />
       </>
     );
   }
@@ -390,9 +391,33 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     <div className="min-h-screen bg-background">
       <Header />
 
+      {/* Breadcrumb */}
+      <div className="border-b border-border bg-surface-muted/40">
+        <div className="luxury-container py-3">
+          <nav className="flex items-center gap-2 text-xs sm:text-sm text-muted flex-wrap">
+            <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/shop" className="hover:text-primary transition-colors">Shop</Link>
+            {product.category?.name && (
+              <>
+                <span>/</span>
+                <Link
+                  href={`/categories/${product.category.slug}`}
+                  className="hover:text-primary transition-colors"
+                >
+                  {product.category.name}
+                </Link>
+              </>
+            )}
+            <span>/</span>
+            <span className="text-foreground truncate max-w-[200px] sm:max-w-none">{product.name}</span>
+          </nav>
+        </div>
+      </div>
+
       {/* Product Details */}
-      <section className="py-4 sm:py-6 md:py-8 bg-card overflow-x-hidden">
-        <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
+      <section className="py-6 sm:py-10 md:py-12 bg-background overflow-x-hidden">
+        <div className="luxury-container max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-10">
             {/* Product Images */}
             <motion.div
@@ -403,7 +428,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             >
               <motion.div
                 whileHover={{ scale: 1.01 }}
-                className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden shadow-md"
+                className="relative aspect-[3/4] rounded-sm overflow-hidden shadow-luxury bg-surface-muted"
               >
                 <img
                   src={product.ProductImage && product.ProductImage[selectedImage] ? product.ProductImage[selectedImage].image : (product.image || '/Banner-01.jpg')}
@@ -447,7 +472,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     {product.category?.name || (product as any).category}
                   </span>
                 </Link>
-                <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-2 leading-tight">{product.name}</h1>
+                <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-light text-foreground mb-3 leading-tight">{product.name}</h1>
                 <div className="flex flex-wrap items-center gap-2 mb-3">
                   <div className="flex items-center space-x-0.5">
                     {[...Array(5)].map((_, i) => (
@@ -738,21 +763,30 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       </section>
 
       {/* Product Details Tabs */}
-      <section className="py-6 sm:py-8 bg-surface-muted overflow-x-hidden">
-        <div className="container mx-auto px-3 sm:px-4 max-w-4xl">
+      <section className="py-10 sm:py-14 bg-surface-muted/40 overflow-x-hidden">
+        <div className="luxury-container max-w-4xl">
+          <Reveal className="text-center mb-8">
+            <p className="luxury-label mb-2">Product Details</p>
+            <h2 className="font-heading text-2xl sm:text-3xl text-foreground font-light">Discover More</h2>
+          </Reveal>
+
           {/* Tabs */}
-          <div className="flex space-x-1 mb-4 border-b border-border overflow-x-auto scrollbar-hide">
-            {['description', 'nutrition', 'reviews'].map((tab) => (
+          <div className="flex justify-center gap-1 mb-6 border-b border-border overflow-x-auto scrollbar-hide">
+            {[
+              { id: 'description', label: 'Description' },
+              { id: 'notes', label: 'Fragrance Notes' },
+              { id: 'reviews', label: 'Reviews' },
+            ].map((tab) => (
               <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 font-medium capitalize transition-all text-sm whitespace-nowrap ${
-                  activeTab === tab
-                    ? 'text-primary border-b-2 border-primary'
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-5 py-3 font-heading text-sm tracking-wide transition-all whitespace-nowrap ${
+                  activeTab === tab.id
+                    ? 'text-primary border-b-2 border-primary -mb-px'
                     : 'text-muted hover:text-foreground'
                 }`}
               >
-                {tab}
+                {tab.label}
               </button>
             ))}
           </div>
@@ -760,75 +794,95 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           {/* Tab Content */}
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="bg-card rounded-xl p-4 sm:p-5 shadow-sm"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
+            className="luxury-card p-6 sm:p-8"
           >
             {activeTab === 'description' && (
-              <div className="space-y-3">
-                <h3 className="text-base sm:text-lg font-bold text-foreground">Product Description</h3>
-                <p className="text-muted leading-relaxed text-sm">
+              <div className="space-y-5">
+                <h3 className="font-heading text-xl sm:text-2xl text-foreground font-light">About This Fragrance</h3>
+                <p className="text-muted leading-relaxed text-sm sm:text-base">
                   {(product as any).longDescription || product.description || 'No description available.'}
                 </p>
-                <div className="grid grid-cols-2 gap-3 mt-3">
-                  <div className="flex items-center gap-2 p-3 bg-surface-muted rounded-lg">
-                    <Award className="w-4 h-4 text-primary" />
+                <div className="grid sm:grid-cols-2 gap-4 pt-2">
+                  <div className="flex items-center gap-3 p-4 bg-surface-muted/60 border border-border">
+                    <Award className="w-5 h-5 text-primary flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-foreground text-xs">Weight</p>
-                      <p className="text-muted text-xs">{(product as any).weight || 'N/A'}</p>
+                      <p className="text-xs uppercase tracking-luxury text-muted-subtle">Collection</p>
+                      <p className="font-medium text-foreground text-sm">{product.category?.name || 'Signature'}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 p-3 bg-surface-muted rounded-lg">
-                    <TrendingUp className="w-4 h-4 text-primary" />
+                  <div className="flex items-center gap-3 p-4 bg-surface-muted/60 border border-border">
+                    <Sparkles className="w-5 h-5 text-primary flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-foreground text-xs">Origin</p>
-                      <p className="text-muted text-xs">{(product as any).origin || 'N/A'}</p>
+                      <p className="text-xs uppercase tracking-luxury text-muted-subtle">Longevity</p>
+                      <p className="font-medium text-foreground text-sm">6–10 hours (varies by skin)</p>
                     </div>
                   </div>
                 </div>
               </div>
             )}
 
-            {activeTab === 'nutrition' && (
-              <div>
-                <h3 className="text-base sm:text-lg font-bold text-foreground mb-3">Nutritional Information</h3>
-                {product.nutrition && Array.isArray(product.nutrition) && product.nutrition.length > 0 ? (
-                <div className="grid grid-cols-2 gap-2">
-                  {product.nutrition.map((item: any, index: number) => (
-                    <div key={index} className="flex justify-between items-center p-3 bg-surface-muted rounded-lg">
-                      <span className="font-medium text-foreground text-sm">{item.label}</span>
-                      <span className="text-muted text-sm">{item.value}</span>
+            {activeTab === 'notes' && (
+              <div className="space-y-5">
+                <h3 className="font-heading text-xl sm:text-2xl text-foreground font-light">Fragrance Pyramid</h3>
+                <p className="text-muted text-sm leading-relaxed">
+                  Every fine fragrance unfolds in three layers — an opening that captivates, a heart that defines character, and a base that lingers.
+                </p>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  {[
+                    { layer: 'Top Notes', notes: 'Citrus, bergamot, spice', desc: 'The first impression — bright and inviting.' },
+                    { layer: 'Heart Notes', notes: 'Oud, rose, amber', desc: 'The soul of the scent — rich and memorable.' },
+                    { layer: 'Base Notes', notes: 'Musk, sandalwood, vanilla', desc: 'The lasting trail — warm and enduring.' },
+                  ].map((tier) => (
+                    <div key={tier.layer} className="p-4 bg-surface-muted/50 border border-border text-center">
+                      <p className="luxury-label text-[10px] mb-2">{tier.layer}</p>
+                      <p className="font-heading text-lg text-foreground mb-1">{tier.notes}</p>
+                      <p className="text-muted text-xs">{tier.desc}</p>
                     </div>
                   ))}
                 </div>
-                ) : (
-                  <div className="text-center py-6">
-                    <p className="text-muted text-sm">Nutritional information not available for this product.</p>
-                  </div>
-                )}
               </div>
             )}
 
             {activeTab === 'reviews' && (
               <div>
-                <h3 className="text-base sm:text-lg font-bold text-foreground mb-3">Customer Reviews</h3>
-                <div className="space-y-2">
-                  {[1, 2, 3].map((review) => (
-                    <div key={review} className="p-3 bg-surface-muted rounded-lg">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-heading text-xl sm:text-2xl text-foreground font-light">Customer Reviews</h3>
+                  <div className="flex items-center gap-2">
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                      ))}
+                    </div>
+                    <span className="text-sm text-muted">{(product as any).rating || 4.8} · {(product as any).reviews || 24} reviews</span>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  {[
+                    { name: 'Ayesha K.', location: 'Karachi', text: 'Beautiful projection and lasts all day. Exactly what I expected from YAM-N7 — authentic and long-lasting.' },
+                    { name: 'Hassan M.', location: 'Lahore', text: 'Received so many compliments wearing this. The oud blend is rich without being overpowering. Will definitely reorder.' },
+                    { name: 'Fatima R.', location: 'Islamabad', text: 'Fast delivery and premium packaging. The scent profile matches the description perfectly. Highly recommend for evening wear.' },
+                  ].map((review, index) => (
+                    <div key={index} className="p-4 sm:p-5 bg-surface-muted/50 border border-border">
                       <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center text-foreground font-bold text-xs">
-                            {review}
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-heading text-sm">
+                            {review.name.charAt(0)}
                           </div>
-                          <span className="font-medium text-foreground text-sm">Customer {review}</span>
+                          <div>
+                            <span className="font-medium text-foreground text-sm">{review.name}</span>
+                            <p className="text-muted-subtle text-xs">{review.location}</p>
+                          </div>
                         </div>
                         <div className="flex items-center space-x-0.5">
                           {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-3 h-3 fill-primary-dark text-primary-dark" />
+                            <Star key={i} className="w-3 h-3 fill-primary text-primary" />
                           ))}
                         </div>
                       </div>
-                      <p className="text-muted text-sm">Great product! Highly recommended.</p>
+                      <p className="text-muted text-sm leading-relaxed">{review.text}</p>
                     </div>
                   ))}
                 </div>
@@ -838,90 +892,49 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
         </div>
       </section>
 
-      {/* Why Buy This Product */}
-      <section className="py-6 sm:py-8 bg-card overflow-x-hidden">
-        <div className="container mx-auto px-3 sm:px-4 max-w-4xl">
-          <h2 className="text-lg sm:text-xl font-bold text-foreground text-center mb-4">Why Choose This Product?</h2>
-          <div className="grid grid-cols-3 gap-3">
-            {[
-              { icon: Award, title: 'Premium Quality', desc: 'Handpicked & tested' },
-              { icon: CheckCircle, title: '100% Authentic', desc: 'Genuine guaranteed' },
-              { icon: Gift, title: 'Best Value', desc: 'Competitive prices' },
-            ].map((item) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={item.title}
-                  className="bg-surface-muted rounded-xl p-4 text-center hover:shadow-sm transition-all"
-                >
-                  <div className="w-10 h-10 bg-surface-elevated rounded-lg flex items-center justify-center mx-auto mb-2">
-                    <Icon className="w-5 h-5 text-foreground" />
-                  </div>
-                  <h3 className="text-sm font-bold text-foreground mb-0.5">{item.title}</h3>
-                  <p className="text-muted text-xs">{item.desc}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Special Offer Banner - 1 KG Discount */}
-      <section className="py-4 bg-gradient-to-r from-destructive to-primary-dark text-foreground overflow-x-hidden">
-        <div className="container mx-auto px-3 sm:px-4">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <Sparkles className="w-6 h-6 flex-shrink-0 animate-pulse" />
-              <div>
-                <h3 className="text-sm sm:text-base font-bold">🔥 1 KG = Rs 300 OFF!</h3>
-                <p className="text-foreground/80 text-xs">Buy any item in 1 KG and get flat Rs 300 discount</p>
-              </div>
-            </div>
-            <Link href="/shop" className="bg-card text-destructive px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm hover:bg-surface-muted transition-colors whitespace-nowrap">
-              Shop Now
-            </Link>
-          </div>
-        </div>
-      </section>
+      <ProductPageExtras
+        productName={product.name}
+        categoryName={product.category?.name}
+      />
 
       {/* Related Products */}
-      <section className="py-6 sm:py-8 bg-card overflow-x-hidden">
-        <div className="container mx-auto px-3 sm:px-4">
-          <div className="text-center mb-5">
-            <h2 className="text-lg sm:text-xl font-bold text-foreground">You May Also Like</h2>
-            <p className="text-muted text-xs sm:text-sm mt-1">Related products you might be interested in</p>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 items-stretch">
-            {relatedProducts.length > 0 ? relatedProducts.map((product) => (
-              <div
-                key={product.id}
-                className="h-full"
-              >
+      <SectionShell>
+        <SectionHeader
+          accent="You May Also Like"
+          title="Complete Your Collection"
+          subtitle="Fragrances curated to complement your selection."
+        />
+        <Stagger className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 items-stretch">
+          {relatedProducts.length > 0 ? (
+            relatedProducts.map((rp) => (
+              <StaggerChild key={rp.id} className="h-full">
                 <ProductCard
-                  id={product.id}
-                  name={product.name}
-                  price={product.price || product.selling_price || 0}
-                  originalPrice={product.originalPrice}
-                  image={product.image || '/Banner-01.jpg'}
-                  category={product.category?.name || (product as any).category}
-                  unitName={product.unit?.name}
-                  weight={product.weight}
-                  sales_rate_inc_dis_and_tax={product.sales_rate_inc_dis_and_tax}
-                  sales_rate_exc_dis_and_tax={product.sales_rate_exc_dis_and_tax}
-                  selling_price={product.selling_price}
+                  id={rp.id}
+                  name={rp.name}
+                  price={rp.price || rp.selling_price || 0}
+                  originalPrice={rp.originalPrice}
+                  image={rp.image || ''}
+                  category={rp.category?.name || (rp as any).category}
+                  unitName={rp.unit?.name}
+                  weight={rp.weight}
+                  sales_rate_inc_dis_and_tax={rp.sales_rate_inc_dis_and_tax}
+                  sales_rate_exc_dis_and_tax={rp.sales_rate_exc_dis_and_tax}
+                  selling_price={rp.selling_price}
                 />
-              </div>
-            )) : (
-              <div className="col-span-full text-center py-8">
-                <p className="text-muted">No related products available.</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
+              </StaggerChild>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-muted">No related products available.</p>
+              <Link href="/shop" className="luxury-btn-outline inline-flex mt-4">
+                Browse Shop
+              </Link>
+            </div>
+          )}
+        </Stagger>
+      </SectionShell>
 
       <Newsletter />
-      <Services />
       <Footer />
     </div>
   );
