@@ -52,8 +52,9 @@ module.exports = {
         accent: 'rgb(var(--color-primary-dark) / <alpha-value>)',
       },
       fontFamily: {
-        sans: ['var(--font-body)', 'DM Sans', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-body)', 'Poppins', 'system-ui', 'sans-serif'],
         heading: ['var(--font-heading)', 'Cormorant Garamond', 'Georgia', 'serif'],
+        display: ['var(--font-display)', 'Playfair Display', 'Georgia', 'serif'],
       },
       letterSpacing: {
         luxury: '0.28em',

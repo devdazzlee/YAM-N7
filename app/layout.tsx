@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { DM_Sans, Cormorant_Garamond } from "next/font/google";
+import { Poppins, Cormorant_Garamond, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import CartToast from "./components/CartToast";
 import PageTransition from "./components/PageTransition";
+import AnnouncementBar from "./components/AnnouncementBar";
+import BrandPreloader from "./components/BrandPreloader";
 
-const dmSans = DM_Sans({
+const poppins = Poppins({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -15,6 +17,13 @@ const cormorant = Cormorant_Garamond({
   variable: "--font-heading",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -32,9 +41,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${dmSans.variable} ${cormorant.variable} font-sans antialiased`}
+        className={`${poppins.variable} ${cormorant.variable} ${playfair.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
+        <BrandPreloader />
+        <AnnouncementBar />
         <PageTransition />
         {children}
         <CartToast />
@@ -42,3 +53,4 @@ export default function RootLayout({
     </html>
   );
 }
+

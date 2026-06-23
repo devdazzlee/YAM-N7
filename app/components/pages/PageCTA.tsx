@@ -25,7 +25,7 @@ export default function PageCTA({
   return (
     <SectionShell tone="primary" className="!py-16 sm:!py-20">
       <Reveal className="max-w-3xl mx-auto text-center">
-        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-light mb-4 text-primary-foreground">{title}</h2>
+        <h2 className="font-display tracking-luxury uppercase text-2xl sm:text-3xl md:text-4xl font-normal mb-4 text-primary-foreground">{title}</h2>
         <p className="text-primary-foreground/90 text-sm sm:text-base leading-relaxed mb-8 max-w-xl mx-auto">
           {subtitle}
         </p>

@@ -1,148 +1,621 @@
 'use client';
 
 import Link from 'next/link';
+import { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
-import { useRef } from 'react';
-import { ease } from './motion/reveal';
 
+/* ─── ease curves ──────────────────────────────────────────────── */
+const SILK   = [0.25, 0.46, 0.45, 0.94] as const;
+const REVEAL = [0.16, 1,    0.3,  1   ] as const;
+
+/* ─── gold particle pool ───────────────────────────────────────── */
+const PARTICLES = Array.from({ length: 28 }, (_, i) => ({
+  id: i,
+  x:  Math.random() * 100,
+  y:  Math.random() * 100,
+  size: Math.random() * 3 + 1,
+  delay: Math.random() * 4,
+  dur:   Math.random() * 6 + 5,
+  opacity: Math.random() * 0.55 + 0.15,
+}));
+
+/* ─── smoke layers ─────────────────────────────────────────────── */
+const SMOKE = [
+  { x: '30%', y: '55%', scale: 1.4, delay: 0,   dur: 14, blur: 60 },
+  { x: '60%', y: '45%', scale: 1.1, delay: 3,   dur: 18, blur: 48 },
+  { x: '50%', y: '60%', scale: 1.6, delay: 6,   dur: 16, blur: 70 },
+];
+
+/* ══════════════════════════════════════════════════════════════ */
 export default function HeroSection() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '8%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const sectionRef = useRef<HTMLElement>(null);
+  const canvasRef  = useRef<HTMLCanvasElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const imageY   = useTransform(scrollYProgress, [0, 1], ['0%',  '22%']);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%',  '10%']);
+  const overallO = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
+  /* ── canvas particle field ── */
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let raf: number;
+    let t = 0;
+
+    const dots: { x: number; y: number; vx: number; vy: number; r: number; o: number; base: number }[] = [];
+    const resize = () => {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (let i = 0; i < 55; i++) {
+      dots.push({
+        x:    Math.random() * canvas.width,
+        y:    Math.random() * canvas.height,
+        vx:   (Math.random() - 0.5) * 0.18,
+        vy:   -(Math.random() * 0.22 + 0.06),
+        r:    Math.random() * 1.4 + 0.4,
+        o:    Math.random() * 0.5 + 0.15,
+        base: Math.random() * 0.5 + 0.15,
+      });
+    }
+
+    const draw = () => {
+      t += 0.012;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      dots.forEach((d) => {
+        d.x += d.vx;
+        d.y += d.vy;
+        if (d.y < -4)  { d.y = canvas.height + 4; d.x = Math.random() * canvas.width; }
+        if (d.x < -4)  d.x = canvas.width  + 4;
+        if (d.x > canvas.width + 4) d.x = -4;
+
+        const pulse = d.base + Math.sin(t + d.r * 3) * 0.18;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(200,164,107,${Math.min(pulse, 0.7)})`;
+        ctx.fill();
+      });
+
+      raf = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', resize);
+    };
+  }, []);
 
   return (
     <section
-      ref={ref}
-      className="relative min-h-[85vh] sm:min-h-[80vh] flex items-center overflow-hidden bg-background border-b border-border"
+      ref={sectionRef}
+      style={{
+        position: 'relative',
+        width: '100%',
+        minHeight: '100svh',
+        display: 'flex',
+        alignItems: 'center',
+        overflow: 'hidden',
+        background: '#000000',
+      }}
     >
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-surface via-background to-surface-muted/40" />
 
-      <div className="luxury-container relative z-10 w-full py-16 sm:py-20 lg:py-24">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          {/* Editorial copy */}
+      {/* ═══ BACKGROUND LAYER STACK ═══════════════════════════════ */}
+
+      {/* 1 — hero image with parallax */}
+      <motion.div
+        style={{ y: imageY }}
+        initial={{ opacity: 0, scale: 1.08 }}
+        animate={{ opacity: 1, scale: 1.0 }}
+        transition={{ duration: 2.2, ease: SILK }}
+        aria-hidden
+        className="absolute inset-0"
+      >
+        <img
+          src="/banners/New-Banner.jpg"
+          alt=""
+          style={{
+            width: '100%',
+            height: '115%',
+            objectFit: 'cover',
+            objectPosition: 'center top',
+            transform: 'translateY(-8%)',
+            filter: 'brightness(0.28) saturate(0.7)',
+          }}
+        />
+      </motion.div>
+
+      {/* 2 — deep cinematic gradient over image */}
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute', inset: 0,
+          background: `
+            linear-gradient(to right,  rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.35) 100%),
+            linear-gradient(to bottom, rgba(0,0,0,0.5) 0%,  rgba(0,0,0,0)   40%, rgba(0,0,0,0.8) 100%)
+          `,
+        }}
+      />
+
+      {/* 3 — gold shimmer line (horizontal) */}
+      <motion.div
+        aria-hidden
+        initial={{ scaleX: 0, opacity: 0 }}
+        animate={{ scaleX: 1, opacity: 1 }}
+        transition={{ duration: 2.5, delay: 0.8, ease: SILK }}
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: 0,
+          right: 0,
+          height: '1px',
+          background: 'linear-gradient(to right, transparent, rgba(200,164,107,0.12) 30%, rgba(200,164,107,0.06) 70%, transparent)',
+          transformOrigin: 'left',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* 4 — animated smoke / mist blobs */}
+      {SMOKE.map((s, i) => (
+        <motion.div
+          key={i}
+          aria-hidden
+          animate={{
+            x: ['-2%', '2%', '-1%', '2%'],
+            y: ['-2%', '1%', '-2%'],
+            scale: [s.scale, s.scale * 1.08, s.scale],
+          }}
+          transition={{
+            duration: s.dur,
+            delay: s.delay,
+            repeat: Infinity,
+            repeatType: 'mirror',
+            ease: 'easeInOut',
+          }}
+          style={{
+            position: 'absolute',
+            left: s.x,
+            top:  s.y,
+            width: 'clamp(300px, 40vw, 600px)',
+            height: 'clamp(300px, 40vw, 600px)',
+            transform: 'translate(-50%, -50%)',
+            borderRadius: '50%',
+            background: `radial-gradient(circle, rgba(200,164,107,0.045) 0%, rgba(200,164,107,0) 70%)`,
+            filter: `blur(${s.blur}px)`,
+            pointerEvents: 'none',
+            mixBlendMode: 'screen',
+          }}
+        />
+      ))}
+
+      {/* 5 — CSS particle field (canvas) */}
+      <canvas
+        ref={canvasRef}
+        aria-hidden
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          pointerEvents: 'none',
+          opacity: 0.7,
+          mixBlendMode: 'screen',
+        }}
+      />
+
+      {/* 6 — SVG floating gold particles (declarative, crisp) */}
+      <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
+        {PARTICLES.map((p) => (
           <motion.div
-            style={{ y: contentY, opacity }}
-            className="lg:col-span-5 text-center lg:text-left order-2 lg:order-1"
-          >
-            <motion.p
-              initial={{ opacity: 0, letterSpacing: '0.5em' }}
-              animate={{ opacity: 1, letterSpacing: '0.32em' }}
-              transition={{ duration: 1, delay: 0.2, ease }}
-              className="luxury-label mb-4 sm:mb-6"
-            >
-              Since 2000 · Karachi
-            </motion.p>
+            key={p.id}
+            animate={{
+              y:       [0, -30, 0],
+              opacity: [p.opacity * 0.4, p.opacity, p.opacity * 0.4],
+            }}
+            transition={{
+              duration:   p.dur,
+              delay:      p.delay,
+              repeat:     Infinity,
+              repeatType: 'mirror',
+              ease:       'easeInOut',
+            }}
+            style={{
+              position: 'absolute',
+              left:     `${p.x}%`,
+              top:      `${p.y}%`,
+              width:    `${p.size}px`,
+              height:   `${p.size}px`,
+              borderRadius: '50%',
+              background:   '#C8A46B',
+              boxShadow:    `0 0 ${p.size * 3}px rgba(200,164,107,0.6)`,
+            }}
+          />
+        ))}
+      </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.35, ease }}
-              className="font-heading text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[4.25rem] leading-[1.05] font-light mb-5 sm:mb-6"
-            >
-              The Art of
-              <span className="block text-gradient-gold font-normal italic mt-1">
-                Luxury Fragrance
-              </span>
-            </motion.h1>
+      {/* 7 — vignette */}
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse 80% 80% at 50% 50%, transparent 45%, rgba(0,0,0,0.65) 100%)',
+          pointerEvents: 'none',
+        }}
+      />
 
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.55, ease }}
-              className="text-muted text-sm sm:text-base md:text-lg leading-relaxed max-w-md mx-auto lg:mx-0 mb-8 sm:mb-10"
-            >
-              Rare attars, exquisite oud, and signature scents — curated for those who
-              understand that fragrance is the final layer of elegance.
-            </motion.p>
+      {/* ═══ CONTENT ══════════════════════════════════════════════ */}
+      <motion.div
+        style={{ y: contentY, opacity: overallO }}
+        className="relative z-10 w-full"
+        aria-label="Hero content"
+      >
+        <div
+          style={{
+            maxWidth: '1440px',
+            margin: '0 auto',
+            padding: 'clamp(108px, 14vw, 160px) clamp(20px, 6vw, 80px) clamp(80px, 10vw, 120px)',
+            display: 'grid',
+            gridTemplateColumns: '1fr',
+          }}
+        >
+          <div style={{ maxWidth: '700px' }}>
 
+            {/* ── Label ─────────────────────────────────────────── */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.7, ease }}
-              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4"
+              initial={{ opacity: 0, y: 12, letterSpacing: '0.5em' }}
+              animate={{ opacity: 1, y: 0,  letterSpacing: '0.28em' }}
+              transition={{ duration: 1.1, delay: 0.2, ease: SILK }}
+              style={{
+                display:        'flex',
+                alignItems:     'center',
+                gap:            '14px',
+                marginBottom:   'clamp(20px, 3vw, 32px)',
+              }}
             >
-              <Link href="/shop" className="luxury-btn-primary w-full sm:w-auto group">
-                Explore Collection
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              <span style={{
+                display: 'block', width: '36px', height: '1px',
+                background: 'linear-gradient(to right, transparent, #C8A46B)',
+                flexShrink: 0,
+              }} />
+              <span style={{
+                fontFamily:    'var(--font-body), Poppins, sans-serif',
+                fontSize:      'clamp(9px, 1.1vw, 11px)',
+                fontWeight:    500,
+                color:         '#C8A46B',
+                letterSpacing: '0.28em',
+                textTransform: 'uppercase',
+              }}>
+                The Identity Collection
+              </span>
+            </motion.div>
+
+            {/* ── Headline ──────────────────────────────────────── */}
+            <div style={{ overflow: 'hidden', marginBottom: 'clamp(20px, 3vw, 28px)' }}>
+              {/* Line 1 */}
+              <motion.div
+                initial={{ y: '110%', opacity: 0 }}
+                animate={{ y: '0%',   opacity: 1 }}
+                transition={{ duration: 1.0, delay: 0.4, ease: REVEAL }}
+              >
+                <h1
+                  style={{
+                    fontFamily:    'var(--font-display), "Playfair Display", Georgia, serif',
+                    fontSize:      'clamp(32px, 5.5vw, 74px)',
+                    fontWeight:    400,
+                    lineHeight:    1.1,
+                    letterSpacing: 'clamp(0.02em, 0.5vw, 0.06em)',
+                    color:         '#FFFFFF',
+                    margin:        0,
+                  }}
+                >
+                  Discover The Fragrance
+                </h1>
+              </motion.div>
+
+              {/* Line 2 — italic gold */}
+              <motion.div
+                initial={{ y: '110%', opacity: 0 }}
+                animate={{ y: '0%',   opacity: 1 }}
+                transition={{ duration: 1.0, delay: 0.55, ease: REVEAL }}
+              >
+                <h1
+                  style={{
+                    fontFamily:    'var(--font-display), "Playfair Display", Georgia, serif',
+                    fontSize:      'clamp(32px, 5.5vw, 74px)',
+                    fontWeight:    400,
+                    fontStyle:     'italic',
+                    lineHeight:    1.1,
+                    letterSpacing: 'clamp(0.02em, 0.5vw, 0.06em)',
+                    background:    'linear-gradient(135deg, #C8A46B 0%, #D8C4A0 40%, #C8A46B 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    margin:        0,
+                  }}
+                >
+                  Behind Your Presence
+                </h1>
+              </motion.div>
+            </div>
+
+            {/* ── Description ───────────────────────────────────── */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0  }}
+              transition={{ duration: 0.9, delay: 0.85, ease: SILK }}
+              style={{
+                fontFamily:    'var(--font-body), Poppins, sans-serif',
+                fontSize:      'clamp(13px, 1.5vw, 16px)',
+                fontWeight:    300,
+                lineHeight:    1.85,
+                color:         'rgba(255,255,255,0.55)',
+                maxWidth:      '480px',
+                marginBottom:  'clamp(32px, 4.5vw, 48px)',
+              }}
+            >
+              Every individual carries a story. Every attitude leaves an impression.
+              YAM-N7 fragrances are designed to reveal confidence, individuality,
+              and the infinite character that exists within.
+            </motion.p>
+
+            {/* ── CTAs ──────────────────────────────────────────── */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0  }}
+              transition={{ duration: 0.8, delay: 1.05, ease: SILK }}
+              style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}
+            >
+              {/* Gold filled */}
+              <Link href="/shop" style={{ textDecoration: 'none' }}>
+                <motion.div
+                  whileHover={{ scale: 1.03, boxShadow: '0 0 32px rgba(200,164,107,0.35)' }}
+                  whileTap={{ scale: 0.97 }}
+                  style={{
+                    display:       'inline-flex',
+                    alignItems:    'center',
+                    gap:           '10px',
+                    padding:       'clamp(12px, 1.5vw, 15px) clamp(24px, 3vw, 36px)',
+                    background:    'linear-gradient(135deg, #C8A46B 0%, #D8C4A0 50%, #C8A46B 100%)',
+                    backgroundSize:'200% 100%',
+                    color:         '#0A0A0A',
+                    fontFamily:    'var(--font-body), Poppins, sans-serif',
+                    fontSize:      'clamp(10px, 1.1vw, 12px)',
+                    fontWeight:    600,
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    cursor:        'pointer',
+                    borderRadius:  '1px',
+                    transition:    'background-position 0.5s ease',
+                    whiteSpace:    'nowrap',
+                  }}
+                >
+                  Explore Collection
+                  <ArrowRight size={14} strokeWidth={2} />
+                </motion.div>
               </Link>
-              <Link href="/about" className="luxury-btn-outline w-full sm:w-auto">
-                Our Story
+
+              {/* Gold outline */}
+              <Link href="/about" style={{ textDecoration: 'none' }}>
+                <motion.div
+                  whileHover={{
+                    background: 'rgba(200,164,107,0.08)',
+                    borderColor: '#D8C4A0',
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                  style={{
+                    display:       'inline-flex',
+                    alignItems:    'center',
+                    gap:           '10px',
+                    padding:       'clamp(11px, 1.5vw, 14px) clamp(24px, 3vw, 36px)',
+                    background:    'transparent',
+                    border:        '1px solid rgba(200,164,107,0.55)',
+                    color:         '#C8A46B',
+                    fontFamily:    'var(--font-body), Poppins, sans-serif',
+                    fontSize:      'clamp(10px, 1.1vw, 12px)',
+                    fontWeight:    500,
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    cursor:        'pointer',
+                    borderRadius:  '1px',
+                    transition:    'all 0.3s ease',
+                    whiteSpace:    'nowrap',
+                  }}
+                >
+                  Discover Your Identity
+                </motion.div>
               </Link>
             </motion.div>
 
+            {/* ── Stats bar ─────────────────────────────────────── */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.1, duration: 0.8 }}
-              className="hidden lg:flex items-center gap-8 mt-14 pt-8 border-t border-border/50"
+              transition={{ duration: 1, delay: 1.4 }}
+              style={{
+                display:        'flex',
+                alignItems:     'center',
+                gap:            'clamp(24px, 4vw, 48px)',
+                marginTop:      'clamp(36px, 5vw, 56px)',
+                paddingTop:     'clamp(24px, 3vw, 32px)',
+                borderTop:      '1px solid rgba(255,255,255,0.08)',
+              }}
             >
               {[
                 { value: '1400+', label: 'Fragrances' },
-                { value: '25+', label: 'Years' },
-                { value: '10K+', label: 'Clients' },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <p className="font-heading text-2xl text-foreground">{stat.value}</p>
-                  <p className="text-[10px] uppercase tracking-luxury text-muted-subtle mt-0.5">
-                    {stat.label}
-                  </p>
+                { value: '25+',   label: 'Years of Craft' },
+                { value: '10K+',  label: 'Identities Found' },
+              ].map((stat, i) => (
+                <div key={i} style={{ position: 'relative' }}>
+                  {i > 0 && (
+                    <div style={{
+                      position: 'absolute', left: `calc(-1 * clamp(12px, 2vw, 24px))`,
+                      top: '50%', transform: 'translateY(-50%)',
+                      width: '1px', height: '28px',
+                      background: 'rgba(200,164,107,0.2)',
+                    }} />
+                  )}
+                  <p style={{
+                    fontFamily:    'var(--font-heading), "Cormorant Garamond", serif',
+                    fontSize:      'clamp(22px, 2.8vw, 34px)',
+                    fontWeight:    400,
+                    color:         '#C8A46B',
+                    margin:        0,
+                    lineHeight:    1,
+                  }}>{stat.value}</p>
+                  <p style={{
+                    fontFamily:    'var(--font-body), Poppins, sans-serif',
+                    fontSize:      'clamp(8px, 0.8vw, 10px)',
+                    fontWeight:    400,
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    color:         'rgba(255,255,255,0.35)',
+                    margin:        '5px 0 0',
+                  }}>{stat.label}</p>
                 </div>
               ))}
             </motion.div>
-          </motion.div>
-
-          {/* Hero imagery */}
-          <motion.div
-            style={{ y: imageY }}
-            className="lg:col-span-7 order-1 lg:order-2 relative"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92, filter: 'blur(16px)' }}
-              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-              transition={{ duration: 1.1, ease }}
-              className="relative mx-auto max-w-xl lg:max-w-none"
-            >
-              {/* Decorative frame */}
-              <div className="absolute -inset-3 sm:-inset-4 border border-border pointer-events-none" />
-
-              <Link href="/shop" className="block relative overflow-hidden shadow-luxury rounded-sm bg-surface-muted">
-                <motion.img
-                  src="/banners/New-Banner.jpg"
-                  alt="YAM-N7 luxury perfume collection"
-                  className="w-full h-auto object-contain"
-                  initial={{ scale: 1.04 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 1.6, ease }}
-                  whileHover={{ scale: 1.01 }}
-                />
-              </Link>
-
-              {/* Floating accent — desktop only, positioned outside image */}
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -right-4 lg:-right-8 top-8 hidden lg:block bg-surface border border-border px-4 py-3 shadow-luxury z-10"
-              >
-                <p className="text-[10px] uppercase tracking-luxury text-primary mb-0.5">New</p>
-                <p className="font-heading text-lg text-foreground whitespace-nowrap">Elite Series</p>
-              </motion.div>
-            </motion.div>
-          </motion.div>
+          </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Scroll cue */}
+      {/* ── Right side bottle image — desktop focal ─────────────── */}
       <motion.div
-        style={{ opacity }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2"
+        initial={{ opacity: 0, scale: 0.9, x: 40, filter: 'blur(16px)' }}
+        animate={{ opacity: 1, scale: 1,   x: 0,  filter: 'blur(0px)' }}
+        transition={{ duration: 1.6, delay: 0.6, ease: REVEAL }}
+        aria-hidden
+        className="hidden lg:block"
+        style={{
+          position: 'absolute',
+          right: 'clamp(40px, 8vw, 120px)',
+          top:   '50%',
+          transform: 'translateY(-50%)',
+          zIndex: 5,
+          pointerEvents: 'none',
+        }}
       >
-        <span className="text-[10px] uppercase tracking-luxury text-muted-subtle">Scroll</span>
-        <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.8, repeat: Infinity }}>
-          <ChevronDown className="w-4 h-4 text-primary/70" />
+
+        {/* Reflection glow behind bottle */}
+        <div style={{
+          position: 'absolute',
+          bottom: '-10%',
+          left:   '50%',
+          transform: 'translateX(-50%)',
+          width:  '140%',
+          height: '60%',
+          background: 'radial-gradient(ellipse, rgba(200,164,107,0.18) 0%, transparent 70%)',
+          filter: 'blur(30px)',
+          pointerEvents: 'none',
+        }} />
+
+        {/* Slow floating animation wrapper */}
+        <motion.div
+          animate={{ y: [0, -14, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <img
+            src="/YAM N-7 Signature.jpg"
+            alt="YAM-N7 Signature fragrance"
+            style={{
+              height:     'clamp(300px, 38vw, 560px)',
+              width:      'auto',
+              objectFit:  'contain',
+              filter:     'drop-shadow(0 40px 80px rgba(0,0,0,0.8)) drop-shadow(0 0 40px rgba(200,164,107,0.15)) brightness(1.05)',
+              display:    'block',
+            }}
+          />
+
+          {/* Floor reflection */}
+          <div style={{
+            width:   '100%',
+            height:  '80px',
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0.04), transparent)',
+            transform: 'scaleY(-0.25) scaleX(0.9)',
+            transformOrigin: 'top',
+            marginTop: '-4px',
+            filter:   'blur(8px)',
+            opacity:  0.6,
+          }}>
+            <img
+              src="/YAM N-7 Signature.jpg"
+              alt=""
+              style={{ width: '100%', height: '100%', objectFit: 'contain', opacity: 0.2 }}
+            />
+          </div>
         </motion.div>
+
+        {/* Floating badge */}
+        <motion.div
+          animate={{ y: [0, -6, 0], opacity: [0.8, 1, 0.8] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          style={{
+            position:   'absolute',
+            top:        '12%',
+            left:       '-40px',
+            background: 'rgba(10,10,10,0.85)',
+            backdropFilter: 'blur(16px)',
+            border:     '1px solid rgba(200,164,107,0.25)',
+            padding:    '12px 18px',
+            borderRadius: '2px',
+          }}
+        >
+          <p style={{
+            fontFamily:    'var(--font-body), Poppins, sans-serif',
+            fontSize:      '9px',
+            letterSpacing: '0.2em',
+            color:         '#C8A46B',
+            textTransform: 'uppercase',
+            margin:        0,
+          }}>New</p>
+          <p style={{
+            fontFamily: 'var(--font-heading), "Cormorant Garamond", serif',
+            fontSize:   '16px',
+            color:      '#FFF',
+            margin:     '2px 0 0',
+            whiteSpace: 'nowrap',
+          }}>Elite Series</p>
+        </motion.div>
+      </motion.div>
+
+      {/* ── Scroll indicator ──────────────────────────────────────── */}
+      <motion.div
+        style={overallO ? { opacity: overallO } : {}}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.6, duration: 0.8 }}
+        className="absolute bottom-[clamp(20px,3vw,36px)] left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
+      >
+        <span style={{
+          fontFamily:    'var(--font-body), Poppins, sans-serif',
+          fontSize:      '9px',
+          letterSpacing: '0.24em',
+          textTransform: 'uppercase',
+          color:         'rgba(200,164,107,0.5)',
+        }}>Scroll</span>
+
+        {/* Animated scroll line */}
+        <div style={{ width: '1px', height: '40px', background: 'rgba(200,164,107,0.2)', position: 'relative', overflow: 'hidden' }}>
+          <motion.div
+            animate={{ y: ['-100%', '100%'] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: 'linear' }}
+            style={{
+              position: 'absolute', top: 0, left: 0,
+              width: '100%', height: '50%',
+              background: 'linear-gradient(to bottom, transparent, #C8A46B)',
+            }}
+          />
+        </div>
       </motion.div>
     </section>
   );

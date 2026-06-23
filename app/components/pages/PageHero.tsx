@@ -22,10 +22,10 @@ export default function PageHero({
   imageAlt = '',
 }: PageHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-surface border-b border-border">
+    <section className="relative overflow-hidden bg-surface border-b border-border page-offset">
       <div className="absolute inset-0 bg-gradient-to-br from-surface-muted/50 via-surface to-background" />
 
-      <div className="luxury-container relative z-10 py-14 sm:py-16 md:py-20 lg:py-24">
+      <div className="luxury-container relative z-10 py-10 sm:py-12 md:py-16 lg:py-20">
         <div className={`grid gap-10 lg:gap-16 items-center ${image ? 'lg:grid-cols-2' : ''}`}>
           <motion.div
             initial={{ opacity: 0, y: 32 }}
@@ -34,7 +34,7 @@ export default function PageHero({
             className={image ? '' : 'max-w-3xl mx-auto text-center'}
           >
             <p className="luxury-label mb-4">{label}</p>
-            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-light text-foreground leading-tight mb-4">
+            <h1 className="font-display tracking-luxury uppercase text-3xl sm:text-4xl md:text-5xl font-normal text-foreground leading-tight mb-4">
               {title}
             </h1>
             {subtitle && (

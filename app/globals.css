@@ -8,40 +8,40 @@
  * UI accent = espresso bronze (NOT logo gold — so the mark stays visible)
  */
 :root {
-  --color-background: 247 244 239;
-  --color-foreground: 31 27 23;
-  --color-cream: 253 251 247;
-  --color-champagne: 184 150 90;
+  --color-background: 10 10 10;
+  --color-foreground: 255 255 255;
+  --color-cream: 10 10 10;
+  --color-champagne: 216 196 160;
 
-  --color-surface: 255 255 255;
-  --color-surface-elevated: 250 247 242;
-  --color-surface-muted: 237 232 224;
-  --color-card: 255 255 255;
+  --color-surface: 10 10 10;
+  --color-surface-elevated: 15 15 15;
+  --color-surface-muted: 10 10 10;
+  --color-card: 10 10 10;
 
   /* UI accent — matte bronze, separate from logo metallics */
-  --color-primary: 92 74 50;
-  --color-primary-dark: 61 50 40;
-  --color-primary-light: 139 115 85;
-  --color-on-primary: 255 255 255;
+  --color-primary: 200 164 107;
+  --color-primary-dark: 160 128 80;
+  --color-primary-light: 216 196 160;
+  --color-on-primary: 10 10 10;
 
-  --color-muted: 107 98 88;
-  --color-muted-subtle: 140 132 122;
+  --color-muted: 192 192 192;
+  --color-muted-subtle: 120 120 120;
 
-  --color-border: 221 214 204;
-  --color-border-strong: 196 186 172;
-  --color-input: 255 255 255;
-  --color-ring: 92 74 50;
+  --color-border: 40 40 40;
+  --color-border-strong: 200 164 107;
+  --color-input: 10 10 10;
+  --color-ring: 200 164 107;
   --color-destructive: 185 58 58;
 
-  --color-subtle: 245 241 235;
-  --color-subtle-strong: 232 226 216;
+  --color-subtle: 10 10 10;
+  --color-subtle-strong: 15 15 15;
 
-  --navy: 31 27 23;
-  --blue: 92 74 50;
-  --beige: 237 232 224;
-  --green: 250 247 242;
-  --grey: 107 98 88;
-  --accent: 61 50 40;
+  --navy: 10 10 10;
+  --blue: 200 164 107;
+  --beige: 216 196 160;
+  --green: 10 10 10;
+  --grey: 192 192 192;
+  --accent: 216 196 160;
 }
 
 * {
@@ -64,10 +64,18 @@ html {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading), 'Cormorant Garamond', Georgia, serif;
-  letter-spacing: -0.01em;
   color: rgb(var(--color-foreground));
-  font-weight: 500;
+  font-weight: 400;
+}
+
+h1, .font-display {
+  font-family: var(--font-display), 'Playfair Display', Georgia, serif;
+  letter-spacing: 0.16em;
+}
+
+h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-heading), 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: 0.08em;
 }
 
 /* Headings stay readable on bronze / primary surfaces */
@@ -92,21 +100,20 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .luxury-card {
-    @apply bg-card rounded-xl border border-border
-           shadow-[0_2px_20px_rgba(31,27,23,0.06)] transition-all duration-300;
+    @apply bg-card rounded-xl border border-border/40
+           transition-all duration-300;
   }
 
   .luxury-card-hover {
-    @apply hover:border-border-strong hover:shadow-[0_8px_32px_rgba(31,27,23,0.1)]
-           hover:-translate-y-0.5;
+    @apply hover:border-primary hover:-translate-y-0.5;
   }
 
   .luxury-glass {
-    @apply bg-surface/90 backdrop-blur-md border border-border shadow-sm;
+    @apply bg-surface/90 backdrop-blur-md border border-border/40;
   }
 
   .luxury-divider {
-    @apply h-px w-full bg-gradient-to-r from-transparent via-border-strong to-transparent;
+    @apply h-px w-full bg-gradient-to-r from-transparent via-border-strong/30 to-transparent;
   }
 
   .luxury-label {
@@ -155,34 +162,34 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .bg-gradient-brand {
-    background: linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-primary-dark)));
+    background: rgb(var(--color-background));
   }
 
   .bg-gradient-brand-h {
-    background: linear-gradient(to right, rgb(var(--color-surface-muted)), rgb(var(--color-surface)));
+    background: rgb(var(--color-background));
   }
 
   .bg-gradient-surface {
-    background: linear-gradient(to bottom, rgb(var(--color-background)), rgb(var(--color-surface-muted)));
+    background: rgb(var(--color-background));
   }
 
   .bg-gradient-card {
-    background: linear-gradient(to bottom right, rgb(var(--color-surface)), rgb(var(--color-surface-muted)));
+    background: rgb(var(--color-background));
   }
 
   .text-gradient-gold {
-    background: linear-gradient(135deg, rgb(var(--color-primary-dark)), rgb(var(--color-primary)));
+    background: linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-primary-light)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .shadow-luxury {
-    box-shadow: 0 4px 24px rgba(31, 27, 23, 0.08);
+    box-shadow: none;
   }
 
   .shadow-luxury-hover {
-    box-shadow: 0 12px 40px rgba(31, 27, 23, 0.12);
+    box-shadow: none;
   }
 }
 
@@ -197,3 +204,16 @@ h1, h2, h3, h4, h5, h6 {
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-slide-up { animation: slideUp 0.3s ease-out; }
+
+/*
+ * Fixed header offset
+ * Announcement bar (36px) + nav (72px) = 108px total
+ * Use .page-offset on sections that sit directly below the header
+ */
+:root {
+  --header-total: 108px;
+}
+
+.page-offset {
+  padding-top: var(--header-total);
+}

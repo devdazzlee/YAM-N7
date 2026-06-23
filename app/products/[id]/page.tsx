@@ -515,25 +515,24 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   </span>
                 )}
                 {kgDiscountAmount > 0 && (
-                  <span className="bg-gradient-to-r from-destructive to-primary-dark text-foreground px-2.5 py-0.5 rounded-full text-[11px] font-bold ml-auto animate-pulse">
-                    🔥 Rs {kgDiscountAmount} OFF
+                  <span className="bg-gradient-to-r from-primary to-primary-light text-primary-foreground px-2.5 py-0.5 rounded-full text-[11px] font-bold ml-auto">
+                    Rs {kgDiscountAmount} OFF
                   </span>
                 )}
               </div>
 
               {/* 1 KG Discount Promo Banner */}
               {isWeightBasedUnit(product.unit?.name) && (
-                <div className={`flex items-center gap-2 p-2.5 rounded-xl border-2 transition-all ${
+                <div className={`flex items-center gap-2 p-2.5 rounded-xl border transition-all ${
                   qualifiesFor1KgDiscount 
-                    ? 'bg-emerald-950/30 border-emerald-800/40' 
-                    : 'bg-destructive/10 border-destructive/20'
+                    ? 'bg-primary/10 border-primary/30' 
+                    : 'bg-card border-border/40'
                 }`}>
-                  <span className="text-lg">🔥</span>
                   <div className="flex-1">
-                    <p className={`text-xs font-bold ${qualifiesFor1KgDiscount ? 'text-emerald-400' : 'text-destructive'}`}>
-                      {qualifiesFor1KgDiscount ? '✅ Rs 300 Discount Applied!' : 'Select 1 KG to get Rs 300 OFF!'}
+                    <p className={`text-xs font-bold ${qualifiesFor1KgDiscount ? 'text-primary' : 'text-muted'}`}>
+                      {qualifiesFor1KgDiscount ? '✓ Rs 300 Discount Applied!' : 'Select 1 KG to get Rs 300 OFF!'}
                     </p>
-                    <p className="text-[10px] text-muted">
+                    <p className="text-[10px] text-muted-subtle">
                       {qualifiesFor1KgDiscount 
                         ? `You saved Rs ${kgDiscountAmount} on this order` 
                         : 'Special offer on all 1 KG purchases'}
@@ -592,14 +591,14 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                             }}
                             className={`relative flex flex-col items-center py-2 px-1 rounded-xl font-medium text-xs sm:text-sm transition-all border-2 ${
                               isSelected
-                                ? 'bg-surface-elevated text-foreground border-surface-elevated shadow-md'
+                                ? 'bg-surface-elevated text-foreground border-primary/60'
                                 : optionIs1Kg
-                                ? 'bg-destructive/10 text-foreground border-destructive/40 hover:border-destructive/60'
-                                : 'bg-surface-muted text-foreground border-transparent hover:border-primary/40 hover:bg-surface/50'
+                                ? 'bg-primary/10 text-foreground border-primary/30 hover:border-primary/50'
+                                : 'bg-surface-muted text-foreground border-border/40 hover:border-primary/40 hover:bg-surface/50'
                             }`}
                           >
                             {optionIs1Kg && (
-                              <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-destructive text-foreground text-[7px] sm:text-[8px] px-1.5 py-[1px] rounded-full font-bold whitespace-nowrap leading-tight">
+                              <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[7px] sm:text-[8px] px-1.5 py-[1px] rounded-full font-bold whitespace-nowrap leading-tight">
                                 Rs {KG_DISCOUNT.amount} OFF
                               </span>
                             )}
@@ -607,7 +606,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                             {optionDiscount > 0 ? (
                               <span className={`text-[10px] sm:text-[11px] mt-0.5 ${isSelected ? 'text-foreground/80' : 'text-muted'}`}>
                                 <span className="line-through mr-0.5">Rs. {optionPrice.toLocaleString()}</span>
-                                <span className={`font-bold ${isSelected ? 'text-green-300' : 'text-green-600'}`}> Rs. {optionFinalPrice.toLocaleString()}</span>
+                                <span className={`font-bold ${isSelected ? 'text-primary-light' : 'text-primary'}`}> Rs. {optionFinalPrice.toLocaleString()}</span>
                               </span>
                             ) : (
                               <span className={`text-[10px] sm:text-[11px] mt-0.5 ${isSelected ? 'text-foreground/80' : 'text-muted'}`}>
@@ -735,12 +734,12 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   onClick={toggleWishlist}
                   className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all border ${
                     isInWishlist
-                      ? 'bg-destructive/10 border-destructive/30 text-red-500'
+                      ? 'bg-primary/10 border-primary/30 text-primary'
                       : 'bg-surface-muted border-border text-muted hover:border-primary hover:text-primary'
                   }`}
                   aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
                 >
-                  <Heart className={`w-4 h-4 ${isInWishlist ? 'fill-red-500' : ''}`} />
+                  <Heart className={`w-4 h-4 ${isInWishlist ? 'fill-primary text-primary' : ''}`} />
                 </button>
               </div>
 

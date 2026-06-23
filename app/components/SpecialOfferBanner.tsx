@@ -25,7 +25,7 @@ export default function SpecialOfferBanner() {
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="bg-card text-foreground px-5 py-2 rounded-full font-semibold text-sm hover:bg-surface transition-colors shadow-md w-full sm:w-auto"
+              className="bg-card text-foreground px-5 py-2 rounded-full font-semibold text-sm hover:bg-surface border border-border/40 hover:border-primary transition-colors w-full sm:w-auto"
             >
               Shop Now
             </motion.button>

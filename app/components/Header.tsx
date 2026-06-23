@@ -1,9 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { ShoppingCart, Menu, X, Search, User, ChevronDown, ArrowRight, Heart } from 'lucide-react';
+import {
+  ShoppingCart, Menu, X, Search, User, ChevronDown,
+  ArrowRight, Heart, LogOut, Package,
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { webApi, WebCategory, WebSearchSuggestion } from '../../lib/api/webApi';
 import { cartUtils } from '../../lib/utils/cart';
@@ -11,444 +14,538 @@ import { getCategoryIcon, getCategoryDescription } from '../../lib/utils/categor
 import { useWebCategoryStore } from '../../lib/store/webCategoryStore';
 import { useAuthStore } from '../../lib/store/authStore';
 
+/* ─── Nav link definitions ───────────────────────────────────────── */
+const NAV_LINKS = [
+  { name: 'Home',                href: '/' },
+  { name: 'Shop',                href: '/shop' },
+  { name: 'Collections',         href: '/collections' },
+  { name: 'The Identity Series', href: '/identity-series' },
+  { name: 'Best Sellers',        href: '/best-sellers' },
+  { name: "What's Hot",          href: '/whats-hot' },
+  { name: 'Journal',             href: '/journal' },
+  { name: 'About',               href: '/about' },
+  { name: 'Contact',             href: '/contact' },
+];
+
+/* ─── Badge ───────────────────────────────────────────────────────── */
+function Badge({ count }: { count: number }) {
+  if (count <= 0) return null;
+  return (
+    <motion.span
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      style={{
+        position: 'absolute',
+        top: '-6px',
+        right: '-6px',
+        background: '#C8A46B',
+        color: '#0A0A0A',
+        fontSize: '10px',
+        fontWeight: 700,
+        borderRadius: '9999px',
+        minWidth: '18px',
+        height: '18px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '0 4px',
+        fontFamily: 'var(--font-body)',
+        lineHeight: 1,
+      }}
+    >
+      {count > 9 ? '9+' : count}
+    </motion.span>
+  );
+}
+
+/* ─── Icon button ─────────────────────────────────────────────────── */
+function IconBtn({
+  onClick, href, label, children, count,
+}: {
+  onClick?: () => void;
+  href?: string;
+  label: string;
+  children: React.ReactNode;
+  count?: number;
+}) {
+  const inner = (
+    <motion.button
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.93 }}
+      onClick={onClick}
+      aria-label={label}
+      style={{
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '38px',
+        height: '38px',
+        background: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+        color: '#FFFFFF',
+        transition: 'color 0.25s',
+      }}
+      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#C8A46B'; }}
+      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#FFFFFF'; }}
+    >
+      {children}
+      {count !== undefined && <Badge count={count} />}
+    </motion.button>
+  );
+
+  if (href) return <Link href={href}>{inner}</Link>;
+  return inner;
+}
+
+/* ══════════════════════════════════════════════════════════════════ */
 export default function Header() {
-  const router = useRouter();
+  const router   = useRouter();
   const pathname = usePathname();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  const [wishlistCount, setWishlistCount] = useState(0);
-  const [cartCount, setCartCount] = useState(0);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<WebSearchSuggestion[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [categories, setCategories] = useState<Array<WebCategory & { icon: any; description: string }>>([]);
-  const [categoriesLoading, setCategoriesLoading] = useState(true);
+
+  const [isMenuOpen,       setIsMenuOpen]       = useState(false);
+  const [isShopOpen,       setIsShopOpen]       = useState(false);
+  const [wishlistCount,    setWishlistCount]    = useState(0);
+  const [cartCount,        setCartCount]        = useState(0);
+  const [isSearchOpen,     setIsSearchOpen]     = useState(false);
+  const [searchQuery,      setSearchQuery]      = useState('');
+  const [searchResults,    setSearchResults]    = useState<WebSearchSuggestion[]>([]);
+  const [isSearching,      setIsSearching]      = useState(false);
+  const [isScrolled,       setIsScrolled]       = useState(false);
+  const [categories,       setCategories]       = useState<Array<WebCategory & { icon: any; description: string }>>([]);
+  const [categoriesLoading,setCategoriesLoading]= useState(true);
+  const [isProfileOpen,    setIsProfileOpen]    = useState(false);
+  const shopRef = useRef<HTMLDivElement>(null);
 
   const fetchAllCategories = useWebCategoryStore((s) => s.fetchAll);
-  const { isAuthenticated, user, logout, fetchCurrentUser, token } = useAuthStore();
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const { isAuthenticated, user, logout, fetchCurrentUser } = useAuthStore();
 
-  // Initialize auth state on mount if token exists
+  /* ── Auth init ── */
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedToken = localStorage.getItem('authToken');
-      if (storedToken && !isAuthenticated && !user) {
-        fetchCurrentUser().catch(() => {
-          // If fetch fails, token is invalid, clear it
-          localStorage.removeItem('authToken');
-        });
-      }
+    if (typeof window === 'undefined') return;
+    const tok = localStorage.getItem('authToken');
+    if (tok && !isAuthenticated && !user) {
+      fetchCurrentUser().catch(() => localStorage.removeItem('authToken'));
     }
   }, [fetchCurrentUser, isAuthenticated, user]);
 
-  // Fetch active categories once via shared store (cached 10 min).
+  /* ── Categories ── */
   useEffect(() => {
     let cancelled = false;
     setCategoriesLoading(true);
     fetchAllCategories()
-      .then((apiCategories) => {
+      .then((apiCats) => {
         if (cancelled) return;
-        const mapped = apiCategories
-          .filter((cat) => cat.is_active)
-          .map((cat) => ({
-            ...cat,
-            icon: getCategoryIcon(cat.slug, cat.name),
-            description: getCategoryDescription(cat.name),
-          }));
-        setCategories(mapped);
+        setCategories(
+          apiCats.filter((c) => c.is_active).map((c) => ({
+            ...c,
+            icon: getCategoryIcon(c.slug, c.name),
+            description: getCategoryDescription(c.name),
+          }))
+        );
       })
-      .catch(() => {
-        if (!cancelled) setCategories([]);
-      })
-      .finally(() => {
-        if (!cancelled) setCategoriesLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
+      .catch(() => { if (!cancelled) setCategories([]); })
+      .finally(() => { if (!cancelled) setCategoriesLoading(false); });
+    return () => { cancelled = true; };
   }, [fetchAllCategories]);
 
-  // Compact sticky header on scroll — top bar slides away, main bar stays pinned
+  /* ── Scroll ── */
   useEffect(() => {
-    const onScroll = () => {
-      setIsScrolled(window.scrollY > 24);
-    };
-
+    const onScroll = () => setIsScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Get wishlist count from localStorage
+  /* ── Wishlist ── */
   useEffect(() => {
-    const updateWishlistCount = () => {
-      if (typeof window !== 'undefined') {
-        const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-        setWishlistCount(wishlist.length);
-      }
+    const update = () => {
+      if (typeof window === 'undefined') return;
+      setWishlistCount(JSON.parse(localStorage.getItem('wishlist') || '[]').length);
     };
-
-    updateWishlistCount();
-    
-    if (typeof window !== 'undefined') {
-    window.addEventListener('wishlistUpdated', updateWishlistCount);
-    return () => {
-      window.removeEventListener('wishlistUpdated', updateWishlistCount);
-    };
-    }
+    update();
+    window.addEventListener('wishlistUpdated', update);
+    return () => window.removeEventListener('wishlistUpdated', update);
   }, []);
 
-  // Get cart count from localStorage
+  /* ── Cart ── */
   useEffect(() => {
-    const updateCartCount = () => {
-      setCartCount(cartUtils.getCartCount());
-    };
-
-    updateCartCount();
-    
-    if (typeof window !== 'undefined') {
-      window.addEventListener('cartUpdated', updateCartCount);
-      return () => {
-        window.removeEventListener('cartUpdated', updateCartCount);
-      };
-    }
+    const update = () => setCartCount(cartUtils.getCartCount());
+    update();
+    window.addEventListener('cartUpdated', update);
+    return () => window.removeEventListener('cartUpdated', update);
   }, []);
 
-  const menuItems = [
-    { name: 'Home', href: '/' },
-    { name: 'Shop', href: '/shop' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
-  ];
-
-  // Debounced typeahead — hits the lightweight /web/search/suggest endpoint.
+  /* ── Search typeahead ── */
   useEffect(() => {
     if (!isSearchOpen) return;
-    const trimmed = searchQuery.trim();
-    if (trimmed.length < 2) {
-      setSearchResults([]);
-      setIsSearching(false);
-      return;
-    }
-
+    const q = searchQuery.trim();
+    if (q.length < 2) { setSearchResults([]); setIsSearching(false); return; }
     let cancelled = false;
     setIsSearching(true);
-    const timeoutId = setTimeout(() => {
-      webApi
-        .suggest(trimmed, 8)
-        .then((results) => {
-          if (!cancelled) setSearchResults(results);
-        })
-        .catch(() => {
-          if (!cancelled) setSearchResults([]);
-        })
-        .finally(() => {
-          if (!cancelled) setIsSearching(false);
-        });
+    const t = setTimeout(() => {
+      webApi.suggest(q, 8)
+        .then((r) => { if (!cancelled) setSearchResults(r); })
+        .catch(() => { if (!cancelled) setSearchResults([]); })
+        .finally(() => { if (!cancelled) setIsSearching(false); });
     }, 300);
-
-    return () => {
-      cancelled = true;
-      clearTimeout(timeoutId);
-    };
+    return () => { cancelled = true; clearTimeout(t); };
   }, [searchQuery, isSearchOpen]);
 
-  const performSearch = (query: string) => {
-    if (query.trim()) {
-      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
-      setIsSearchOpen(false);
-      setSearchQuery('');
-      setSearchResults([]);
-    }
-  };
-
-  const handleProductClick = (product: WebSearchSuggestion) => {
-    router.push(`/products/${product.id}`);
-    setIsSearchOpen(false);
-    setSearchQuery('');
-    setSearchResults([]);
-  };
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    performSearch(searchQuery);
-  };
-
-  const handleSearchClick = () => {
-    setIsSearchOpen(true);
-    setTimeout(() => {
-      const searchInput = document.getElementById('header-search-input');
-      if (searchInput) {
-        (searchInput as HTMLInputElement).focus();
-      }
-    }, 300);
-  };
-
-  const closeSearchModal = () => {
-    setIsSearchOpen(false);
-    setSearchQuery('');
-    setSearchResults([]);
-  };
-
+  /* ── Escape key ── */
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isSearchOpen) {
-        closeSearchModal();
-      }
+    const h = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { closeSearch(); setIsMenuOpen(false); }
     };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [isSearchOpen]);
+    window.addEventListener('keydown', h);
+    return () => window.removeEventListener('keydown', h);
+  }, []);
 
+  /* ── Body lock when search or menu open ── */
   useEffect(() => {
-    if (isSearchOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isSearchOpen]);
+    document.body.style.overflow = (isSearchOpen || isMenuOpen) ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isSearchOpen, isMenuOpen]);
+
+  /* ── Close mobile menu on route change ── */
+  useEffect(() => { setIsMenuOpen(false); setIsProfileOpen(false); }, [pathname]);
+
+  /* ── Helpers ── */
+  const closeSearch = () => { setIsSearchOpen(false); setSearchQuery(''); setSearchResults([]); };
+
+  const performSearch = (q: string) => {
+    if (!q.trim()) return;
+    router.push(`/search?q=${encodeURIComponent(q.trim())}`);
+    closeSearch();
+  };
 
   const isActive = (href: string) => pathname === href;
 
+  /* ════════════════ RENDER ════════════════════════════════════════ */
   return (
     <>
-      <header className="sticky top-0 z-50">
-        {/* Main navigation — always sticky, compacts on scroll */}
+      {/* ── HEADER ─────────────────────────────────────────────── */}
+      <header
+        style={{
+          position: 'fixed',
+          top: '36px',          /* sits right below the 36px announcement bar */
+          left: 0,
+          right: 0,
+          zIndex: 50,
+          transition: 'background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease',
+          background: isScrolled
+            ? 'rgba(10,10,10,0.82)'
+            : 'transparent',
+          backdropFilter: isScrolled ? 'blur(18px) saturate(180%)' : 'none',
+          WebkitBackdropFilter: isScrolled ? 'blur(18px) saturate(180%)' : 'none',
+          borderBottom: isScrolled
+            ? '1px solid rgba(200,164,107,0.35)'
+            : '1px solid transparent',
+        }}
+      >
         <div
-          className={`relative border-b border-border transition-[background-color,box-shadow,padding] duration-300 ease-out ${
-            isScrolled
-              ? 'bg-surface/95 backdrop-blur-md shadow-[0_2px_16px_rgba(31,27,23,0.06)]'
-              : 'bg-surface shadow-sm'
-          }`}
+          style={{
+            maxWidth: '1440px',
+            margin: '0 auto',
+            padding: '0 32px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: isScrolled ? '64px' : '72px',
+            transition: 'height 0.35s ease',
+          }}
         >
-          <div
-            className={`pointer-events-none absolute inset-x-0 bottom-0 h-px bg-border transition-opacity duration-300 ${
-              isScrolled ? 'opacity-100' : 'opacity-60'
-            }`}
-          />
-          <div className="container mx-auto px-4 sm:px-6">
-            <div
-              className={`flex items-center justify-between transition-[height] duration-300 ease-out ${
-                isScrolled ? 'h-[4.25rem]' : 'h-16 md:h-20'
-              }`}
-            >
-          {/* Logo */}
-            <Link href="/" className="flex items-center flex-shrink-0 group">
+          {/* ── LEFT: Logo ─────────────────────────────────────── */}
+          <Link
+            href="/"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              textDecoration: 'none',
+              flexShrink: 0,
+            }}
+          >
             <motion.img
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.04 }}
               src="/YAM-N7-Logo.png"
               alt="YAM-N7"
-              className={`w-auto object-contain transition-[height] duration-300 ease-out ${
-                isScrolled
-                  ? 'h-11 sm:h-12 md:h-14'
-                  : 'h-14 sm:h-16 md:h-[4.5rem]'
-              }`}
-              width={240}
-              height={72}
+              style={{
+                height: isScrolled ? '44px' : '52px',
+                width: 'auto',
+                objectFit: 'contain',
+                transition: 'height 0.35s ease',
+              }}
             />
           </Link>
 
-          {/* Desktop Navigation — centered */}
-            <nav className="hidden lg:flex items-center justify-center flex-1 space-x-1">
-            {menuItems.map((item) => {
-              if (item.name === 'Shop') {
-                return (
-                    <div key={item.name} className="flex items-center space-x-1">
-                    <Link
-                      href={item.href}
-                        className={`relative px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${
-                          isActive(item.href)
-                            ? 'text-primary bg-primary/10'
-                            : 'text-foreground hover:text-primary hover:bg-surface-muted'
-                        }`}
-                    >
-                      {item.name}
-                        {isActive(item.href) && (
-                          <motion.div
-                            layoutId="activeNav"
-                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
-                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                          />
-                        )}
-                    </Link>
-                      
-                      {/* Products Dropdown */}
-                    <div
-                      className="relative"
-                      onMouseEnter={() => setIsCategoriesOpen(true)}
-                      onMouseLeave={() => setIsCategoriesOpen(false)}
-                    >
-                        <button className={`flex items-center gap-1 px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${
-                          isCategoriesOpen
-                            ? 'text-primary bg-primary/10'
-                            : 'text-foreground hover:text-primary hover:bg-surface-muted'
-                        }`}>
-                        <span>Products</span>
-                        <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isCategoriesOpen ? 'rotate-180' : ''}`} />
-                      </button>
+          {/* ── CENTER: Desktop Nav ─────────────────────────────── */}
+          <nav
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0px',
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+            }}
+            className="luxury-nav hidden lg:flex"
+          >
+            {NAV_LINKS.map((link) => {
+              const active = isActive(link.href);
 
-                      <AnimatePresence>
-                        {isCategoriesOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 10 }}
-                            transition={{ duration: 0.2 }}
-                              className="absolute top-full left-0 mt-2 w-96 bg-card rounded-xl shadow-luxury overflow-hidden border border-border"
-                            >
-                              <div className="px-5 py-4 bg-primary">
-                                <h3 className="text-primary-foreground font-heading text-xl font-medium">Shop by Category</h3>
-                                <p className="text-primary-foreground/80 text-sm mt-0.5">Browse our premium collection</p>
-                            </div>
-                              <div className="max-h-96 overflow-y-auto p-2">
-                                {categoriesLoading ? (
-                                  <div className="flex items-center justify-center py-8">
-                                    <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                                  </div>
-                                ) : categories.length > 0 ? (
-                                  categories.map((category, index) => {
-                                const Icon = category.icon;
-                                return (
-                                  <Link
-                                        key={category.id || category.slug}
-                                        href={`/categories/${category.slug}`}
-                                    onClick={() => setIsCategoriesOpen(false)}
+              /* Shop gets a mega-dropdown */
+              if (link.name === 'Shop') {
+                return (
+                  <div
+                    key={link.name}
+                    ref={shopRef}
+                    style={{ position: 'relative' }}
+                    onMouseEnter={() => setIsShopOpen(true)}
+                    onMouseLeave={() => setIsShopOpen(false)}
+                  >
+                    <NavLink active={active} href={link.href} hasArrow>
+                      {link.name}
+                    </NavLink>
+
+                    <AnimatePresence>
+                      {isShopOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 12 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 12 }}
+                          transition={{ duration: 0.22 }}
+                          style={{
+                            position: 'absolute',
+                            top: 'calc(100% + 8px)',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: '420px',
+                            background: 'rgba(10,10,10,0.96)',
+                            backdropFilter: 'blur(20px)',
+                            border: '1px solid rgba(200,164,107,0.25)',
+                            borderRadius: '4px',
+                            overflow: 'hidden',
+                            zIndex: 100,
+                          }}
+                        >
+                          {/* Dropdown header */}
+                          <div style={{
+                            padding: '16px 20px',
+                            borderBottom: '1px solid rgba(200,164,107,0.15)',
+                          }}>
+                            <p style={{
+                              fontFamily: 'var(--font-display), "Playfair Display", serif',
+                              fontSize: '11px',
+                              letterSpacing: '0.2em',
+                              color: '#C8A46B',
+                              textTransform: 'uppercase',
+                            }}>Shop by Category</p>
+                          </div>
+
+                          {/* Category list */}
+                          <div style={{ maxHeight: '360px', overflowY: 'auto', padding: '8px' }}>
+                            {categoriesLoading ? (
+                              <div style={{ display: 'flex', justifyContent: 'center', padding: '32px' }}>
+                                <div style={{
+                                  width: '20px', height: '20px',
+                                  border: '2px solid #C8A46B',
+                                  borderTopColor: 'transparent',
+                                  borderRadius: '50%',
+                                  animation: 'spin 0.8s linear infinite',
+                                }} />
+                              </div>
+                            ) : categories.length > 0 ? categories.map((cat, i) => {
+                              const Icon = cat.icon;
+                              return (
+                                <Link
+                                  key={cat.id || cat.slug}
+                                  href={`/categories/${cat.slug}`}
+                                  onClick={() => setIsShopOpen(false)}
+                                  style={{ textDecoration: 'none' }}
+                                >
+                                  <motion.div
+                                    initial={{ opacity: 0, x: -8 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: i * 0.025 }}
+                                    style={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: '12px',
+                                      padding: '10px 12px',
+                                      borderRadius: '2px',
+                                      cursor: 'pointer',
+                                      transition: 'background 0.2s',
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      (e.currentTarget as HTMLElement).style.background = 'rgba(200,164,107,0.08)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      (e.currentTarget as HTMLElement).style.background = 'transparent';
+                                    }}
                                   >
-                                    <motion.div
-                                      initial={{ opacity: 0, x: -10 }}
-                                      animate={{ opacity: 1, x: 0 }}
-                                      transition={{ delay: index * 0.03 }}
-                                          className="flex items-center gap-3 p-3 rounded-lg hover:bg-surface-muted transition-all group cursor-pointer"
-                                    >
-                                          <div className="luxury-icon-box-sm flex-shrink-0 group-hover:border-primary/40 transition-colors">
-                                            <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                                      </div>
-                                      <div className="flex-1">
-                                            <h4 className="font-bold text-foreground group-hover:text-primary transition-colors text-base">
-                                          {category.name}
-                                        </h4>
-                                            <p className="text-sm text-muted mt-0.5">{category.description}</p>
-                                      </div>
-                                          <ChevronDown className="w-5 h-5 text-muted-subtle rotate-[-90deg] group-hover:text-primary transition-colors" />
-                                    </motion.div>
-                                  </Link>
-                                );
-                                  })
-                                ) : (
-                                  <div className="text-center py-8 text-muted">
-                                    <p>No categories available</p>
-                                  </div>
-                                )}
-                            </div>
-                              <div className="p-4 bg-gradient-to-r from-surface-muted to-surface border-t border-border">
-                              <Link
-                                href="/shop"
-                                  className="block text-center text-primary hover:text-foreground font-bold text-sm transition-colors py-2"
-                              >
-                                View All Products →
-                              </Link>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
+                                    <Icon style={{ width: '16px', height: '16px', color: '#C8A46B', flexShrink: 0 }} strokeWidth={1.5} />
+                                    <div>
+                                      <p style={{
+                                        fontFamily: 'var(--font-body), Poppins, sans-serif',
+                                        fontSize: '13px',
+                                        color: '#FFFFFF',
+                                        fontWeight: 500,
+                                        margin: 0,
+                                      }}>{cat.name}</p>
+                                      <p style={{
+                                        fontFamily: 'var(--font-body), Poppins, sans-serif',
+                                        fontSize: '11px',
+                                        color: 'rgba(255,255,255,0.45)',
+                                        margin: 0,
+                                        marginTop: '2px',
+                                      }}>{cat.description}</p>
+                                    </div>
+                                    <ArrowRight style={{ width: '14px', height: '14px', color: 'rgba(200,164,107,0.4)', marginLeft: 'auto' }} />
+                                  </motion.div>
+                                </Link>
+                              );
+                            }) : (
+                              <p style={{ textAlign: 'center', padding: '24px', color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>
+                                No categories available
+                              </p>
+                            )}
+                          </div>
+
+                          {/* View all */}
+                          <div style={{ padding: '12px 20px', borderTop: '1px solid rgba(200,164,107,0.15)' }}>
+                            <Link
+                              href="/shop"
+                              onClick={() => setIsShopOpen(false)}
+                              style={{
+                                display: 'block',
+                                textAlign: 'center',
+                                fontFamily: 'var(--font-body), Poppins, sans-serif',
+                                fontSize: '11px',
+                                letterSpacing: '0.18em',
+                                textTransform: 'uppercase',
+                                color: '#C8A46B',
+                                textDecoration: 'none',
+                                transition: 'color 0.2s',
+                              }}
+                              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#D8C4A0'; }}
+                              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#C8A46B'; }}
+                            >
+                              View All Products →
+                            </Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 );
               }
+
               return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                    className={`relative px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${
-                      isActive(item.href)
-                        ? 'text-primary bg-primary/10'
-                        : 'text-foreground hover:text-primary hover:bg-surface-muted'
-                    }`}
-                >
-                  {item.name}
-                    {isActive(item.href) && (
-                      <motion.div
-                        layoutId="activeNav"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                      />
-                    )}
-                </Link>
+                <NavLink key={link.name} active={active} href={link.href}>
+                  {link.name}
+                </NavLink>
               );
             })}
           </nav>
 
-          {/* Right Icons */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {/* Search */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={handleSearchClick}
-                className="hidden md:flex items-center gap-2 px-4 py-2 bg-surface-muted hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300 group"
-              aria-label="Search"
-            >
-                <Search className="w-5 h-5 text-muted group-hover:text-primary-foreground transition-colors" />
-                <span className="text-sm font-medium text-muted group-hover:text-primary-foreground hidden lg:block">Search</span>
-            </motion.button>
-            
-              {/* User Account / Profile */}
+          {/* ── RIGHT: Icons ───────────────────────────────────── */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+
+            {/* Search */}
+            <IconBtn label="Search" onClick={() => setIsSearchOpen(true)}>
+              <Search size={18} strokeWidth={1.5} />
+            </IconBtn>
+
+            {/* Account */}
             {isAuthenticated ? (
-              <div className="relative hidden md:block">
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                  className="flex items-center justify-center w-10 h-10 bg-primary text-primary-foreground rounded-full transition-all duration-300 hover:bg-primary-dark hover:text-primary-foreground group"
-                  aria-label="Profile"
-                >
-                  <User className="w-5 h-5" />
-                </motion.button>
-                
+              <div style={{ position: 'relative' }}>
+                <IconBtn label="Profile" onClick={() => setIsProfileOpen(!isProfileOpen)}>
+                  <User size={18} strokeWidth={1.5} />
+                </IconBtn>
+
                 <AnimatePresence>
-                  {isProfileMenuOpen && (
+                  {isProfileOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute right-0 top-full mt-2 w-56 bg-card rounded-xl shadow-2xl overflow-hidden border border-border z-50"
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.2 }}
+                      style={{
+                        position: 'absolute',
+                        right: 0,
+                        top: 'calc(100% + 8px)',
+                        width: '220px',
+                        background: 'rgba(10,10,10,0.96)',
+                        backdropFilter: 'blur(20px)',
+                        border: '1px solid rgba(200,164,107,0.25)',
+                        borderRadius: '4px',
+                        overflow: 'hidden',
+                        zIndex: 100,
+                      }}
                     >
-                      <div className="p-4 bg-primary text-primary-foreground">
-                        <p className="font-semibold truncate">{user?.email}</p>
+                      <div style={{
+                        padding: '14px 16px',
+                        borderBottom: '1px solid rgba(200,164,107,0.15)',
+                      }}>
+                        <p style={{ fontSize: '12px', color: '#C8A46B', fontFamily: 'var(--font-body)', margin: 0 }}>
+                          {user?.email}
+                        </p>
                         {user?.name && (
-                          <p className="text-sm text-primary-foreground/90 truncate">{user.name}</p>
+                          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-body)', margin: '2px 0 0' }}>
+                            {user.name}
+                          </p>
                         )}
                       </div>
-                      <div className="py-2">
-                        <Link
-                          href="/account/profile"
-                          onClick={() => setIsProfileMenuOpen(false)}
-                          className="block px-4 py-2 text-foreground hover:bg-surface-muted transition-colors"
-                        >
-                          My Profile
-                        </Link>
-                        <Link
-                          href="/account/orders"
-                          onClick={() => setIsProfileMenuOpen(false)}
-                          className="block px-4 py-2 text-foreground hover:bg-surface-muted transition-colors"
-                        >
-                          My Orders
-                        </Link>
+                      <div style={{ padding: '6px' }}>
+                        {[
+                          { href: '/account/profile', label: 'My Profile', icon: User },
+                          { href: '/account/orders',  label: 'My Orders',  icon: Package },
+                        ].map(({ href, label, icon: Icon }) => (
+                          <Link
+                            key={href}
+                            href={href}
+                            onClick={() => setIsProfileOpen(false)}
+                            style={{ textDecoration: 'none' }}
+                          >
+                            <div
+                              style={{
+                                display: 'flex', alignItems: 'center', gap: '10px',
+                                padding: '9px 10px', borderRadius: '2px',
+                                transition: 'background 0.2s',
+                                cursor: 'pointer',
+                              }}
+                              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(200,164,107,0.08)'; }}
+                              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+                            >
+                              <Icon size={14} style={{ color: '#C8A46B' }} strokeWidth={1.5} />
+                              <span style={{ fontSize: '12px', color: '#FFF', fontFamily: 'var(--font-body)', letterSpacing: '0.04em' }}>
+                                {label}
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
                         <button
                           onClick={async () => {
                             await logout();
-                            setIsProfileMenuOpen(false);
+                            setIsProfileOpen(false);
                             router.push('/');
                           }}
-                          className="w-full text-left px-4 py-2 text-red-600 hover:bg-destructive/10 transition-colors"
+                          style={{
+                            display: 'flex', alignItems: 'center', gap: '10px',
+                            padding: '9px 10px', borderRadius: '2px',
+                            background: 'transparent', border: 'none',
+                            cursor: 'pointer', width: '100%',
+                            transition: 'background 0.2s',
+                          }}
+                          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(200,164,107,0.08)'; }}
+                          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
                         >
-                          Logout
+                          <LogOut size={14} style={{ color: '#C8A46B' }} strokeWidth={1.5} />
+                          <span style={{ fontSize: '12px', color: '#FFF', fontFamily: 'var(--font-body)', letterSpacing: '0.04em' }}>
+                            Logout
+                          </span>
                         </button>
                       </div>
                     </motion.div>
@@ -456,208 +553,238 @@ export default function Header() {
                 </AnimatePresence>
               </div>
             ) : (
-              <Link href="/login">
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="hidden md:flex items-center justify-center w-10 h-10 bg-surface-muted hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300 group"
-                  aria-label="Account"
-                >
-                  <User className="w-5 h-5 text-muted group-hover:text-primary-foreground transition-colors" />
-                </motion.button>
-              </Link>
+              <IconBtn label="Account" href="/login">
+                <User size={18} strokeWidth={1.5} />
+              </IconBtn>
             )}
 
-              {/* Wishlist */}
-            <Link href="/wishlist">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                  className="relative flex items-center justify-center w-10 h-10 bg-surface-muted hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300 group"
-                aria-label="Wishlist"
-              >
-                  <Heart className="w-5 h-5 text-muted group-hover:text-primary-foreground transition-colors" />
-                {wishlistCount > 0 && (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="absolute -top-1 -right-1 bg-primary-dark text-primary-foreground text-xs rounded-full min-w-5 h-5 px-1 flex items-center justify-center font-bold shadow-lg ring-2 ring-surface"
-                    >
-                    {wishlistCount > 9 ? '9+' : wishlistCount}
-                    </motion.span>
-                )}
-              </motion.button>
-            </Link>
+            {/* Wishlist */}
+            <IconBtn label="Wishlist" href="/wishlist" count={wishlistCount}>
+              <Heart size={18} strokeWidth={1.5} />
+            </IconBtn>
 
-              {/* Cart */}
-            <Link href="/cart">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                  className="relative flex items-center justify-center w-10 h-10 bg-primary text-primary-foreground rounded-full transition-all duration-300 hover:bg-primary-dark hover:text-primary-foreground group"
-                aria-label="Shopping Cart"
-              >
-                  <ShoppingCart className="w-5 h-5" />
-                  {cartCount > 0 && (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="absolute -top-1 -right-1 bg-primary-dark text-primary-foreground text-xs rounded-full min-w-5 h-5 px-1 flex items-center justify-center font-bold shadow-lg ring-2 ring-surface"
-                    >
-                      {cartCount > 9 ? '9+' : cartCount}
-                    </motion.span>
-                  )}
-              </motion.button>
-            </Link>
+            {/* Cart */}
+            <IconBtn label="Cart" href="/cart" count={cartCount}>
+              <ShoppingCart size={18} strokeWidth={1.5} />
+            </IconBtn>
 
-              {/* Mobile Search */}
+            {/* Mobile hamburger */}
             <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={handleSearchClick}
-                className="lg:hidden flex items-center justify-center w-10 h-10 bg-surface-muted hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300 group"
-              aria-label="Search"
-            >
-                <Search className="w-5 h-5 text-muted group-hover:text-primary-foreground transition-colors" />
-            </motion.button>
-
-              {/* Mobile Menu */}
-            <button
+              whileTap={{ scale: 0.92 }}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden flex items-center justify-center w-10 h-10 bg-surface-muted hover:bg-subtle-strong rounded-full transition-all duration-300"
               aria-label="Menu"
+              className="lg:hidden"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '38px',
+                height: '38px',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                color: '#FFFFFF',
+                marginLeft: '4px',
+              }}
             >
-                {isMenuOpen ? <X className="w-5 h-5 text-foreground/90" /> : <Menu className="w-5 h-5 text-foreground/90" />}
-            </button>
-          </div>
-            </div>
+              {isMenuOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
+            </motion.button>
           </div>
         </div>
+      </header>
 
-        {/* Mobile Menu — inside sticky header so it stays attached */}
-        <AnimatePresence>
-          {isMenuOpen && (
+      {/* ── MOBILE DRAWER ──────────────────────────────────────────── */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:hidden overflow-hidden border-t border-border bg-card shadow-lg"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setIsMenuOpen(false)}
+              style={{
+                position: 'fixed', inset: 0, zIndex: 48,
+                background: 'rgba(0,0,0,0.6)',
+                backdropFilter: 'blur(4px)',
+              }}
+            />
+
+            {/* Panel */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ duration: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
+              style={{
+                position: 'fixed',
+                top: 0,
+                right: 0,
+                bottom: 0,
+                width: 'min(85vw, 360px)',
+                background: '#0A0A0A',
+                borderLeft: '1px solid rgba(200,164,107,0.2)',
+                zIndex: 49,
+                display: 'flex',
+                flexDirection: 'column',
+                overflowY: 'auto',
+              }}
             >
-              <nav className="container mx-auto px-4 py-6 space-y-1">
-              {/* Mobile Search */}
-                <form onSubmit={handleSearchSubmit} className="pb-4 mb-4 border-b border-border">
-                <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-subtle" />
+              {/* Drawer header */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '20px 24px',
+                borderBottom: '1px solid rgba(200,164,107,0.15)',
+              }}>
+                <span style={{
+                  fontFamily: 'var(--font-display), "Playfair Display", serif',
+                  fontSize: '13px',
+                  letterSpacing: '0.22em',
+                  color: '#C8A46B',
+                  textTransform: 'uppercase',
+                }}>
+                  Menu
+                </span>
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#fff', padding: '4px' }}
+                >
+                  <X size={20} strokeWidth={1.5} />
+                </button>
+              </div>
+
+              {/* Mobile search */}
+              <div style={{ padding: '16px 24px', borderBottom: '1px solid rgba(200,164,107,0.1)' }}>
+                <form
+                  onSubmit={(e) => { e.preventDefault(); performSearch(searchQuery); setIsMenuOpen(false); }}
+                  style={{ position: 'relative' }}
+                >
+                  <Search
+                    size={15}
+                    style={{
+                      position: 'absolute', left: '12px', top: '50%',
+                      transform: 'translateY(-50%)',
+                      color: 'rgba(200,164,107,0.6)',
+                    }}
+                    strokeWidth={1.5}
+                  />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search products..."
-                      className="w-full pl-10 pr-4 py-2.5 bg-surface-muted border border-border rounded-full text-foreground placeholder-muted-subtle focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                    />
-                </div>
-              </form>
-                
-              {menuItems.map((item) => {
-                if (item.name === 'Shop') {
-                  return (
-                    <div key={item.name}>
-                      <Link
-                        href={item.href}
-                        onClick={() => setIsMenuOpen(false)}
-                          className={`block px-4 py-3 rounded-lg font-semibold transition-colors ${
-                            isActive(item.href)
-                              ? 'text-primary bg-primary/10'
-                              : 'text-foreground hover:bg-surface-muted'
-                          }`}
-                      >
-                        {item.name}
-                      </Link>
-                        <div className="pl-4 mt-1">
-                        <button
-                          onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
-                            className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-foreground hover:bg-surface-muted transition-colors"
-                        >
-                          <span>Products</span>
-                          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isCategoriesOpen ? 'rotate-180' : ''}`} />
-                        </button>
-                        <AnimatePresence>
-                          {isCategoriesOpen && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: 'auto' }}
-                              exit={{ opacity: 0, height: 0 }}
-                                className="pl-4 mt-1 space-y-1"
-                            >
-                              {categoriesLoading ? (
-                                <div className="flex items-center justify-center py-4">
-                                  <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                                </div>
-                              ) : categories.length > 0 ? (
-                                categories.map((category) => {
-                                const Icon = category.icon;
-                                return (
-                                  <Link
-                                      key={category.id || category.slug}
-                                      href={`/categories/${category.slug}`}
-                                    onClick={() => {
-                                      setIsMenuOpen(false);
-                                      setIsCategoriesOpen(false);
-                                    }}
-                                      className="flex items-center gap-3 px-4 py-2.5 text-foreground/90 hover:text-primary hover:bg-surface-muted rounded-lg transition-colors"
-                                  >
-                                      <span className="luxury-icon-box w-8 h-8 flex-shrink-0">
-                                        <Icon className="w-4 h-4 text-primary" strokeWidth={1.5} />
-                                      </span>
-                                      <span className="font-medium">{category.name}</span>
-                                  </Link>
-                                );
-                                })
-                              ) : (
-                                <div className="text-center py-4 text-muted text-sm">
-                                  <p>No categories available</p>
-                                </div>
-                              )}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    </div>
-                  );
-                }
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setIsMenuOpen(false)}
-                      className={`block px-4 py-3 rounded-lg font-semibold transition-colors ${
-                        isActive(item.href)
-                          ? 'text-primary bg-primary/10'
-                          : 'text-foreground hover:bg-surface-muted'
-                      }`}
-                  >
-                    {item.name}
-                  </Link>
-                );
-              })}
-
-                <div className="pt-4 mt-4 border-t border-border space-y-1">
-                <Link
-                  href="/login"
-                  onClick={() => setIsMenuOpen(false)}
-                    className="block px-4 py-3 rounded-lg font-semibold text-foreground hover:bg-surface-muted transition-colors"
-                >
-                  Login / Register
-                </Link>
+                    placeholder="Search fragrances…"
+                    style={{
+                      width: '100%',
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(200,164,107,0.2)',
+                      borderRadius: '2px',
+                      padding: '10px 12px 10px 36px',
+                      color: '#FFF',
+                      fontFamily: 'var(--font-body), Poppins, sans-serif',
+                      fontSize: '13px',
+                      outline: 'none',
+                      boxSizing: 'border-box',
+                    }}
+                  />
+                </form>
               </div>
-            </nav>
-          </motion.div>
-        )}
-        </AnimatePresence>
-      </header>
 
-      {/* Search Modal */}
+              {/* Nav links */}
+              <nav style={{ padding: '8px 16px', flex: 1 }}>
+                {NAV_LINKS.map((link, i) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.04 }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      style={{
+                        display: 'block',
+                        padding: '13px 8px',
+                        fontFamily: 'var(--font-body), Poppins, sans-serif',
+                        fontSize: '13px',
+                        letterSpacing: '0.12em',
+                        textTransform: 'uppercase',
+                        color: isActive(link.href) ? '#C8A46B' : 'rgba(255,255,255,0.82)',
+                        textDecoration: 'none',
+                        borderBottom: '1px solid rgba(255,255,255,0.05)',
+                        transition: 'color 0.2s',
+                      }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#C8A46B'; }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.color = isActive(link.href) ? '#C8A46B' : 'rgba(255,255,255,0.82)';
+                      }}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+
+              {/* Auth footer */}
+              <div style={{
+                padding: '20px 24px',
+                borderTop: '1px solid rgba(200,164,107,0.15)',
+              }}>
+                {isAuthenticated ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <p style={{ fontSize: '11px', color: 'rgba(200,164,107,0.7)', fontFamily: 'var(--font-body)', letterSpacing: '0.08em', margin: 0 }}>
+                      {user?.email}
+                    </p>
+                    <button
+                      onClick={async () => { await logout(); setIsMenuOpen(false); router.push('/'); }}
+                      style={{
+                        background: 'transparent',
+                        border: '1px solid rgba(200,164,107,0.3)',
+                        borderRadius: '2px',
+                        padding: '10px 16px',
+                        color: '#C8A46B',
+                        fontFamily: 'var(--font-body), Poppins, sans-serif',
+                        fontSize: '11px',
+                        letterSpacing: '0.14em',
+                        textTransform: 'uppercase',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                      }}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={() => setIsMenuOpen(false)}
+                    style={{
+                      display: 'block',
+                      textAlign: 'center',
+                      padding: '12px',
+                      border: '1px solid rgba(200,164,107,0.4)',
+                      borderRadius: '2px',
+                      color: '#C8A46B',
+                      fontFamily: 'var(--font-body), Poppins, sans-serif',
+                      fontSize: '11px',
+                      letterSpacing: '0.18em',
+                      textTransform: 'uppercase',
+                      textDecoration: 'none',
+                      transition: 'all 0.25s',
+                    }}
+                  >
+                    Login / Register
+                  </Link>
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* ── SEARCH MODAL ───────────────────────────────────────────── */}
       <AnimatePresence>
         {isSearchOpen && (
           <>
@@ -665,154 +792,371 @@ export default function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={closeSearchModal}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+              transition={{ duration: 0.22 }}
+              onClick={closeSearch}
+              style={{
+                position: 'fixed', inset: 0, zIndex: 200,
+                background: 'rgba(0,0,0,0.75)',
+                backdropFilter: 'blur(8px)',
+              }}
             />
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: -20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -20 }}
+              initial={{ opacity: 0, y: -24, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0,   scale: 1 }}
+              exit={{ opacity: 0, y: -24, scale: 0.97 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="fixed inset-0 z-[101] flex items-start justify-center pt-10 sm:pt-20 px-4 pointer-events-none overflow-y-auto"
+              style={{
+                position: 'fixed',
+                top: '100px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 201,
+                width: 'min(640px, calc(100vw - 32px))',
+                background: 'rgba(10,10,10,0.97)',
+                border: '1px solid rgba(200,164,107,0.25)',
+                borderRadius: '4px',
+                overflow: 'hidden',
+              }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <div
-                  className="bg-card rounded-2xl shadow-2xl w-full max-w-2xl pointer-events-auto my-4"
-                onClick={(e) => e.stopPropagation()}
+              {/* Modal header */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '16px 20px',
+                borderBottom: '1px solid rgba(200,164,107,0.15)',
+              }}>
+                <p style={{
+                  fontFamily: 'var(--font-display), "Playfair Display", serif',
+                  fontSize: '11px',
+                  letterSpacing: '0.2em',
+                  color: '#C8A46B',
+                  textTransform: 'uppercase',
+                  margin: 0,
+                }}>Search</p>
+                <button
+                  onClick={closeSearch}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.5)', padding: '2px' }}
+                >
+                  <X size={18} strokeWidth={1.5} />
+                </button>
+              </div>
+
+              {/* Input */}
+              <form
+                onSubmit={(e) => { e.preventDefault(); performSearch(searchQuery); }}
+                style={{ padding: '20px' }}
               >
-                  <div className="flex items-center justify-between p-6 border-b border-border">
-                    <h2 className="text-2xl font-bold text-foreground">Search Products</h2>
-                  <button
-                    onClick={closeSearchModal}
-                    className="p-2 hover:bg-subtle-strong rounded-full transition-colors"
-                    aria-label="Close search"
-                  >
-                      <X className="w-6 h-6 text-muted" />
-                  </button>
+                <div style={{ position: 'relative' }}>
+                  <Search
+                    size={16}
+                    style={{
+                      position: 'absolute', left: '14px', top: '50%',
+                      transform: 'translateY(-50%)',
+                      color: 'rgba(200,164,107,0.6)',
+                    }}
+                    strokeWidth={1.5}
+                  />
+                  <input
+                    id="header-search-input"
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search for fragrances, attars, oud…"
+                    autoFocus
+                    style={{
+                      width: '100%',
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(200,164,107,0.25)',
+                      borderRadius: '2px',
+                      padding: '14px 40px 14px 44px',
+                      color: '#FFF',
+                      fontFamily: 'var(--font-body), Poppins, sans-serif',
+                      fontSize: '15px',
+                      outline: 'none',
+                      boxSizing: 'border-box',
+                      letterSpacing: '0.02em',
+                    }}
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => { setSearchQuery(''); setSearchResults([]); }}
+                      style={{
+                        position: 'absolute', right: '12px', top: '50%',
+                        transform: 'translateY(-50%)',
+                        background: 'none', border: 'none',
+                        cursor: 'pointer', color: 'rgba(255,255,255,0.4)',
+                        padding: '2px',
+                      }}
+                    >
+                      <X size={14} strokeWidth={1.5} />
+                    </button>
+                  )}
                 </div>
 
-                  <form onSubmit={handleSearchSubmit} className="p-6">
-                  <div className="relative">
-                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-muted-subtle" />
-                    <input
-                      id="header-search-input"
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Search for products, categories, or brands..."
-                        className="w-full pl-14 pr-12 py-4 text-lg text-foreground placeholder-muted-subtle border-2 border-border rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
-                      autoFocus
-                    />
-                    {searchQuery && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSearchQuery('');
-                          setSearchResults([]);
-                        }}
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 p-1 hover:bg-subtle-strong rounded-full transition-colors"
-                        aria-label="Clear search"
-                      >
-                        <X className="w-5 h-5 text-muted-subtle hover:text-muted" />
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Search Results */}
+                {/* Results */}
+                <AnimatePresence mode="wait">
                   {searchQuery && (
-                    <div className="mt-4 max-h-96 overflow-y-auto">
+                    <motion.div
+                      key="results"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      style={{ marginTop: '12px', maxHeight: '340px', overflowY: 'auto' }}
+                    >
                       {isSearching ? (
-                        <div className="flex items-center justify-center py-8">
-                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                          <span className="ml-3 text-muted">Searching...</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '24px', justifyContent: 'center' }}>
+                          <div style={{
+                            width: '18px', height: '18px',
+                            border: '2px solid #C8A46B',
+                            borderTopColor: 'transparent',
+                            borderRadius: '50%',
+                            animation: 'spin 0.8s linear infinite',
+                          }} />
+                          <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', fontFamily: 'var(--font-body)' }}>
+                            Searching…
+                          </span>
                         </div>
                       ) : searchResults.length > 0 ? (
-                        <div className="space-y-2">
+                        <div>
                           {searchResults.map((product) => (
                             <button
                               key={product.id}
                               type="button"
-                              onClick={() => handleProductClick(product)}
-                              className="w-full flex items-center gap-4 p-3 hover:bg-surface-muted rounded-lg transition-colors text-left group"
+                              onClick={() => {
+                                router.push(`/products/${product.id}`);
+                                closeSearch();
+                              }}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '14px',
+                                width: '100%',
+                                padding: '10px 4px',
+                                background: 'transparent',
+                                border: 'none',
+                                borderBottom: '1px solid rgba(255,255,255,0.05)',
+                                cursor: 'pointer',
+                                textAlign: 'left',
+                                transition: 'background 0.15s',
+                              }}
+                              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(200,164,107,0.06)'; }}
+                              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
                             >
-                              <div className="flex-shrink-0 w-16 h-16 bg-subtle-strong rounded-lg overflow-hidden">
+                              <div style={{
+                                width: '52px', height: '52px',
+                                borderRadius: '2px',
+                                overflow: 'hidden',
+                                flexShrink: 0,
+                                background: 'rgba(255,255,255,0.06)',
+                              }}>
                                 <img
                                   src={product.image || '/Banner-01.jpg'}
                                   alt={product.name}
-                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-                                  onError={(e) => {
-                                    (e.target as HTMLImageElement).src = '/Banner-01.jpg';
-                                  }}
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                  onError={(e) => { (e.target as HTMLImageElement).src = '/Banner-01.jpg'; }}
                                 />
                               </div>
-                              <div className="flex-1 min-w-0">
-                                <h3 className="font-semibold text-foreground truncate group-hover:text-primary transition-colors">
-                                  {product.name}
-                                </h3>
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <p style={{
+                                  margin: 0,
+                                  fontFamily: 'var(--font-body), Poppins, sans-serif',
+                                  fontSize: '13px',
+                                  color: '#FFF',
+                                  fontWeight: 500,
+                                  whiteSpace: 'nowrap',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                }}>{product.name}</p>
                                 {product.category && (
-                                  <p className="text-sm text-muted truncate">{product.category.name}</p>
+                                  <p style={{ margin: '2px 0 0', fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-body)' }}>
+                                    {product.category.name}
+                                  </p>
                                 )}
-                                <p className="text-lg font-bold text-primary mt-1">
+                                <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#C8A46B', fontWeight: 600, fontFamily: 'var(--font-body)' }}>
                                   Rs. {product.price?.toLocaleString() || '0'}
                                 </p>
                               </div>
-                              <div className="flex-shrink-0">
-                                <ArrowRight className="w-5 h-5 text-muted-subtle group-hover:text-primary transition-colors" />
-                              </div>
+                              <ArrowRight size={14} style={{ color: 'rgba(200,164,107,0.4)', flexShrink: 0 }} />
                             </button>
                           ))}
+
+                          <button
+                            type="submit"
+                            style={{
+                              marginTop: '12px',
+                              width: '100%',
+                              padding: '12px',
+                              background: 'transparent',
+                              border: '1px solid rgba(200,164,107,0.35)',
+                              borderRadius: '2px',
+                              color: '#C8A46B',
+                              fontFamily: 'var(--font-body), Poppins, sans-serif',
+                              fontSize: '11px',
+                              letterSpacing: '0.16em',
+                              textTransform: 'uppercase',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s',
+                            }}
+                            onMouseEnter={(e) => {
+                              const el = e.currentTarget as HTMLElement;
+                              el.style.background = 'rgba(200,164,107,0.08)';
+                            }}
+                            onMouseLeave={(e) => {
+                              const el = e.currentTarget as HTMLElement;
+                              el.style.background = 'transparent';
+                            }}
+                          >
+                            View All Results
+                          </button>
                         </div>
                       ) : (
-                        <div className="text-center py-8">
-                          <p className="text-muted">No products found</p>
-                          <p className="text-sm text-muted-subtle mt-1">Try a different search term</p>
-                        </div>
+                        <p style={{
+                          textAlign: 'center', padding: '24px',
+                          color: 'rgba(255,255,255,0.35)',
+                          fontFamily: 'var(--font-body)',
+                          fontSize: '13px',
+                        }}>
+                          No products found for "{searchQuery}"
+                        </p>
                       )}
-                    </div>
+                    </motion.div>
                   )}
 
-                  {/* Popular Searches - Category names from API */}
+                  {/* Popular searches */}
                   {!searchQuery && categories.length > 0 && (
-                    <div className="mt-6">
-                      <p className="text-sm font-semibold text-muted mb-3">Popular Searches</p>
-                      <div className="flex flex-wrap gap-2">
+                    <motion.div
+                      key="popular"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      style={{ marginTop: '16px' }}
+                    >
+                      <p style={{
+                        fontSize: '10px',
+                        letterSpacing: '0.18em',
+                        color: 'rgba(200,164,107,0.6)',
+                        textTransform: 'uppercase',
+                        fontFamily: 'var(--font-body)',
+                        margin: '0 0 10px',
+                      }}>Popular Searches</p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                         {categories.slice(0, 8).map((cat) => (
                           <button
                             key={cat.id || cat.name}
                             type="button"
-                            onClick={() => {
-                              setSearchQuery(cat.name);
+                            onClick={() => setSearchQuery(cat.name)}
+                            style={{
+                              padding: '6px 14px',
+                              background: 'rgba(200,164,107,0.08)',
+                              border: '1px solid rgba(200,164,107,0.2)',
+                              borderRadius: '2px',
+                              color: 'rgba(255,255,255,0.7)',
+                              fontFamily: 'var(--font-body), Poppins, sans-serif',
+                              fontSize: '11px',
+                              letterSpacing: '0.06em',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s',
                             }}
-                            className="px-4 py-2 bg-subtle-strong hover:bg-gradient-to-r hover:from-surface hover:to-surface-muted text-foreground/90 hover:text-foreground rounded-full text-sm font-medium transition-all"
+                            onMouseEnter={(e) => {
+                              const el = e.currentTarget as HTMLElement;
+                              el.style.background = 'rgba(200,164,107,0.15)';
+                              el.style.color = '#C8A46B';
+                            }}
+                            onMouseLeave={(e) => {
+                              const el = e.currentTarget as HTMLElement;
+                              el.style.background = 'rgba(200,164,107,0.08)';
+                              el.style.color = 'rgba(255,255,255,0.7)';
+                            }}
                           >
                             {cat.name}
                           </button>
                         ))}
                       </div>
-                    </div>
+                    </motion.div>
                   )}
+                </AnimatePresence>
+              </form>
 
-                  {searchQuery && searchResults.length > 0 && (
-                    <button
-                      type="submit"
-                      className="mt-4 w-full py-3 bg-gradient-to-r from-surface-elevated to-primary text-foreground rounded-xl font-bold hover:from-primary hover:to-surface-elevated transition-all shadow-lg hover:shadow-xl"
-                    >
-                      View All Results
-                    </button>
-                  )}
-                </form>
-
-                  <div className="px-6 pb-4">
-                  <p className="text-xs text-muted-subtle text-center">
-                    Press <kbd className="hidden sm:inline px-2 py-1 bg-subtle-strong rounded text-muted font-mono">ESC</kbd><span className="sm:hidden">Tap outside</span> to close
-                  </p>
-                </div>
-              </div>
+              <p style={{
+                textAlign: 'center',
+                padding: '0 20px 14px',
+                fontSize: '10px',
+                color: 'rgba(255,255,255,0.2)',
+                fontFamily: 'var(--font-body)',
+                letterSpacing: '0.08em',
+              }}>
+                Press ESC to close
+              </p>
             </motion.div>
           </>
         )}
       </AnimatePresence>
+
+      {/* Spin keyframe */}
+      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </>
+  );
+}
+
+/* ─── NavLink sub-component ──────────────────────────────────────── */
+function NavLink({
+  href, active, children, hasArrow,
+}: {
+  href: string;
+  active: boolean;
+  children: React.ReactNode;
+  hasArrow?: boolean;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <Link
+      href={href}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: 'relative',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '4px',
+        padding: '6px 12px',
+        fontFamily: 'var(--font-body), Poppins, sans-serif',
+        fontSize: '11px',
+        fontWeight: 500,
+        letterSpacing: '0.13em',
+        textTransform: 'uppercase',
+        textDecoration: 'none',
+        color: active || hovered ? '#C8A46B' : 'rgba(255,255,255,0.85)',
+        transition: 'color 0.25s',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {children}
+      {hasArrow && (
+        <ChevronDown
+          size={11}
+          strokeWidth={1.5}
+          style={{ transition: 'transform 0.25s', opacity: 0.7 }}
+        />
+      )}
+
+      {/* Active / hover underline */}
+      <span
+        style={{
+          position: 'absolute',
+          bottom: '2px',
+          left: '12px',
+          right: '12px',
+          height: '1px',
+          background: '#C8A46B',
+          transform: active || hovered ? 'scaleX(1)' : 'scaleX(0)',
+          transformOrigin: 'left',
+          transition: 'transform 0.3s ease',
+        }}
+      />
+    </Link>
   );
 }

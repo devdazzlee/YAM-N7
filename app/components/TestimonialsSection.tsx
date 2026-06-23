@@ -72,9 +72,9 @@ export default function TestimonialsSection() {
           key={star}
           className={`w-4 h-4 sm:w-[18px] sm:h-[18px] ${
             star <= rating
-              ? 'fill-[#FBBC04] text-[#FBBC04]'
+              ? 'fill-primary text-primary'
               : star - 0.5 <= rating
-              ? 'fill-[#FBBC04]/50 text-[#FBBC04]'
+              ? 'fill-primary/50 text-primary'
               : 'fill-border text-border'
           }`}
         />
@@ -133,14 +133,14 @@ export default function TestimonialsSection() {
             <>
               <button
                 onClick={prevPage}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-11 sm:h-11 bg-card rounded-full shadow-lg flex items-center justify-center hover:bg-surface-muted transition-colors border border-border"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-11 sm:h-11 bg-card rounded-full flex items-center justify-center hover:bg-surface-elevated transition-colors border border-border/40 hover:border-primary"
                 aria-label="Previous reviews"
               >
                 <ChevronLeft className="w-5 h-5 text-foreground" />
               </button>
               <button
                 onClick={nextPage}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-11 sm:h-11 bg-card rounded-full shadow-lg flex items-center justify-center hover:bg-surface-muted transition-colors border border-border"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-11 sm:h-11 bg-card rounded-full flex items-center justify-center hover:bg-surface-elevated transition-colors border border-border/40 hover:border-primary"
                 aria-label="Next reviews"
               >
                 <ChevronRight className="w-5 h-5 text-foreground" />
@@ -166,7 +166,7 @@ export default function TestimonialsSection() {
                     animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                     transition={{ duration: 0.5, delay: index * 0.1, ease }}
                     whileHover={{ y: -6, scale: 1.01 }}
-                    className="bg-gradient-to-br from-surface-muted/50 to-background rounded-xl p-4 sm:p-5 shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col h-full border border-border"
+                    className="bg-card rounded-xl p-4 sm:p-5 transition-all duration-300 flex flex-col h-full border border-border/40 hover:border-primary"
                   >
                     {/* Stars */}
                     <div className="mb-3">

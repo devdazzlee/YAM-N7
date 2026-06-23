@@ -171,7 +171,7 @@ export function SectionHeader({
         </motion.p>
       )}
       <h2
-        className={`font-heading text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-3 sm:mb-4 ${
+        className={`font-display tracking-luxury uppercase text-2xl sm:text-3xl md:text-4xl font-normal leading-tight mb-3 sm:mb-4 ${
           light ? 'text-foreground' : 'text-foreground'
         }`}
       >

@@ -5,12 +5,16 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Newsletter from './components/Newsletter';
 import HeroSection from './components/HeroSection';
+import IdentitySection from './components/IdentitySection';
+import GenderProductCollections from './components/GenderProductCollections';
 import StatsSection from './components/StatsSection';
-import CategoriesSection from './components/CategoriesSection';
 import LuxuryCollectionsSection from './components/LuxuryCollectionsSection';
 import WhyChooseUsSection from './components/WhyChooseUsSection';
-import FeaturedProductsSection from './components/FeaturedProductsSection';
+import TrendingProductsSection from './components/TrendingProductsSection';
 import ProductShowcaseSection from './components/ProductShowcaseSection';
+import BestSellersSection from './components/BestSellersSection';
+import WhyChooseYAMSection from './components/WhyChooseYAMSection';
+import SignatureBannerSection from './components/SignatureBannerSection';
 import NewArrivalsSection from './components/NewArrivalsSection';
 import BrandStorySection from './components/BrandStorySection';
 import BenefitsSection from './components/BenefitsSection';
@@ -39,30 +43,21 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <Header />
       <HeroSection />
+      <IdentitySection />
+      <GenderProductCollections />
       <StatsSection />
-      <CategoriesSection
-        initialCategories={categories}
-        initialTotal={categoriesTotal}
-        initialLoading={loading && !data}
-        error={error}
-      />
       <LuxuryCollectionsSection />
-      <FeaturedProductsSection
+      <TrendingProductsSection
         initialProducts={featured}
         initialTotal={featuredTotal}
         initialLoading={loading && !data}
       />
-      <ProductShowcaseSection
-        id="best-sellers"
-        accent="Client Favourites"
-        title="Best Sellers"
-        subtitle="The fragrances our community loves most — proven performers with exceptional reviews."
+      <BestSellersSection
         products={bestSellers}
         loading={loading && !data}
-        viewAllHref="/best-sellers"
-        viewAllLabel="Shop Best Sellers"
-        dark
       />
+      <WhyChooseYAMSection />
+      <SignatureBannerSection />
       <NewArrivalsSection />
       <BrandStorySection />
       <WhyChooseUsSection />

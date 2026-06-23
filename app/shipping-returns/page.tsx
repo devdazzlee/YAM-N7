@@ -48,8 +48,7 @@ export default function ShippingReturnsPage() {
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Page Header */}
-      <section className="relative bg-gradient-to-r from-surface-elevated via-primary to-surface-elevated text-foreground py-16 sm:py-20 md:py-24 overflow-hidden">
+      <section className="relative bg-card text-foreground py-16 sm:py-20 md:py-24 border-b border-border/40 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-72 sm:w-96 h-72 sm:h-96 bg-surface rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-72 sm:w-96 h-72 sm:h-96 bg-primary-dark rounded-full blur-3xl"></div>
@@ -83,9 +82,9 @@ export default function ShippingReturnsPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ y: -5 }}
-                  className="bg-gradient-to-br from-surface-muted to-background rounded-2xl p-5 sm:p-6 text-center shadow-md hover:shadow-lg transition-all duration-300"
+                  className="bg-card rounded-2xl p-5 sm:p-6 text-center border border-border/40 hover:border-primary transition-all duration-300"
                 >
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-primary to-surface-elevated rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-md">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-primary to-primary-light rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-foreground" />
                   </div>
                   <h3 className="font-bold text-foreground text-sm sm:text-base mb-1 sm:mb-2">{info.title}</h3>
@@ -115,11 +114,11 @@ export default function ShippingReturnsPage() {
               </div>
             </div>
 
-            <div className="bg-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 shadow-lg space-y-6">
+            <div className="bg-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 border border-border/40 space-y-6">
               {/* Complimentary Shipping */}
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-emerald-950/40 rounded-xl flex items-center justify-center mt-0.5">
-                  <Truck className="w-5 h-5 text-green-600" />
+                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mt-0.5">
+                  <Truck className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <h3 className="font-bold text-foreground text-base sm:text-lg mb-1">Complimentary Shipping</h3>
@@ -144,8 +143,8 @@ export default function ShippingReturnsPage() {
 
               {/* Delivery Timelines */}
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center mt-0.5">
-                  <Clock className="w-5 h-5 text-orange-600" />
+                <div className="flex-shrink-0 w-10 h-10 bg-primary-light/10 rounded-xl flex items-center justify-center mt-0.5">
+                  <Clock className="w-5 h-5 text-primary-light" />
                 </div>
                 <div className="w-full">
                   <h3 className="font-bold text-foreground text-base sm:text-lg mb-3">Delivery Timelines</h3>
@@ -166,8 +165,8 @@ export default function ShippingReturnsPage() {
 
               {/* Order Tracking */}
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center mt-0.5">
-                  <MapPin className="w-5 h-5 text-purple-600" />
+                <div className="flex-shrink-0 w-10 h-10 bg-muted/10 rounded-xl flex items-center justify-center mt-0.5">
+                  <MapPin className="w-5 h-5 text-muted" />
                 </div>
                 <div>
                   <h3 className="font-bold text-foreground text-base sm:text-lg mb-1">Order Tracking</h3>
@@ -217,28 +216,28 @@ export default function ShippingReturnsPage() {
 
             <div className="space-y-6">
               {/* Returns & Exchanges */}
-              <div className="bg-gradient-to-br from-surface-muted to-background rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-md border border-border">
+              <div className="bg-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-border/40">
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-10 h-10 bg-gradient-to-br from-primary to-surface-elevated rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-xl flex items-center justify-center flex-shrink-0">
                     <RotateCcw className="w-5 h-5 text-foreground" />
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground">Returns & Exchanges</h3>
                 </div>
                 <div className="space-y-4 text-sm sm:text-base text-muted leading-relaxed">
                   <div className="flex gap-3">
-                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <p>
                       <strong className="text-foreground">Window:</strong> You have <span className="font-semibold text-primary">7 days</span> from the date of delivery to request a return or exchange.
                     </p>
                   </div>
                   <div className="flex gap-3">
-                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <p>
                       <strong className="text-foreground">Condition:</strong> Due to the nature of fragrance products, returns are only accepted if the perfume remains <span className="font-semibold">unopened, unused, and in its original packaging</span> with the safety seal intact.
                     </p>
                   </div>
                   <div className="flex gap-3">
-                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <p>
                       <strong className="text-foreground">Process:</strong> To initiate a return, please contact our support team at{' '}
                       <a href={`tel:${CONTACT.phoneTel}`} className="text-primary font-semibold hover:underline">{CONTACT.phoneDisplay}</a> or email{' '}
@@ -249,16 +248,16 @@ export default function ShippingReturnsPage() {
               </div>
 
               {/* Damaged or Incorrect Items */}
-              <div className="bg-gradient-to-br from-primary/10 to-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-md border border-primary/20">
+              <div className="bg-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-primary/30">
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-10 h-10 bg-gradient-to-br from-primary-dark to-[#EA580C] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary-dark to-primary-light rounded-xl flex items-center justify-center flex-shrink-0">
                     <AlertTriangle className="w-5 h-5 text-foreground" />
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground">Damaged or Incorrect Items</h3>
                 </div>
                 <div className="space-y-3 text-sm sm:text-base text-muted leading-relaxed">
                   <p>
-                    If you receive a product that is <strong className="text-foreground">damaged, expired, or differs</strong> from what you ordered, you are entitled to a <span className="font-semibold text-green-600">full replacement or refund</span>.
+                    If you receive a product that is <strong className="text-foreground">damaged, expired, or differs</strong> from what you ordered, you are entitled to a <span className="font-semibold text-primary">full replacement or refund</span>.
                   </p>
                   <p>
                     Please report such issues within <span className="font-semibold text-primary-dark">24 hours</span> of delivery with photographic evidence to facilitate a swift resolution.
@@ -267,28 +266,28 @@ export default function ShippingReturnsPage() {
               </div>
 
               {/* Refunds */}
-              <div className="bg-gradient-to-br from-surface to-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-md border border-border">
+              <div className="bg-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-border/40">
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-10 h-10 bg-gradient-to-br from-[#059669] to-[#047857] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-xl flex items-center justify-center flex-shrink-0">
                     <CreditCard className="w-5 h-5 text-foreground" />
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground">Refunds</h3>
                 </div>
                 <div className="space-y-4 text-sm sm:text-base text-muted leading-relaxed">
                   <div className="flex gap-3">
-                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <p>
                       <strong className="text-foreground">Approval:</strong> Once your return is received and inspected, we will notify you of the approval or rejection of your refund.
                     </p>
                   </div>
                   <div className="flex gap-3">
-                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <p>
                       <strong className="text-foreground">Timeline:</strong> Approved refunds are processed within <span className="font-semibold text-primary">5–7 business days</span>.
                     </p>
                   </div>
                   <div className="flex gap-3">
-                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <p>
                       <strong className="text-foreground">Method:</strong> Refunds will be issued to your original payment method (Bank Transfer/Credit Card) or as store credit for Cash on Delivery orders.
                     </p>
@@ -297,9 +296,9 @@ export default function ShippingReturnsPage() {
               </div>
 
               {/* Non-Returnable Items */}
-              <div className="bg-gradient-to-br from-destructive/10 to-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-md border border-destructive/20">
+              <div className="bg-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-border/30">
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-10 h-10 bg-gradient-to-br from-destructive/100 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary-dark to-primary-light rounded-xl flex items-center justify-center flex-shrink-0">
                     <XCircle className="w-5 h-5 text-foreground" />
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground">Non-Returnable Items</h3>
@@ -307,7 +306,7 @@ export default function ShippingReturnsPage() {
                 <ul className="space-y-3">
                   {nonReturnableItems.map((item, index) => (
                     <li key={index} className="flex gap-3 items-start text-sm sm:text-base text-muted">
-                      <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-1" />
+                      <XCircle className="w-4 h-4 text-muted flex-shrink-0 mt-1" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -315,9 +314,9 @@ export default function ShippingReturnsPage() {
               </div>
 
               {/* Exchange Option */}
-              <div className="bg-gradient-to-br from-surface-muted to-background rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-md border border-border">
+              <div className="bg-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-border/40">
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-10 h-10 bg-gradient-to-br from-primary to-surface-elevated rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-xl flex items-center justify-center flex-shrink-0">
                     <ArrowLeftRight className="w-5 h-5 text-foreground" />
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground">Prefer an Exchange?</h3>
@@ -333,7 +332,7 @@ export default function ShippingReturnsPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mt-10 bg-gradient-to-r from-surface-elevated to-primary rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center text-foreground"
+              className="mt-10 bg-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center text-foreground border border-border/40"
             >
               <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3">Need Help With a Return?</h3>
               <p className="text-sm sm:text-base text-foreground/80 mb-5 max-w-xl mx-auto">
@@ -342,7 +341,7 @@ export default function ShippingReturnsPage() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a
                   href={`tel:${CONTACT.phoneTel}`}
-                  className="inline-flex items-center gap-2 bg-card text-foreground px-6 py-3 rounded-full font-semibold text-sm sm:text-base hover:bg-surface transition-colors shadow-lg"
+                  className="inline-flex items-center gap-2 bg-card text-foreground px-6 py-3 rounded-full font-semibold text-sm sm:text-base hover:bg-surface border border-border/40 hover:border-primary transition-colors"
                 >
                   <Phone className="w-4 h-4" />
                   {CONTACT.phoneDisplay}

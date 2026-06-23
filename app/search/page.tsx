@@ -14,13 +14,53 @@ import { useWebProductListStore } from '../../lib/store/webProductListStore';
 
 const PAGE_SIZE = 12;
 
+const PERSONALITY_MAP: Record<string, { apiKey: string; title: string; description: string }> = {
+  'the visionary': {
+    apiKey: 'Oud',
+    title: 'The Visionary',
+    description: 'Deep, complex, and pioneering scents driven by rich notes of Royal Oud.',
+  },
+  'the bold': {
+    apiKey: 'Black',
+    title: 'The Bold',
+    description: 'Intense and striking statements characterized by dark spices, leather, and black oud.',
+  },
+  'the elegant': {
+    apiKey: 'Attar',
+    title: 'The Elegant',
+    description: 'Refined and timeless compositions crafted from precious rose and traditional jasmine attars.',
+  },
+  'the magnetic': {
+    apiKey: 'Musk',
+    title: 'The Magnetic',
+    description: 'Hypnotic and warm presences defined by midnight musk and alluring amber.',
+  },
+  'the untamed': {
+    apiKey: 'Royal',
+    title: 'The Untamed',
+    description: 'Raw and expressive profiles featuring earthy saffron, patchouli, and vetiver.',
+  },
+  'the infinite': {
+    apiKey: 'Ocean',
+    title: 'The Infinite',
+    description: 'Celestial, limitless freshness highlighted by sea salt and crisp citrus notes.',
+  },
+};
+
 function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [input, setInput] = useState('');
   const [query, setQuery] = useState('');
 
-  const bucketKey = `search:${query}`;
+  const normalizedQuery = query.toLowerCase().trim();
+  const personalityMatch = PERSONALITY_MAP[normalizedQuery];
+  
+  const apiQuery = personalityMatch ? personalityMatch.apiKey : query;
+  const displayTitle = personalityMatch ? personalityMatch.title : 'Search Products';
+  const displaySubtitle = personalityMatch ? personalityMatch.description : '';
+
+  const bucketKey = `search:${apiQuery}`;
   const bucket = useWebProductListStore((s) => s.buckets[bucketKey]);
   const loadFirstPage = useWebProductListStore((s) => s.loadFirstPage);
   const loadNextPage = useWebProductListStore((s) => s.loadNextPage);
@@ -32,9 +72,9 @@ function SearchContent() {
   }, [searchParams]);
 
   useEffect(() => {
-    if (!query) return;
-    loadFirstPage(bucketKey, { search: query, limit: PAGE_SIZE, sort: 'newest' }).catch(() => {});
-  }, [query, bucketKey, loadFirstPage]);
+    if (!apiQuery) return;
+    loadFirstPage(bucketKey, { search: apiQuery, limit: PAGE_SIZE, sort: 'newest' }).catch(() => {});
+  }, [apiQuery, bucketKey, loadFirstPage]);
 
   const products = bucket?.items ?? [];
   const meta = bucket?.meta;
@@ -57,8 +97,20 @@ function SearchContent() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-2xl mx-auto"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Search Products</h1>
-            <form onSubmit={handleSearchSubmit} className="relative">
+            {personalityMatch && (
+              <span className="text-xs uppercase tracking-[0.25em] text-[#C8A46B] font-semibold mb-2 block">
+                The Identity Series
+              </span>
+            )}
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 font-display tracking-luxury uppercase">
+              {displayTitle}
+            </h1>
+            {displaySubtitle && (
+              <p className="text-gray-300 font-heading text-lg max-w-xl mx-auto leading-relaxed mb-6 font-normal">
+                {displaySubtitle}
+              </p>
+            )}
+            <form onSubmit={handleSearchSubmit} className="relative max-w-md mx-auto">
               <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-muted" />
               <input
                 type="text"
@@ -80,10 +132,16 @@ function SearchContent() {
             <Loader size="lg" text="Searching products..." />
           ) : (
             <>
-              <p className="text-muted mb-6">
-                {total > 0
-                  ? `${total} result${total !== 1 ? 's' : ''} for "${query}"`
-                  : `No results found for "${query}"`}
+              <p className="text-muted mb-6 font-sans text-sm tracking-wide">
+                {personalityMatch ? (
+                  total > 0
+                    ? `Revealed ${total} fragrance${total !== 1 ? 's' : ''} aligned with your aura`
+                    : `No fragrances found matching this identity profile`
+                ) : (
+                  total > 0
+                    ? `${total} result${total !== 1 ? 's' : ''} for "${query}"`
+                    : `No results found for "${query}"`
+                )}
               </p>
               {products.length > 0 && (
                 <>

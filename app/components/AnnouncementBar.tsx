@@ -1,0 +1,65 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+
+const MESSAGES = [
+  'FREE SHIPPING ON ORDERS OVER PKR 5000',
+  'DISCOVER YOUR SIGNATURE SCENT',
+  'CRAFTED FOR EVERY IDENTITY',
+  'NEW ARRIVALS NOW LIVE',
+  'YOUR ATTITUDE MATTERS',
+];
+
+export default function AnnouncementBar() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % MESSAGES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div
+      aria-live="polite"
+      style={{
+        background: '#0A0A0A',
+        borderBottom: '1px solid rgba(200, 164, 107, 0.15)',
+        height: '36px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        position: 'relative',
+        zIndex: 60,
+        width: '100%',
+      }}
+    >
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={index}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+          style={{
+            color: '#C8A46B',
+            fontFamily: 'var(--font-body), Poppins, sans-serif',
+            fontSize: '10.5px',
+            fontWeight: 500,
+            letterSpacing: '0.22em',
+            textTransform: 'uppercase',
+            textAlign: 'center',
+            whiteSpace: 'nowrap',
+            position: 'absolute',
+            userSelect: 'none',
+          }}
+        >
+          {MESSAGES[index]}
+        </motion.p>
+      </AnimatePresence>
+    </div>
+  );
+}

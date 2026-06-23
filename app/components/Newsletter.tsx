@@ -26,7 +26,7 @@ export default function Newsletter() {
           </div>
 
           <p className="luxury-label mb-3">Exclusive Access</p>
-          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-light text-foreground mb-4">
+          <h2 className="font-display tracking-luxury uppercase text-2xl sm:text-3xl md:text-4xl font-normal text-foreground mb-4">
             Join the YAM-N7 Circle
           </h2>
           <p className="text-muted text-sm sm:text-base leading-relaxed mb-8 max-w-lg mx-auto">

@@ -155,7 +155,7 @@ export default function AboutPage() {
               <span className="inline-block text-primary-dark font-semibold text-xs sm:text-sm tracking-[0.2em] uppercase mb-3">
                 Since 2000
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              <h2 className="font-display tracking-luxury uppercase text-2xl sm:text-3xl md:text-4xl text-foreground mb-4">
                 Our Story
               </h2>
               <div className="flex items-center justify-center gap-2">
@@ -284,7 +284,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-10 sm:mb-14"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">
+            <h2 className="font-display tracking-luxury uppercase text-2xl sm:text-3xl md:text-4xl text-foreground mb-3">
               A Legacy of Fragrance: Our Journey
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-muted max-w-xl mx-auto mb-4">
@@ -350,7 +350,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-10 sm:mb-14"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">Our Values</h2>
+            <h2 className="font-display tracking-luxury uppercase text-2xl sm:text-3xl md:text-4xl text-foreground mb-3">Our Values</h2>
             <p className="text-sm sm:text-base md:text-lg text-muted max-w-lg mx-auto mb-4">
               The principles that guide our product selections.
             </p>
@@ -393,7 +393,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-10 sm:mb-14"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">Mission & Vision</h2>
+            <h2 className="font-display tracking-luxury uppercase text-2xl sm:text-3xl md:text-4xl text-foreground mb-3">Mission & Vision</h2>
             <p className="text-sm sm:text-base md:text-lg text-muted max-w-lg mx-auto mb-4">
               Aligning your goals with community health and premium standards.
             </p>
@@ -449,7 +449,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-10 sm:mb-14"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">Why Trust Us?</h2>
+            <h2 className="font-display tracking-luxury uppercase text-2xl sm:text-3xl md:text-4xl text-foreground mb-3">Why Trust Us?</h2>
             <p className="text-sm sm:text-base md:text-lg text-muted max-w-lg mx-auto">
               We have earned the trust of thousands of customers through our commitment to excellence.
             </p>

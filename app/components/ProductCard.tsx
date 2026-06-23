@@ -146,7 +146,7 @@ export default function ProductCard({
         viewport={{ once: true }}
         whileHover={{ y: -4 }}
         transition={{ duration: 0.3 }}
-        className="bg-card rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group flex flex-col"
+        className="bg-card rounded-xl sm:rounded-2xl border border-border/40 hover:border-primary transition-all duration-300 overflow-hidden group flex flex-col"
       >
         <div className="flex flex-col sm:flex-row min-w-0">
           <Link href={`/products/${id}`} className="flex-shrink-0 w-full sm:w-auto">
@@ -218,7 +218,7 @@ export default function ProductCard({
               </button>
               <button
                 onClick={handleBuyNow}
-                className="px-2 sm:px-3 md:px-4 lg:px-6 py-1.5 sm:py-2 md:py-3 bg-gradient-to-r from-primary-dark to-primary-dark text-foreground rounded-full flex items-center justify-center hover:from-primary-dark hover:to-primary-dark transition-colors duration-200 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base shadow-lg hover:shadow-xl flex-1 sm:flex-initial"
+                className="px-2 sm:px-3 md:px-4 lg:px-6 py-1.5 sm:py-2 md:py-3 bg-primary text-primary-foreground rounded-full flex items-center justify-center hover:bg-primary-dark transition-colors duration-200 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base flex-1 sm:flex-initial"
                 aria-label="Buy now"
               >
                 <Zap className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-1 sm:mr-1.5 md:mr-2 flex-shrink-0" />
