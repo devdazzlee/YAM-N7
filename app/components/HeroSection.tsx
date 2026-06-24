@@ -514,11 +514,7 @@ export default function HeroSection() {
       </motion.div>
 
       {/* ── Right side bottle image — desktop focal ─────────────── */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9, x: 40, filter: 'blur(16px)' }}
-        animate={{ opacity: 1, scale: 1,   x: 0,  filter: 'blur(0px)' }}
-        transition={{ duration: 1.6, delay: 0.6, ease: REVEAL }}
-        aria-hidden
+      <div
         className="hidden lg:block"
         style={{
           position: 'absolute',
@@ -527,99 +523,108 @@ export default function HeroSection() {
           transform: 'translateY(-50%)',
           zIndex: 5,
           pointerEvents: 'none',
-          willChange: 'transform',
         }}
       >
-        {/* Parallax wrapper — bottle drifts at 0.25x scroll speed on desktop */}
         <motion.div
+          initial={{ opacity: 0, scale: 0.9, x: 40, filter: 'blur(16px)' }}
+          animate={{ opacity: 1, scale: 1,   x: 0,  filter: 'blur(0px)' }}
+          transition={{ duration: 1.6, delay: 0.6, ease: REVEAL }}
           style={{
-            y: bottleY,
             willChange: 'transform',
           }}
         >
-
-        {/* Reflection glow behind bottle */}
-        <div style={{
-          position: 'absolute',
-          bottom: '-10%',
-          left:   '50%',
-          transform: 'translateX(-50%)',
-          width:  '140%',
-          height: '60%',
-          background: 'radial-gradient(ellipse, rgba(200,164,107,0.18) 0%, transparent 70%)',
-          filter: 'blur(30px)',
-          pointerEvents: 'none',
-        }} />
-
-        {/* Slow floating animation wrapper */}
-        <motion.div
-          animate={{ y: [0, -14, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <img
-            src="/YAM N-7 Signature.jpg"
-            alt="YAM-N7 Signature fragrance"
+          {/* Parallax wrapper — bottle drifts at 0.25x scroll speed on desktop */}
+          <motion.div
             style={{
-              height:     'clamp(300px, 38vw, 560px)',
-              width:      'auto',
-              objectFit:  'contain',
-              filter:     'drop-shadow(0 40px 80px rgba(0,0,0,0.8)) drop-shadow(0 0 40px rgba(200,164,107,0.15)) brightness(1.05)',
-              display:    'block',
+              y: bottleY,
+              willChange: 'transform',
             }}
-          />
+          >
 
-          {/* Floor reflection */}
+          {/* Reflection glow behind bottle */}
           <div style={{
-            width:   '100%',
-            height:  '80px',
-            background: 'linear-gradient(to bottom, rgba(255,255,255,0.04), transparent)',
-            transform: 'scaleY(-0.25) scaleX(0.9)',
-            transformOrigin: 'top',
-            marginTop: '-4px',
-            filter:   'blur(8px)',
-            opacity:  0.6,
-          }}>
-            <img
-              src="/YAM N-7 Signature.jpg"
-              alt=""
-              style={{ width: '100%', height: '100%', objectFit: 'contain', opacity: 0.2 }}
-            />
-          </div>
-        </motion.div>
+            position: 'absolute',
+            bottom: '-10%',
+            left:   '50%',
+            transform: 'translateX(-50%)',
+            width:  '140%',
+            height: '60%',
+            background: 'radial-gradient(ellipse, rgba(200,164,107,0.18) 0%, transparent 70%)',
+            filter: 'blur(30px)',
+            pointerEvents: 'none',
+          }} />
 
-        {/* Floating badge */}
-        <motion.div
-          animate={{ y: [0, -6, 0], opacity: [0.8, 1, 0.8] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          style={{
-            position:   'absolute',
-            top:        '12%',
-            left:       '-40px',
-            background: 'rgba(10,10,10,0.85)',
-            backdropFilter: 'blur(16px)',
-            border:     '1px solid rgba(200,164,107,0.25)',
-            padding:    '12px 18px',
-            borderRadius: '2px',
-          }}
-        >
-          <p style={{
-            fontFamily:    'var(--font-body), Poppins, sans-serif',
-            fontSize:      '9px',
-            letterSpacing: '0.2em',
-            color:         '#C8A46B',
-            textTransform: 'uppercase',
-            margin:        0,
-          }}>New</p>
-          <p style={{
-            fontFamily: 'var(--font-heading), "Cormorant Garamond", serif',
-            fontSize:   '16px',
-            color:      '#FFF',
-            margin:     '2px 0 0',
-            whiteSpace: 'nowrap',
-          }}>Elite Series</p>
+          {/* Slow floating animation wrapper */}
+          <motion.div
+            animate={{ y: [0, -14, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <img
+              src="/brand-story-bottle.png"
+              alt="YAM-N7 Signature fragrance"
+              style={{
+                height:     'clamp(300px, 38vw, 560px)',
+                width:      'auto',
+                objectFit:  'contain',
+                filter:     'drop-shadow(0 40px 80px rgba(0,0,0,0.8)) drop-shadow(0 0 40px rgba(200,164,107,0.15)) brightness(1.05)',
+                display:    'block',
+                maxWidth:   '100%',
+              }}
+            />
+
+            {/* Floor reflection */}
+            <div style={{
+              width:   '100%',
+              height:  '80px',
+              background: 'linear-gradient(to bottom, rgba(255,255,255,0.04), transparent)',
+              transform: 'scaleY(-0.25) scaleX(0.9)',
+              transformOrigin: 'top',
+              marginTop: '-4px',
+              filter:   'blur(8px)',
+              opacity:  0.6,
+            }}>
+              <img
+                src="/brand-story-bottle.png"
+                alt=""
+                style={{ width: '100%', height: '100%', objectFit: 'contain', opacity: 0.2 }}
+              />
+            </div>
+          </motion.div>
+
+          {/* Floating badge */}
+          <motion.div
+            animate={{ y: [0, -6, 0], opacity: [0.8, 1, 0.8] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+            style={{
+              position:   'absolute',
+              top:        '12%',
+              left:       '-40px',
+              background: 'rgba(10,10,10,0.85)',
+              backdropFilter: 'blur(16px)',
+              border:     '1px solid rgba(200,164,107,0.25)',
+              padding:    '12px 18px',
+              borderRadius: '2px',
+            }}
+          >
+            <p style={{
+              fontFamily:    'var(--font-body), Poppins, sans-serif',
+              fontSize:      '9px',
+              letterSpacing: '0.2em',
+              color:         '#C8A46B',
+              textTransform: 'uppercase',
+              margin:        0,
+            }}>New</p>
+            <p style={{
+              fontFamily: 'var(--font-heading), "Cormorant Garamond", serif',
+              fontSize:   '16px',
+              color:      '#FFF',
+              margin:     '2px 0 0',
+              whiteSpace: 'nowrap',
+            }}>Elite Series</p>
+          </motion.div>
+          </motion.div>{/* /parallax bottle wrapper */}
         </motion.div>
-        </motion.div>{/* /parallax bottle wrapper */}
-      </motion.div>
+      </div>
 
       {/* ── Scroll indicator ──────────────────────────────────────── */}
       <motion.div
