@@ -185,7 +185,7 @@ export default function Footer() {
                 { name: 'Limited Editions', href: '/categories/limited-editions' },
               ].map((item) => (
                 <li key={item.name}>
-                  <Link href={item.href} style={linkStyle}>{item.name}</Link>
+                  <Link href={item.href} style={linkStyle} className="luxury-underline-link">{item.name}</Link>
                 </li>
               ))}
             </ul>
@@ -207,7 +207,7 @@ export default function Footer() {
                 { name: 'New Arrivals', href: '/new-arrivals' },
               ].map((item) => (
                 <li key={item.name}>
-                  <Link href={item.href} style={linkStyle}>{item.name}</Link>
+                  <Link href={item.href} style={linkStyle} className="luxury-underline-link">{item.name}</Link>
                 </li>
               ))}
             </ul>
@@ -230,7 +230,7 @@ export default function Footer() {
                 { name: 'Contact Us', href: '/contact' },
               ].map((item) => (
                 <li key={item.name}>
-                  <Link href={item.href} style={linkStyle}>{item.name}</Link>
+                  <Link href={item.href} style={linkStyle} className="luxury-underline-link">{item.name}</Link>
                 </li>
               ))}
             </ul>
@@ -252,7 +252,7 @@ export default function Footer() {
                 { name: 'Press', href: '/press' },
               ].map((item) => (
                 <li key={item.name}>
-                  <Link href={item.href} style={linkStyle}>{item.name}</Link>
+                  <Link href={item.href} style={linkStyle} className="luxury-underline-link">{item.name}</Link>
                 </li>
               ))}
             </ul>
@@ -391,8 +391,8 @@ export default function Footer() {
             <span>© 2024 YAM-N7. All Rights Reserved.</span>
           </div>
           <div style={{ display: 'flex', gap: '20px' }}>
-            <Link href="/privacy-policy" style={bottomLinkStyle}>Privacy Policy</Link>
-            <Link href="/terms-conditions" style={bottomLinkStyle}>Terms & Conditions</Link>
+            <Link href="/privacy-policy" style={bottomLinkStyle} className="luxury-underline-link">Privacy Policy</Link>
+            <Link href="/terms-conditions" style={bottomLinkStyle} className="luxury-underline-link">Terms & Conditions</Link>
           </div>
         </div>
 
