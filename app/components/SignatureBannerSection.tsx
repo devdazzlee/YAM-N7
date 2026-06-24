@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ease } from './motion/reveal';
@@ -47,15 +47,27 @@ function GoldParticle({ p }: { p: Particle }) {
 export default function SignatureBannerSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
+  // Detect mobile once on mount — disable parallax on small screens
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    check();
+    window.addEventListener('resize', check, { passive: true });
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
   });
 
-  // Parallax: background drifts slower than scroll (moves up by 120px total)
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0px', '-120px']);
+  // Parallax: background drifts slower than scroll (moves from -50px to 50px)
+  const bgYRaw = useTransform(scrollYProgress, [0, 1], [-50, 50]);
+  const bgY = useTransform(bgYRaw, (val) => isDesktop ? `${val}px` : '0px');
+
   // Content drifts slightly less (subtle depth)
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0px', '-40px']);
+  const contentYRaw = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const contentY = useTransform(contentYRaw, (val) => isDesktop ? `${val}px` : '0px');
 
   return (
     <>
@@ -96,8 +108,14 @@ export default function SignatureBannerSection() {
       >
         {/* ── Parallax background layer ─────────────────────────────── */}
         <motion.div
-          style={{ y: bgY }}
-          className="absolute inset-0 scale-110 origin-center"
+          style={{
+            y: bgY,
+            position: 'absolute',
+            top: '-10%',
+            left: 0,
+            right: 0,
+            height: '120%',
+          }}
           aria-hidden
         >
           {/* Marble base */}

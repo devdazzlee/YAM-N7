@@ -56,18 +56,17 @@ export const staggerContainer: Variants = {
   hidden: { opacity: 1 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.06 },
+    transition: { staggerChildren: 0.12, delayChildren: 0.08 },
   },
 };
 
 export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 40, scale: 0.95, filter: 'blur(8px)' },
+  hidden: { opacity: 0, y: 32, filter: 'blur(6px)' },
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1,
     filter: 'blur(0px)',
-    transition: { duration: 0.6, ease },
+    transition: { duration: 0.7, ease },
   },
 };
 
@@ -98,7 +97,7 @@ export function Reveal({
       whileInView="visible"
       viewport={viewport}
       transition={{ delay }}
-      className={className}
+      className={`sr ${className ?? ''}`}
       {...props}
     >
       {children}
@@ -118,7 +117,7 @@ export function Stagger({ children, className }: StaggerProps) {
       initial="hidden"
       whileInView="visible"
       viewport={viewport}
-      className={className}
+      className={`sr-stagger ${className ?? ''}`}
     >
       {children}
     </motion.div>
@@ -131,7 +130,7 @@ export function StaggerChild({
   ...props
 }: HTMLMotionProps<'div'>) {
   return (
-    <motion.div variants={staggerItem} className={className} {...props}>
+    <motion.div variants={staggerItem} className={`sr ${className ?? ''}`} {...props}>
       {children}
     </motion.div>
   );

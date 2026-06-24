@@ -5,6 +5,9 @@ import CartToast from "./components/CartToast";
 import PageTransition from "./components/PageTransition";
 import AnnouncementBar from "./components/AnnouncementBar";
 import BrandPreloader from "./components/BrandPreloader";
+import CustomCursor from "./components/CustomCursor";
+import GoldParticles from "./components/GoldParticles";
+import GlobalScrollReveal from "./components/GlobalScrollReveal";
 
 const poppins = Poppins({
   variable: "--font-body",
@@ -44,6 +47,9 @@ export default function RootLayout({
         className={`${poppins.variable} ${cormorant.variable} ${playfair.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
+        <CustomCursor />
+        <GoldParticles />
+        <GlobalScrollReveal />
         <BrandPreloader />
         <AnnouncementBar />
         <PageTransition />

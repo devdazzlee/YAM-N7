@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 
@@ -32,13 +32,34 @@ export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef  = useRef<HTMLCanvasElement>(null);
 
+  // Detect mobile once on mount — disable parallax on small screens
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    check();
+    window.addEventListener('resize', check, { passive: true });
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end start'],
   });
 
-  const imageY   = useTransform(scrollYProgress, [0, 1], ['0%',  '22%']);
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%',  '10%']);
+  /*
+   * Parallax speed targets (desktop only):
+   *   Background image → 0.35x scroll speed (moves 14% as user scrolls through hero)
+   *   Perfume bottle   → 0.25x scroll speed (slightly slower than content)
+   *   Text content     → 0.15x scroll speed (barely drifts, grounding effect)
+   *   Opacity          → fades out as section exits
+   */
+  const imageYRaw   = useTransform(scrollYProgress, [0, 1], [0, 14]);
+  const bottleYRaw  = useTransform(scrollYProgress, [0, 1], [0, 10]);
+  const contentYRaw = useTransform(scrollYProgress, [0, 1], [0, 6]);
+
+  const imageY   = useTransform(imageYRaw, (val) => isDesktop ? `${val}%` : '0%');
+  const bottleY  = useTransform(bottleYRaw, (val) => isDesktop ? `${val}%` : '0%');
+  const contentY = useTransform(contentYRaw, (val) => isDesktop ? `${val}%` : '0%');
   const overallO = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   /* ── canvas particle field ── */
@@ -115,9 +136,12 @@ export default function HeroSection() {
 
       {/* ═══ BACKGROUND LAYER STACK ═══════════════════════════════ */}
 
-      {/* 1 — hero image with parallax */}
+      {/* 1 — hero image with parallax — desktop only */}
       <motion.div
-        style={{ y: imageY }}
+        style={{
+          y: imageY,
+          willChange: 'transform',
+        }}
         initial={{ opacity: 0, scale: 1.08 }}
         animate={{ opacity: 1, scale: 1.0 }}
         transition={{ duration: 2.2, ease: SILK }}
@@ -503,8 +527,16 @@ export default function HeroSection() {
           transform: 'translateY(-50%)',
           zIndex: 5,
           pointerEvents: 'none',
+          willChange: 'transform',
         }}
       >
+        {/* Parallax wrapper — bottle drifts at 0.25x scroll speed on desktop */}
+        <motion.div
+          style={{
+            y: bottleY,
+            willChange: 'transform',
+          }}
+        >
 
         {/* Reflection glow behind bottle */}
         <div style={{
@@ -586,6 +618,7 @@ export default function HeroSection() {
             whiteSpace: 'nowrap',
           }}>Elite Series</p>
         </motion.div>
+        </motion.div>{/* /parallax bottle wrapper */}
       </motion.div>
 
       {/* ── Scroll indicator ──────────────────────────────────────── */}

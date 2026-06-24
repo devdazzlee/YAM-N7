@@ -60,11 +60,11 @@ export default function Home() {
       <SignatureBannerSection />
       <NewArrivalsSection />
       <BrandStorySection />
+      <SocialShowcaseSection />
       <WhyChooseUsSection />
       <FragranceNotesSection />
       <BenefitsSection />
       <TestimonialsSection />
-      <SocialShowcaseSection />
       <Newsletter />
       <Footer />
     </div>
