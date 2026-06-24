@@ -35,6 +35,7 @@ export default function AnnouncementBar() {
         position: 'relative',
         zIndex: 60,
         width: '100%',
+        flexShrink: 0,
       }}
     >
       <AnimatePresence mode="wait">
@@ -47,11 +48,14 @@ export default function AnnouncementBar() {
           style={{
             color: '#C8A46B',
             fontFamily: 'var(--font-body), Poppins, sans-serif',
-            fontSize: '10.5px',
+            fontSize: 'clamp(9px, 2vw, 10.5px)',
             fontWeight: 500,
-            letterSpacing: '0.22em',
+            letterSpacing: 'clamp(0.1em, 1vw, 0.22em)',
             textTransform: 'uppercase',
             textAlign: 'center',
+            maxWidth: '90vw',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
             position: 'absolute',
             userSelect: 'none',

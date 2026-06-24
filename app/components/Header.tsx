@@ -116,6 +116,8 @@ export default function Header() {
   const [categories,       setCategories]       = useState<Array<WebCategory & { icon: any; description: string }>>([]);
   const [categoriesLoading,setCategoriesLoading]= useState(true);
   const [isProfileOpen,    setIsProfileOpen]    = useState(false);
+  const [isMobileShopExpanded, setIsMobileShopExpanded] = useState(false);
+  const [isMobileCollectionsExpanded, setIsMobileCollectionsExpanded] = useState(false);
   const shopRef = useRef<HTMLDivElement>(null);
 
   const fetchAllCategories = useWebCategoryStore((s) => s.fetchAll);
@@ -209,7 +211,20 @@ export default function Header() {
   }, [isSearchOpen, isMenuOpen]);
 
   /* ── Close mobile menu on route change ── */
-  useEffect(() => { setIsMenuOpen(false); setIsProfileOpen(false); }, [pathname]);
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setIsProfileOpen(false);
+    setIsMobileShopExpanded(false);
+    setIsMobileCollectionsExpanded(false);
+  }, [pathname]);
+
+  /* ── Reset mobile sub-menus when menu closes ── */
+  useEffect(() => {
+    if (!isMenuOpen) {
+      setIsMobileShopExpanded(false);
+      setIsMobileCollectionsExpanded(false);
+    }
+  }, [isMenuOpen]);
 
   /* ── Helpers ── */
   const closeSearch = () => { setIsSearchOpen(false); setSearchQuery(''); setSearchResults([]); };
@@ -229,11 +244,11 @@ export default function Header() {
       <header
         style={{
           position: 'fixed',
-          top: '36px',          /* sits right below the 36px announcement bar */
+          top: isScrolled ? '0' : '36px',          /* sits right below the 36px announcement bar when at top */
           left: 0,
           right: 0,
           zIndex: 50,
-          transition: 'background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease',
+          transition: 'top 0.35s ease, background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease',
           background: isScrolled
             ? 'rgba(10,10,10,0.82)'
             : 'transparent',
@@ -248,13 +263,14 @@ export default function Header() {
           style={{
             maxWidth: '1440px',
             margin: '0 auto',
-            padding: '0 32px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: isScrolled ? '64px' : '72px',
-            transition: 'height 0.35s ease',
+            transition: 'height 0.35s ease, padding 0.35s ease',
           }}
+          className={`px-4 sm:px-6 lg:px-8 ${
+            isScrolled ? 'h-14 sm:h-16' : 'h-16 sm:h-[72px]'
+          }`}
         >
           {/* ── LEFT: Logo ─────────────────────────────────────── */}
           <Link
@@ -271,8 +287,8 @@ export default function Header() {
               whileHover={{ scale: 1.04 }}
               src="/YAM-N7-Logo.png"
               alt="YAM-N7"
+              className={isScrolled ? 'h-9 sm:h-11' : 'h-10 sm:h-[52px]'}
               style={{
-                height: isScrolled ? '44px' : '52px',
                 width: 'auto',
                 objectFit: 'contain',
                 transition: 'height 0.35s ease',
@@ -280,17 +296,15 @@ export default function Header() {
             />
           </Link>
 
-          {/* ── CENTER: Desktop Nav ─────────────────────────────── */}
+          {/* ── CENTER: Desktop Nav — hidden on mobile, shown lg+ ── */}
           <nav
+            className="luxury-nav hidden lg:flex items-center"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0px',
               position: 'absolute',
               left: '50%',
               transform: 'translateX(-50%)',
+              gap: '0px',
             }}
-            className="luxury-nav hidden lg:flex"
           >
             {NAV_LINKS.map((link) => {
               const active = isActive(link.href);
@@ -451,14 +465,17 @@ export default function Header() {
           </nav>
 
           {/* ── RIGHT: Icons ───────────────────────────────────── */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '2px', flexShrink: 0 }}>
 
-            {/* Search */}
-            <IconBtn label="Search" onClick={() => setIsSearchOpen(true)}>
-              <Search size={18} strokeWidth={1.5} />
-            </IconBtn>
+            {/* Search — hidden on mobile (available in drawer) */}
+            <span className="hidden sm:inline-flex">
+              <IconBtn label="Search" onClick={() => setIsSearchOpen(true)}>
+                <Search size={18} strokeWidth={1.5} />
+              </IconBtn>
+            </span>
 
-            {/* Account */}
+            {/* Account — hidden on mobile (available in drawer) */}
+            <span className="hidden sm:inline-flex" style={{ position: 'relative' }}>
             {isAuthenticated ? (
               <div style={{ position: 'relative' }}>
                 <IconBtn label="Profile" onClick={() => setIsProfileOpen(!isProfileOpen)}>
@@ -557,37 +574,44 @@ export default function Header() {
                 <User size={18} strokeWidth={1.5} />
               </IconBtn>
             )}
+            </span>
 
-            {/* Wishlist */}
-            <IconBtn label="Wishlist" href="/wishlist" count={wishlistCount}>
-              <Heart size={18} strokeWidth={1.5} />
-            </IconBtn>
+            {/* Wishlist — hidden on mobile */}
+            <span className="hidden sm:inline-flex">
+              <IconBtn label="Wishlist" href="/wishlist" count={wishlistCount}>
+                <Heart size={18} strokeWidth={1.5} />
+              </IconBtn>
+            </span>
 
             {/* Cart */}
             <IconBtn label="Cart" href="/cart" count={cartCount}>
               <ShoppingCart size={18} strokeWidth={1.5} />
             </IconBtn>
 
-            {/* Mobile hamburger */}
+            {/* Search — mobile only shortcut */}
+            <span className="inline-flex sm:hidden">
+              <IconBtn label="Search" onClick={() => setIsSearchOpen(true)}>
+                <Search size={18} strokeWidth={1.5} />
+              </IconBtn>
+            </span>
+
+            {/* Mobile hamburger — only on < lg */}
             <motion.button
               whileTap={{ scale: 0.92 }}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Menu"
-              className="lg:hidden"
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              className="flex lg:hidden items-center justify-center ml-1"
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '38px',
-                height: '38px',
+                width: '40px',
+                height: '40px',
                 background: 'transparent',
                 border: 'none',
                 cursor: 'pointer',
                 color: '#FFFFFF',
-                marginLeft: '4px',
+                flexShrink: 0,
               }}
             >
-              {isMenuOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
+              {isMenuOpen ? <X size={22} strokeWidth={1.5} /> : <Menu size={22} strokeWidth={1.5} />}
             </motion.button>
           </div>
         </div>
@@ -605,8 +629,8 @@ export default function Header() {
               transition={{ duration: 0.25 }}
               onClick={() => setIsMenuOpen(false)}
               style={{
-                position: 'fixed', inset: 0, zIndex: 48,
-                background: 'rgba(0,0,0,0.6)',
+                position: 'fixed', inset: 0, zIndex: 98,
+                background: 'rgba(0,0,0,0.65)',
                 backdropFilter: 'blur(4px)',
               }}
             />
@@ -625,7 +649,7 @@ export default function Header() {
                 width: 'min(85vw, 360px)',
                 background: '#0A0A0A',
                 borderLeft: '1px solid rgba(200,164,107,0.2)',
-                zIndex: 49,
+                zIndex: 99,
                 display: 'flex',
                 flexDirection: 'column',
                 overflowY: 'auto',
@@ -636,23 +660,28 @@ export default function Header() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '20px 24px',
+                padding: '18px 20px',
                 borderBottom: '1px solid rgba(200,164,107,0.15)',
+                flexShrink: 0,
               }}>
-                <span style={{
-                  fontFamily: 'var(--font-display), "Playfair Display", serif',
-                  fontSize: '13px',
-                  letterSpacing: '0.22em',
-                  color: '#C8A46B',
-                  textTransform: 'uppercase',
-                }}>
-                  Menu
-                </span>
+                {/* Logo in drawer */}
+                <Link href="/" onClick={() => setIsMenuOpen(false)} style={{ textDecoration: 'none' }}>
+                  <img
+                    src="/YAM-N7-Logo.png"
+                    alt="YAM-N7"
+                    style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
+                  />
+                </Link>
                 <button
                   onClick={() => setIsMenuOpen(false)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#fff', padding: '4px' }}
+                  style={{
+                    background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(200,164,107,0.2)',
+                    cursor: 'pointer', color: '#fff', padding: '6px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}
+                  aria-label="Close menu"
                 >
-                  <X size={20} strokeWidth={1.5} />
+                  <X size={18} strokeWidth={1.5} />
                 </button>
               </div>
 
@@ -693,39 +722,212 @@ export default function Header() {
               </div>
 
               {/* Nav links */}
-              <nav style={{ padding: '8px 16px', flex: 1 }}>
-                {NAV_LINKS.map((link, i) => (
-                  <motion.div
-                    key={link.name}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.04 }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsMenuOpen(false)}
-                      style={{
-                        display: 'block',
-                        padding: '13px 8px',
-                        fontFamily: 'var(--font-body), Poppins, sans-serif',
-                        fontSize: '13px',
-                        letterSpacing: '0.12em',
-                        textTransform: 'uppercase',
-                        color: isActive(link.href) ? '#C8A46B' : 'rgba(255,255,255,0.82)',
-                        textDecoration: 'none',
-                        borderBottom: '1px solid rgba(255,255,255,0.05)',
-                        transition: 'color 0.2s',
-                      }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#C8A46B'; }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = isActive(link.href) ? '#C8A46B' : 'rgba(255,255,255,0.82)';
-                      }}
+              <nav style={{ padding: '4px 0', flex: 1, overflowY: 'auto' }}>
+                {NAV_LINKS.map((link, i) => {
+                  const active = isActive(link.href);
+                  const isShop = link.name === 'Shop';
+                  const isCollections = link.name === 'Collections';
+                  const hasDropdown = isShop || isCollections;
+
+                  return (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, x: 24 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.04 }}
                     >
-                      {link.name}
-                    </Link>
-                  </motion.div>
-                ))}
+                      {hasDropdown ? (
+                        <>
+                          <div
+                            onClick={() => {
+                              if (isShop) setIsMobileShopExpanded(!isMobileShopExpanded);
+                              if (isCollections) setIsMobileCollectionsExpanded(!isMobileCollectionsExpanded);
+                            }}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              padding: '14px 24px',
+                              fontFamily: 'var(--font-body), Poppins, sans-serif',
+                              fontSize: '13px',
+                              letterSpacing: '0.1em',
+                              textTransform: 'uppercase',
+                              color: (isShop && isMobileShopExpanded) || (isCollections && isMobileCollectionsExpanded) ? '#C8A46B' : 'rgba(255,255,255,0.78)',
+                              borderBottom: '1px solid rgba(255,255,255,0.04)',
+                              cursor: 'pointer',
+                              background: active ? 'rgba(200,164,107,0.05)' : 'transparent',
+                              borderLeft: active ? '2px solid #C8A46B' : '2px solid transparent',
+                              transition: 'all 0.2s',
+                            }}
+                          >
+                            <span>{link.name}</span>
+                            <ChevronDown
+                              size={15}
+                              style={{
+                                color: '#C8A46B',
+                                transform: (isShop && isMobileShopExpanded) || (isCollections && isMobileCollectionsExpanded) ? 'rotate(180deg)' : 'rotate(0deg)',
+                                transition: 'transform 0.25s ease',
+                              }}
+                              strokeWidth={1.5}
+                            />
+                          </div>
+                          <AnimatePresence>
+                            {((isShop && isMobileShopExpanded) || (isCollections && isMobileCollectionsExpanded)) && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.25, ease: 'easeInOut' }}
+                                style={{
+                                  overflow: 'hidden',
+                                  background: 'rgba(255,255,255,0.02)',
+                                  borderBottom: '1px solid rgba(200,164,107,0.1)',
+                                }}
+                              >
+                                <div style={{ padding: '8px 0 8px 12px' }}>
+                                  {categoriesLoading ? (
+                                    <div style={{ padding: '16px', display: 'flex', justifyContent: 'center' }}>
+                                      <div style={{
+                                        width: '16px', height: '16px',
+                                        border: '2px solid #C8A46B',
+                                        borderTopColor: 'transparent',
+                                        borderRadius: '50%',
+                                        animation: 'spin 0.8s linear infinite',
+                                      }} />
+                                    </div>
+                                  ) : categories.length > 0 ? (
+                                    <>
+                                      {categories.map((cat) => (
+                                        <Link
+                                          key={cat.id || cat.slug}
+                                          href={`/categories/${cat.slug}`}
+                                          onClick={() => setIsMenuOpen(false)}
+                                          style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '10px',
+                                            padding: '10px 24px',
+                                            fontFamily: 'var(--font-body), Poppins, sans-serif',
+                                            fontSize: '12px',
+                                            color: 'rgba(255,255,255,0.65)',
+                                            textDecoration: 'none',
+                                            transition: 'color 0.2s',
+                                          }}
+                                          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#C8A46B'; }}
+                                          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.65)'; }}
+                                        >
+                                          <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(200,164,107,0.5)' }} />
+                                          <span>{cat.name}</span>
+                                        </Link>
+                                      ))}
+                                      <Link
+                                        href={link.href}
+                                        onClick={() => setIsMenuOpen(false)}
+                                        style={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: '10px',
+                                          padding: '12px 24px',
+                                          fontFamily: 'var(--font-body), Poppins, sans-serif',
+                                          fontSize: '11px',
+                                          fontWeight: 600,
+                                          letterSpacing: '0.08em',
+                                          color: '#C8A46B',
+                                          textDecoration: 'none',
+                                          borderTop: '1px solid rgba(255,255,255,0.02)',
+                                          marginTop: '4px',
+                                        }}
+                                      >
+                                        <span>Browse All {link.name} →</span>
+                                      </Link>
+                                    </>
+                                  ) : (
+                                    <p style={{ padding: '12px 24px', color: 'rgba(255,255,255,0.4)', fontSize: '12px', margin: 0 }}>
+                                      No categories available
+                                    </p>
+                                  )}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          onClick={() => setIsMenuOpen(false)}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '14px 24px',
+                            fontFamily: 'var(--font-body), Poppins, sans-serif',
+                            fontSize: '13px',
+                            letterSpacing: '0.1em',
+                            textTransform: 'uppercase',
+                            color: active ? '#C8A46B' : 'rgba(255,255,255,0.78)',
+                            textDecoration: 'none',
+                            borderBottom: '1px solid rgba(255,255,255,0.04)',
+                            background: active ? 'rgba(200,164,107,0.05)' : 'transparent',
+                            borderLeft: active ? '2px solid #C8A46B' : '2px solid transparent',
+                            transition: 'all 0.2s',
+                          }}
+                        >
+                          <span>{link.name}</span>
+                          {active && (
+                            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#C8A46B', flexShrink: 0 }} />
+                          )}
+                        </Link>
+                      )}
+                    </motion.div>
+                  );
+                })}
               </nav>
+
+              {/* Quick-access tiles: Cart, Wishlist, Account */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr 1fr',
+                gap: '8px',
+                padding: '16px 20px',
+                borderTop: '1px solid rgba(200,164,107,0.1)',
+                flexShrink: 0,
+              }}>
+                {[
+                  { href: '/cart',     icon: ShoppingCart, label: 'Cart',     badge: cartCount },
+                  { href: '/wishlist', icon: Heart,        label: 'Wishlist',  badge: wishlistCount },
+                  { href: isAuthenticated ? '/account/profile' : '/login', icon: User, label: isAuthenticated ? 'Account' : 'Login', badge: 0 },
+                ].map(({ href, icon: Icon, label, badge }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={() => setIsMenuOpen(false)}
+                    style={{
+                      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
+                      padding: '12px 8px',
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(200,164,107,0.15)',
+                      textDecoration: 'none',
+                      position: 'relative',
+                      transition: 'border-color 0.2s',
+                    }}
+                  >
+                    <Icon size={18} strokeWidth={1.5} style={{ color: '#C8A46B' }} />
+                    <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--font-body)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                      {label}
+                    </span>
+                    {badge > 0 && (
+                      <span style={{
+                        position: 'absolute', top: '6px', right: '6px',
+                        background: '#C8A46B', color: '#0A0A0A',
+                        fontSize: '9px', fontWeight: 700, borderRadius: '9999px',
+                        minWidth: '16px', height: '16px',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        padding: '0 3px',
+                      }}>{badge > 9 ? '9+' : badge}</span>
+                    )}
+                  </Link>
+                ))}
+              </div>
 
               {/* Auth footer */}
               <div style={{
