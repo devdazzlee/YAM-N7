@@ -80,9 +80,14 @@ h2, h3, h4, h5, h6, .font-heading {
 
 /* Headings stay readable on bronze / primary surfaces */
 .bg-primary :is(h1, h2, h3, h4, h5, h6),
-.bg-gradient-brand :is(h1, h2, h3, h4, h5, h6),
 .text-primary-foreground :is(h1, h2, h3, h4, h5, h6) {
   color: rgb(var(--color-on-primary));
+}
+
+/* Dark brand sections use the site foreground, not on-primary */
+.bg-gradient-brand :is(h1, h2, h3, h4, h5, h6),
+.bg-gradient-brand-h :is(h1, h2, h3, h4, h5, h6) {
+  color: rgb(var(--color-foreground));
 }
 
 ::selection {

@@ -25,14 +25,14 @@ export default function PageCTA({
   return (
     <SectionShell tone="primary" className="!py-16 sm:!py-20">
       <Reveal className="max-w-3xl mx-auto text-center">
-        <h2 className="font-display tracking-luxury uppercase text-2xl sm:text-3xl md:text-4xl font-normal mb-4 text-primary-foreground">{title}</h2>
-        <p className="text-primary-foreground/90 text-sm sm:text-base leading-relaxed mb-8 max-w-xl mx-auto">
+        <h2 className="font-display tracking-luxury uppercase text-2xl sm:text-3xl md:text-4xl font-normal mb-4 text-foreground">{title}</h2>
+        <p className="text-foreground/85 text-sm sm:text-base leading-relaxed mb-8 max-w-xl mx-auto">
           {subtitle}
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             href={primaryHref}
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-surface text-foreground font-semibold text-sm hover:bg-cream transition-colors group shadow-sm"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary-dark transition-colors group shadow-sm"
           >
             {primaryLabel}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -40,7 +40,7 @@ export default function PageCTA({
           {secondaryHref && secondaryLabel && (
             <Link
               href={secondaryHref}
-              className="inline-flex items-center gap-2 px-8 py-3.5 border border-primary-foreground/40 text-primary-foreground font-medium text-sm hover:bg-primary-foreground/15 transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-3.5 border border-foreground/40 text-foreground font-medium text-sm hover:bg-foreground/10 transition-colors"
             >
               {secondaryLabel}
             </Link>

@@ -215,7 +215,7 @@ export function SectionShell({
 }: SectionShellProps) {
   const bgClass =
     tone === 'primary'
-      ? 'bg-gradient-brand text-primary-foreground'
+      ? 'bg-gradient-brand text-foreground'
       : dark
         ? 'bg-surface'
         : 'bg-background';
