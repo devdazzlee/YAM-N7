@@ -90,7 +90,7 @@ export default function IdentitySection() {
                   {/* Background Image Container */}
                   <div className="absolute inset-0 z-0">
                     <motion.div
-                      style={{ backgroundImage: `url(${card.imageUrl})` }}
+                      style={{ backgroundImage: `url("${encodeURI(card.imageUrl)}")` }}
                       className="h-full w-full bg-cover bg-center bg-no-repeat"
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.6, ease: ease }}
