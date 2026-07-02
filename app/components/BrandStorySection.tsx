@@ -25,6 +25,31 @@ export default function BrandStorySection() {
     },
   };
 
+  // Concentric-ring emblem helpers (image-free right column)
+  const ringStyle = (size: string, border: string): React.CSSProperties => ({
+    position: 'absolute',
+    width: size,
+    aspectRatio: '1',
+    borderRadius: '50%',
+    border,
+  });
+  const orbitStyle = (size: string): React.CSSProperties => ({
+    position: 'absolute',
+    width: size,
+    aspectRatio: '1',
+  });
+  const dotStyle: React.CSSProperties = {
+    position: 'absolute',
+    top: '-4.5px',
+    left: '50%',
+    width: '9px',
+    height: '9px',
+    borderRadius: '50%',
+    background: '#F3E0B0',
+    boxShadow: '0 0 14px rgba(200,164,107,0.9)',
+    transform: 'translateX(-50%)',
+  };
+
   return (
     <section
       style={{
@@ -249,7 +274,7 @@ export default function BrandStorySection() {
           </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: LUXURY BRAND/PRODUCT IMAGE */}
+        {/* RIGHT COLUMN: animated "Nature 7" emblem — image-free */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -285,32 +310,104 @@ export default function BrandStorySection() {
               maxHeight: '620px',
               overflow: 'hidden',
               boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8)',
-              background: 'rgba(255,255,255,0.01)',
               border: '1px solid rgba(255,255,255,0.06)',
+              background:
+                'radial-gradient(ellipse at center, rgba(30,22,10,0.55) 0%, rgba(8,8,8,0.92) 72%)',
               zIndex: 2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            {/* Glow overlay */}
+            {/* radial gold glow */}
             <div
+              aria-hidden
               style={{
                 position: 'absolute',
-                inset: 0,
-                background: 'linear-gradient(to top, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0.1) 40%, rgba(8,8,8,0) 100%)',
-                zIndex: 3,
-                pointerEvents: 'none',
+                width: '72%',
+                aspectRatio: '1',
+                borderRadius: '50%',
+                background:
+                  'radial-gradient(circle, rgba(200,164,107,0.18) 0%, transparent 66%)',
+                filter: 'blur(22px)',
               }}
             />
-            <motion.img
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 1.5, ease: 'easeOut' }}
-              src="/brand-story-bottle.png"
-              alt="YAM-N7 The Art Of Becoming"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-              }}
+
+            {/* rotating dashed gold rings */}
+            <motion.div
+              aria-hidden
+              animate={{ rotate: 360 }}
+              transition={{ duration: 55, repeat: Infinity, ease: 'linear' }}
+              style={ringStyle('86%', '1px dashed rgba(200,164,107,0.22)')}
             />
+            <motion.div
+              aria-hidden
+              animate={{ rotate: -360 }}
+              transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
+              style={ringStyle('64%', '1px dashed rgba(200,164,107,0.32)')}
+            />
+            <motion.div
+              aria-hidden
+              animate={{ rotate: 360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+              style={ringStyle('44%', '1px solid rgba(200,164,107,0.4)')}
+            />
+
+            {/* orbiting light dots */}
+            <motion.div
+              aria-hidden
+              animate={{ rotate: 360 }}
+              transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
+              style={orbitStyle('64%')}
+            >
+              <span style={dotStyle} />
+            </motion.div>
+            <motion.div
+              aria-hidden
+              animate={{ rotate: -360 }}
+              transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+              style={orbitStyle('44%')}
+            >
+              <span style={dotStyle} />
+            </motion.div>
+
+            {/* central floating "7" */}
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              style={{ position: 'relative', zIndex: 5, textAlign: 'center' }}
+            >
+              <span
+                style={{
+                  display: 'block',
+                  fontFamily: 'var(--font-display), "Playfair Display", serif',
+                  fontSize: 'clamp(130px, 20vw, 220px)',
+                  fontWeight: 400,
+                  lineHeight: 1,
+                  background:
+                    'linear-gradient(135deg, #C8A46B 0%, #F3E0B0 45%, #C8A46B 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  filter: 'drop-shadow(0 8px 30px rgba(200,164,107,0.35))',
+                }}
+              >
+                7
+              </span>
+              <span
+                style={{
+                  display: 'block',
+                  marginTop: '10px',
+                  fontFamily: 'var(--font-body), Poppins, sans-serif',
+                  fontSize: '11px',
+                  letterSpacing: '0.4em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(200,164,107,0.7)',
+                }}
+              >
+                Nature&nbsp;·&nbsp;Seven
+              </span>
+            </motion.div>
           </div>
         </motion.div>
       </div>

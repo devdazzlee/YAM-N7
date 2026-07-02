@@ -112,9 +112,15 @@ function gesture(kind: Gesture, u: number) {
   return out;
 }
 
+/* Liquid column geometry — a straight amber cylinder that sits in the lower,
+ * straight-walled part of the body and scales up from the base to "fill". */
+const LIQ_BOTTOM = -1.08; // interior floor
+const LIQ_HEIGHT = 1.36; // full-fill height → surface lands ~⅔ up the body
+
 /* ── Procedural glass flacon ─────────────────────────────────────────────── */
 function Flacon({ progress }: { progress: React.MutableRefObject<number> }) {
   const group = useRef<THREE.Group>(null);
+  const liquid = useRef<THREE.Group>(null);
   const smoothed = useRef(0);
 
   // Slim, elegant silhouette: flat base → straight body → soft shoulder →
@@ -131,20 +137,6 @@ function Flacon({ progress }: { progress: React.MutableRefObject<number> }) {
         [0.26, 0.8],
         [0.2, 1.02],
         [0.25, 1.07],
-      ].map(([x, y]) => new THREE.Vector2(x, y)),
-    []
-  );
-
-  // Amber liquid, filled to ~⅔ height so there's a real fill line inside glass.
-  const liquidProfile = useMemo(
-    () =>
-      [
-        [0.0, -1.05],
-        [0.58, -1.05],
-        [0.62, -0.95],
-        [0.62, 0.12],
-        [0.42, 0.26],
-        [0.0, 0.28],
       ].map(([x, y]) => new THREE.Vector2(x, y)),
     []
   );
@@ -236,10 +228,26 @@ function Flacon({ progress }: { progress: React.MutableRefObject<number> }) {
     // SCALE — springs up from near-zero during the entrance
     g.scale.setScalar(scaleBase * lerp(0.04, 1, intro));
 
-    // ROTATION = turntable + idle drift + this band's gesture + entrance spin
-    g.rotation.y = s * TAU * 2.2 + t * 0.1 + gs.ry + (1 - intro) * TAU * 2;
+    // ROTATION.
+    // The label lives on the +z face; rotation.y = 0 points it at the camera.
+    // On the banner (s = 0) the entrance spin unwinds to 0 and there's only a
+    // gentle sway — so the flacon SETTLES showing its "YAM-N7" front, readable.
+    // Scrolling (s) then turns it fully through the sections.
+    g.rotation.y =
+      s * TAU * 2.2 + Math.sin(t * 0.5) * 0.12 + gs.ry + (1 - intro) * TAU * 2;
     g.rotation.x = 0.1 + Math.sin(t * 0.6) * 0.05 + gs.rx;
     g.rotation.z = Math.sin(t * 0.5) * 0.04 + gs.rz + (1 - intro) * 0.5;
+
+    // LIQUID FILL — the perfume pours in: the amber column scales up from the
+    // base (starting ~0.5s after load, over ~2s) with a soft settle, plus a
+    // tiny surface ripple so it reads as liquid, not a solid block.
+    const liq = liquid.current;
+    if (liq) {
+      const raw = clamp01((t - 0.5) / 2.0);
+      const settle = 1 + Math.sin(raw * Math.PI) * 0.04; // gentle overfill/settle
+      const fill = smoother(raw) * settle;
+      liq.scale.y = Math.max(0.0001, fill) + Math.sin(t * 2.2) * 0.006 * raw;
+    }
   });
 
   return (
@@ -281,17 +289,22 @@ function Flacon({ progress }: { progress: React.MutableRefObject<number> }) {
         </mesh>
       )}
 
-      {/* amber liquid inside (creates a visible fill line) */}
-      <mesh>
-        <latheGeometry args={[liquidProfile, 64]} />
-        <meshStandardMaterial
-          color="#b56a15"
-          roughness={0.22}
-          metalness={0.05}
-          emissive="#7a3d0c"
-          emissiveIntensity={0.28}
-        />
-      </mesh>
+      {/* amber liquid — a group pivoted at the interior floor so scaling y
+          grows the column UPWARD from the base (see LIQUID FILL in useFrame).
+          The cylinder's flat top cap doubles as the liquid surface. */}
+      <group ref={liquid} position={[0, LIQ_BOTTOM, 0]} scale={[1, 0.0001, 1]}>
+        <mesh position={[0, LIQ_HEIGHT / 2, 0]}>
+          <cylinderGeometry args={[0.58, 0.56, LIQ_HEIGHT, 48]} />
+          <meshStandardMaterial
+            color="#b56a15"
+            roughness={0.16}
+            metalness={0.1}
+            emissive="#7a3d0c"
+            emissiveIntensity={0.32}
+            envMapIntensity={1.2}
+          />
+        </mesh>
+      </group>
 
       {/* gold neck collar */}
       <mesh position={[0, 1.03, 0]}>

@@ -1,22 +1,22 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef } from 'react';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ease } from './motion/reveal';
 
 /* ─── Floating gold particle ─────────────────────────────────────────── */
 interface Particle {
   id: number;
-  x: number;         // % from left
-  size: number;      // rem
-  duration: number;  // seconds for one full float cycle
-  delay: number;     // animation-delay seconds
+  x: number;
+  size: number;
+  duration: number;
+  delay: number;
   opacity: number;
-  driftX: number;    // horizontal drift amount (px)
+  driftX: number;
 }
 
-const PARTICLES: Particle[] = Array.from({ length: 28 }, (_, i) => ({
+const PARTICLES: Particle[] = Array.from({ length: 26 }, (_, i) => ({
   id: i,
   x: (i * 37 + 11) % 100,
   size: 0.18 + (i % 5) * 0.06,
@@ -30,16 +30,72 @@ function GoldParticle({ p }: { p: Particle }) {
   return (
     <span
       className="absolute bottom-0 rounded-full pointer-events-none"
-      style={{
-        left: `${p.x}%`,
-        width: `${p.size}rem`,
-        height: `${p.size}rem`,
-        background: 'radial-gradient(circle, #C8A46B 0%, rgba(200,164,107,0.3) 60%, transparent 100%)',
-        opacity: p.opacity,
-        animation: `particleFloat ${p.duration}s ease-in-out ${p.delay}s infinite alternate`,
-        '--drift-x': `${p.driftX}px`,
-      } as React.CSSProperties}
+      style={
+        {
+          left: `${p.x}%`,
+          width: `${p.size}rem`,
+          height: `${p.size}rem`,
+          background:
+            'radial-gradient(circle, #C8A46B 0%, rgba(200,164,107,0.3) 60%, transparent 100%)',
+          opacity: p.opacity,
+          animation: `particleFloat ${p.duration}s ease-in-out ${p.delay}s infinite alternate`,
+          '--drift-x': `${p.driftX}px`,
+        } as React.CSSProperties
+      }
     />
+  );
+}
+
+/* ─── Kinetic headline: each word masks up on view ───────────────────── */
+const HEADLINE = ['The', 'Signature', 'Collection'];
+
+/* ─── Marquee content — signature scents drifting behind the headline ── */
+const SCENTS = [
+  'Oud Royale',
+  'Noir Elixir',
+  'Amber Supreme',
+  'Velvet Saffron',
+  'Midnight Musk',
+  'Rose Absolute',
+  'White Agarwood',
+  'Golden Aura',
+];
+
+function Marquee({ reverse = false }: { reverse?: boolean }) {
+  const row = [...SCENTS, ...SCENTS];
+  return (
+    <div
+      className="flex w-max whitespace-nowrap"
+      style={{
+        animation: `${reverse ? 'marqueeRight' : 'marqueeLeft'} 46s linear infinite`,
+      }}
+    >
+      {row.map((s, i) => (
+        <span key={i} className="flex items-center">
+          <span
+            className="font-display uppercase leading-none"
+            style={{
+              fontSize: 'clamp(2.5rem, 7vw, 6rem)',
+              letterSpacing: '0.04em',
+              color: 'transparent',
+              WebkitTextStroke: '1px rgba(200,164,107,0.35)',
+            }}
+          >
+            {s}
+          </span>
+          <span
+            aria-hidden
+            className="mx-8 inline-block rounded-full"
+            style={{
+              width: '10px',
+              height: '10px',
+              transform: 'rotate(45deg)',
+              background: 'rgba(200,164,107,0.5)',
+            }}
+          />
+        </span>
+      ))}
+    </div>
   );
 }
 
@@ -47,31 +103,8 @@ function GoldParticle({ p }: { p: Particle }) {
 export default function SignatureBannerSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Detect mobile once on mount — disable parallax on small screens
-  const [isDesktop, setIsDesktop] = useState(false);
-  useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth >= 1024);
-    check();
-    window.addEventListener('resize', check, { passive: true });
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  });
-
-  // Parallax: background drifts slower than scroll (moves from -50px to 50px)
-  const bgYRaw = useTransform(scrollYProgress, [0, 1], [-50, 50]);
-  const bgY = useTransform(bgYRaw, (val) => isDesktop ? `${val}px` : '0px');
-
-  // Content drifts slightly less (subtle depth)
-  const contentYRaw = useTransform(scrollYProgress, [0, 1], [0, -30]);
-  const contentY = useTransform(contentYRaw, (val) => isDesktop ? `${val}px` : '0px');
-
   return (
     <>
-      {/* ── Keyframe CSS injected once ──────────────────────────────── */}
       <style>{`
         @keyframes particleFloat {
           0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
@@ -79,160 +112,145 @@ export default function SignatureBannerSection() {
           85%  { opacity: 1; }
           100% { transform: translateY(-110vh) translateX(var(--drift-x)) scale(0.4); opacity: 0; }
         }
-        @keyframes shimmerSweep {
-          0%   { transform: translateX(-100%) skewX(-15deg); }
-          100% { transform: translateX(350%) skewX(-15deg); }
+        @keyframes marqueeLeft  { from { transform: translateX(0); }     to { transform: translateX(-50%); } }
+        @keyframes marqueeRight { from { transform: translateX(-50%); }  to { transform: translateX(0); } }
+        @keyframes auroraDrift {
+          0%   { transform: translate(0, 0) scale(1); }
+          50%  { transform: translate(4%, -3%) scale(1.12); }
+          100% { transform: translate(-3%, 2%) scale(1); }
         }
-        .banner-shimmer::after {
+        @keyframes shimmerSweep {
+          0%   { transform: translateX(-120%) skewX(-16deg); }
+          100% { transform: translateX(420%)  skewX(-16deg); }
+        }
+        .sig-shimmer::after {
           content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            90deg,
-            transparent 0%,
-            rgba(200,164,107,0.07) 40%,
-            rgba(200,164,107,0.14) 50%,
-            rgba(200,164,107,0.07) 60%,
-            transparent 100%
-          );
-          width: 60%;
-          animation: shimmerSweep 7s ease-in-out 2s infinite;
+          position: absolute; inset: 0;
+          width: 55%;
+          background: linear-gradient(90deg, transparent, rgba(255,240,210,0.16) 50%, transparent);
+          animation: shimmerSweep 7s ease-in-out 1.5s infinite;
           pointer-events: none;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .sig-marquee, .sig-aurora { animation: none !important; }
         }
       `}</style>
 
       <section
         ref={sectionRef}
-        className="relative w-full overflow-hidden"
-        style={{ minHeight: '60vh' }}
+        className="relative w-full overflow-hidden flex items-center"
+        style={{ minHeight: '78vh' }}
       >
-        {/* ── Parallax background layer ─────────────────────────────── */}
-        <motion.div
-          style={{
-            y: bgY,
-            position: 'absolute',
-            top: '-10%',
-            left: 0,
-            right: 0,
-            height: '120%',
-          }}
+        {/* ── Grounding backdrop (child div, so it survives the homepage
+              transparent-section rule) ─────────────────────────────────── */}
+        <div
           aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse 90% 70% at 50% 45%, rgba(20,14,6,0.72) 0%, rgba(6,6,6,0.94) 70%)',
+          }}
+        />
+
+        {/* ── Living gold aurora ──────────────────────────────────────── */}
+        <div aria-hidden className="absolute inset-0 overflow-hidden">
+          {[
+            { c: 'rgba(200,164,107,0.16)', x: '18%', y: '30%', s: 60, d: 18 },
+            { c: 'rgba(216,196,160,0.12)', x: '80%', y: '62%', s: 70, d: 24 },
+            { c: 'rgba(160,120,60,0.14)', x: '55%', y: '20%', s: 55, d: 21 },
+          ].map((b, i) => (
+            <div
+              key={i}
+              className="sig-aurora absolute rounded-full"
+              style={{
+                left: b.x,
+                top: b.y,
+                width: 'clamp(340px, 42vw, 680px)',
+                height: 'clamp(340px, 42vw, 680px)',
+                transform: 'translate(-50%,-50%)',
+                background: `radial-gradient(circle, ${b.c} 0%, transparent 68%)`,
+                filter: `blur(${b.s}px)`,
+                animation: `auroraDrift ${b.d}s ease-in-out ${i * 2}s infinite alternate`,
+                mixBlendMode: 'screen',
+              }}
+            />
+          ))}
+        </div>
+
+        {/* ── Ghost-text marquee drifting behind the headline ─────────── */}
+        <div
+          aria-hidden
+          className="sig-marquee absolute inset-x-0 top-1/2 -translate-y-1/2 pointer-events-none select-none"
+          style={{ opacity: 0.16 }}
         >
-          {/* Marble base */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `
-                radial-gradient(ellipse 120% 80% at 20% 30%, rgba(28,18,8,0.95) 0%, transparent 60%),
-                radial-gradient(ellipse 100% 120% at 80% 70%, rgba(18,10,4,0.9) 0%, transparent 55%),
-                radial-gradient(ellipse 80% 60% at 50% 50%, rgba(200,164,107,0.04) 0%, transparent 70%),
-                linear-gradient(135deg,
-                  #0A0A08 0%,
-                  #100C06 15%,
-                  #0E0A05 30%,
-                  #120E08 45%,
-                  #0A0808 60%,
-                  #0E0C07 75%,
-                  #0A0A08 100%
-                )
-              `,
-            }}
-          />
+          <div className="mb-2">
+            <Marquee />
+          </div>
+          <div>
+            <Marquee reverse />
+          </div>
+        </div>
 
-          {/* Marble veins — pure CSS */}
-          <div
-            className="absolute inset-0 opacity-30"
-            style={{
-              backgroundImage: `
-                repeating-linear-gradient(
-                  125deg,
-                  transparent 0px,
-                  transparent 18px,
-                  rgba(200,164,107,0.08) 18px,
-                  rgba(200,164,107,0.08) 19px,
-                  transparent 19px,
-                  transparent 54px,
-                  rgba(200,164,107,0.04) 54px,
-                  rgba(200,164,107,0.04) 55px
-                ),
-                repeating-linear-gradient(
-                  47deg,
-                  transparent 0px,
-                  transparent 30px,
-                  rgba(200,164,107,0.05) 30px,
-                  rgba(200,164,107,0.05) 31px,
-                  transparent 31px,
-                  transparent 72px
-                )
-              `,
-            }}
-          />
-
-          {/* Gold foil sheen overlay */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `
-                radial-gradient(ellipse 60% 40% at 50% 50%,
-                  rgba(200,164,107,0.06) 0%,
-                  rgba(200,164,107,0.02) 40%,
-                  transparent 70%
-                )
-              `,
-            }}
-          />
-
-          {/* Vignette */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                'radial-gradient(ellipse 90% 80% at 50% 50%, transparent 30%, rgba(0,0,0,0.7) 100%)',
-            }}
-          />
-        </motion.div>
-
-        {/* ── Floating particles ────────────────────────────────────── */}
+        {/* ── Floating particles ──────────────────────────────────────── */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
           {PARTICLES.map((p) => (
             <GoldParticle key={p.id} p={p} />
           ))}
         </div>
 
-        {/* ── Center content ────────────────────────────────────────── */}
-        <motion.div
-          style={{ y: contentY, minHeight: '60vh' }}
-          className="relative z-10 flex flex-col items-center justify-center text-center px-6 sm:px-12"
-        >
+        {/* ── Center content ──────────────────────────────────────────── */}
+        <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-6 text-center sm:px-12">
           {/* Accent label */}
           <motion.p
-            initial={{ opacity: 0, letterSpacing: '0.5em' }}
-            whileInView={{ opacity: 1, letterSpacing: '0.32em' }}
+            initial={{ opacity: 0, letterSpacing: '0.55em', y: 10 }}
+            whileInView={{ opacity: 1, letterSpacing: '0.34em', y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 1.1, ease }}
-            className="luxury-label mb-6"
+            className="luxury-label mb-7"
           >
             YAM&#8209;N7 Exclusives
           </motion.p>
 
-          {/* Main heading */}
-          <motion.h2
-            initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
-            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 1, delay: 0.15, ease }}
-            className="banner-shimmer relative font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white uppercase font-normal leading-[1.08] tracking-wide max-w-4xl overflow-hidden"
-          >
-            The Signature Collection
-          </motion.h2>
+          {/* Kinetic headline — words mask up + stagger */}
+          <h2 className="sig-shimmer relative font-display uppercase font-normal leading-[1.02] tracking-wide text-white">
+            <span className="sr-only">The Signature Collection</span>
+            <span aria-hidden className="flex flex-wrap justify-center gap-x-[0.3em]">
+              {HEADLINE.map((word, i) => (
+                <span key={i} className="overflow-hidden py-[0.06em]">
+                  <motion.span
+                    initial={{ y: '115%' }}
+                    whileInView={{ y: '0%' }}
+                    viewport={{ once: true, margin: '-70px' }}
+                    transition={{ duration: 0.9, delay: 0.12 * i, ease }}
+                    className="inline-block"
+                    style={{
+                      fontSize: 'clamp(2.4rem, 7vw, 5.6rem)',
+                      ...(word === 'Signature'
+                        ? {
+                            fontStyle: 'italic',
+                            background:
+                              'linear-gradient(135deg, #C8A46B 0%, #F3E0B0 45%, #C8A46B 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                          }
+                        : {}),
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                </span>
+              ))}
+            </span>
+          </h2>
 
-          {/* Decorative line */}
+          {/* Drawing divider */}
           <motion.div
             initial={{ scaleX: 0, opacity: 0 }}
             whileInView={{ scaleX: 1, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2, delay: 0.35, ease }}
-            className="my-7 h-px w-28 sm:w-36 origin-center"
+            className="my-7 h-px w-28 origin-center sm:w-40"
             style={{
               background: 'linear-gradient(to right, transparent, #C8A46B, transparent)',
             }}
@@ -243,49 +261,53 @@ export default function SignatureBannerSection() {
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.85, delay: 0.4, ease }}
-            className="font-heading text-base sm:text-xl md:text-2xl text-white/70 font-normal max-w-xl leading-relaxed"
+            transition={{ duration: 0.85, delay: 0.45, ease }}
+            className="font-heading max-w-xl text-base font-normal leading-relaxed text-white/70 sm:text-xl md:text-2xl"
           >
             For those who are remembered long after they leave the room.
           </motion.p>
 
-          {/* CTA button */}
+          {/* CTA */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.8, delay: 0.55, ease }}
+            transition={{ duration: 0.8, delay: 0.58, ease }}
             className="mt-10"
           >
             <Link
               href="/search?q=Signature"
-              className="group relative inline-flex items-center justify-center px-10 py-4 overflow-hidden text-xs font-semibold uppercase tracking-[0.22em] transition-all duration-400"
-              style={{
-                border: '1px solid rgba(200,164,107,0.7)',
-                color: '#C8A46B',
-              }}
+              className="group relative inline-flex items-center justify-center gap-3 overflow-hidden px-10 py-4 text-xs font-semibold uppercase tracking-[0.22em] transition-all duration-500"
+              style={{ border: '1px solid rgba(200,164,107,0.7)', color: '#C8A46B' }}
             >
-              {/* Fill layer slides in on hover */}
               <span
-                className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-400 ease-out"
-                style={{ background: '#C8A46B' }}
+                className="absolute inset-0 -translate-x-full transition-transform duration-500 ease-out group-hover:translate-x-0"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #C8A46B 0%, #F3E0B0 50%, #C8A46B 100%)',
+                }}
                 aria-hidden
               />
-              {/* Text — turns dark on hover */}
-              <span className="relative z-10 group-hover:text-[#0A0A0A] transition-colors duration-400">
+              <span className="relative z-10 transition-colors duration-500 group-hover:text-[#0A0A0A]">
                 Explore Signature Collection
+              </span>
+              <span className="relative z-10 transition-all duration-500 group-hover:translate-x-1 group-hover:text-[#0A0A0A]">
+                →
               </span>
             </Link>
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* Bottom fade to next section */}
+        {/* Top & bottom fades to blend with neighbours */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to bottom, transparent, #0A0A0A)',
-          }}
           aria-hidden
+          className="absolute inset-x-0 top-0 h-24 pointer-events-none"
+          style={{ background: 'linear-gradient(to bottom, #0A0A0A, transparent)' }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 h-24 pointer-events-none"
+          style={{ background: 'linear-gradient(to top, #0A0A0A, transparent)' }}
         />
       </section>
     </>
