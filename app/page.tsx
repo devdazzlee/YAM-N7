@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Newsletter from './components/Newsletter';
 import HeroSection from './components/HeroSection';
+import ScrollBottle3D from './components/ScrollBottle3D';
 import IdentitySection from './components/IdentitySection';
 import GenderProductCollections from './components/GenderProductCollections';
 import StatsSection from './components/StatsSection';
@@ -40,8 +41,9 @@ export default function Home() {
   const featuredTotal = data?.featured_total ?? featured.length;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="home-3d-bg min-h-screen">
       <Header />
+      <ScrollBottle3D />
       <HeroSection />
       <IdentitySection />
       <GenderProductCollections />

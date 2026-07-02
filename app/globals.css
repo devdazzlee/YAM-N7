@@ -231,7 +231,7 @@ h2, h3, h4, h5, h6, .font-heading {
  * ────────────────────────────────────────────────────────────────────────── */
 .sr {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(40px);
   transition:
     opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
@@ -340,5 +340,23 @@ select:focus {
   outline: none !important;
   border-color: #C8A46B !important;
   box-shadow: 0 0 10px rgba(200, 164, 107, 0.5) !important;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * Homepage 3D background flacon
+ * ──────────────────────────────────────────────────────────────────────────
+ * The animated flacon (ScrollBottle3D) is a fixed layer at z-index -1 — BEHIND
+ * all page content and the navbar. The homepage sections normally paint an
+ * opaque near-black fill, which would hide it, so on desktop we make the
+ * top-level sections transparent. The <body> still provides the exact same
+ * black base, so the page looks identical — the flacon simply shows through
+ * the empty space behind the text/cards. Product cards keep their own opaque
+ * fills, so they occlude the flacon and give it real depth.
+ * Desktop only (the flacon itself is desktop-only).
+ * ────────────────────────────────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .home-3d-bg > section {
+    background-color: transparent !important;
+  }
 }
 

@@ -8,6 +8,8 @@ import { ArrowRight, ChevronDown } from 'lucide-react';
 /* ─── ease curves ──────────────────────────────────────────────── */
 const SILK   = [0.25, 0.46, 0.45, 0.94] as const;
 const REVEAL = [0.16, 1,    0.3,  1   ] as const;
+/* client-spec headline ease — cubic-bezier(0.22, 1, 0.36, 1) */
+const SPEC   = [0.22, 1,    0.36, 1   ] as const;
 
 /* ─── gold particle pool ───────────────────────────────────────── */
 const PARTICLES = Array.from({ length: 28 }, (_, i) => ({
@@ -136,7 +138,9 @@ export default function HeroSection() {
 
       {/* ═══ BACKGROUND LAYER STACK ═══════════════════════════════ */}
 
-      {/* 1 — hero image with parallax — desktop only */}
+      {/* 1 — hero image with parallax.
+          Hidden on desktop (lg+): the 3D flacon background shows through the
+          transparent hero instead. Kept on mobile, where the flacon is off. */}
       <motion.div
         style={{
           y: imageY,
@@ -146,7 +150,7 @@ export default function HeroSection() {
         animate={{ opacity: 1, scale: 1.0 }}
         transition={{ duration: 2.2, ease: SILK }}
         aria-hidden
-        className="absolute inset-0"
+        className="absolute inset-0 lg:hidden"
       >
         <img
           src="/banners/New-Banner.jpg"
@@ -326,11 +330,12 @@ export default function HeroSection() {
 
             {/* ── Headline ──────────────────────────────────────── */}
             <div style={{ overflow: 'hidden', marginBottom: 'clamp(20px, 3vw, 28px)' }}>
-              {/* Line 1 */}
+              {/* Line 1 — mask reveal + scale-in (0.95 → 1, per client spec) */}
               <motion.div
-                initial={{ y: '110%', opacity: 0 }}
-                animate={{ y: '0%',   opacity: 1 }}
-                transition={{ duration: 1.0, delay: 0.4, ease: REVEAL }}
+                initial={{ y: '110%', opacity: 0, scale: 0.95 }}
+                animate={{ y: '0%',   opacity: 1, scale: 1 }}
+                transition={{ duration: 1.2, delay: 0.4, ease: SPEC }}
+                style={{ transformOrigin: 'left bottom' }}
               >
                 <h1
                   style={{
@@ -347,11 +352,12 @@ export default function HeroSection() {
                 </h1>
               </motion.div>
 
-              {/* Line 2 — italic gold */}
+              {/* Line 2 — italic gold — mask reveal + scale-in (0.95 → 1) */}
               <motion.div
-                initial={{ y: '110%', opacity: 0 }}
-                animate={{ y: '0%',   opacity: 1 }}
-                transition={{ duration: 1.0, delay: 0.55, ease: REVEAL }}
+                initial={{ y: '110%', opacity: 0, scale: 0.95 }}
+                animate={{ y: '0%',   opacity: 1, scale: 1 }}
+                transition={{ duration: 1.2, delay: 0.55, ease: SPEC }}
+                style={{ transformOrigin: 'left bottom' }}
               >
                 <h1
                   style={{
@@ -513,9 +519,12 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-      {/* ── Right side bottle image — desktop focal ─────────────── */}
+      {/* ── Right side bottle image ───────────────────────────────
+          Hidden on desktop: the animated 3D flacon (ScrollBottle3D) now owns
+          this space and enters with its own intro animation. Mobile never
+          showed this bottle, so it stays hidden everywhere. */}
       <div
-        className="hidden lg:block"
+        className="hidden"
         style={{
           position: 'absolute',
           right: 'clamp(40px, 8vw, 120px)',
