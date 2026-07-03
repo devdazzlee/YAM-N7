@@ -33,22 +33,22 @@ export default function BrandStorySection() {
     borderRadius: '50%',
     border,
   });
-  const orbitStyle = (size: string): React.CSSProperties => ({
+  const cornerStyle = (pos: {
+    top?: number;
+    bottom?: number;
+    left?: number;
+    right?: number;
+  }): React.CSSProperties => ({
     position: 'absolute',
-    width: size,
-    aspectRatio: '1',
+    width: '34px',
+    height: '34px',
+    zIndex: 3,
+    ...pos,
+    borderTop: pos.top !== undefined ? '1px solid rgba(200,164,107,0.55)' : undefined,
+    borderBottom: pos.bottom !== undefined ? '1px solid rgba(200,164,107,0.55)' : undefined,
+    borderLeft: pos.left !== undefined ? '1px solid rgba(200,164,107,0.55)' : undefined,
+    borderRight: pos.right !== undefined ? '1px solid rgba(200,164,107,0.55)' : undefined,
   });
-  const dotStyle: React.CSSProperties = {
-    position: 'absolute',
-    top: '-4.5px',
-    left: '50%',
-    width: '9px',
-    height: '9px',
-    borderRadius: '50%',
-    background: '#F3E0B0',
-    boxShadow: '0 0 14px rgba(200,164,107,0.9)',
-    transform: 'translateX(-50%)',
-  };
 
   return (
     <section
@@ -274,7 +274,7 @@ export default function BrandStorySection() {
           </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: animated "Nature 7" emblem — image-free */}
+        {/* RIGHT COLUMN: "Nature 7" emblem — image-free */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -287,127 +287,142 @@ export default function BrandStorySection() {
             position: 'relative',
           }}
         >
-          {/* Luxury frame border */}
-          <div
-            style={{
-              position: 'absolute',
-              top: '-16px',
-              left: '-16px',
-              right: '16px',
-              bottom: '16px',
-              border: '1px solid rgba(200, 164, 107, 0.25)',
-              pointerEvents: 'none',
-              zIndex: 1,
-            }}
-            className="hidden sm:block"
-          />
-
           <div
             style={{
               position: 'relative',
               width: '100%',
               aspectRatio: '4/5',
               maxHeight: '620px',
-              overflow: 'hidden',
-              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              background:
-                'radial-gradient(ellipse at center, rgba(30,22,10,0.55) 0%, rgba(8,8,8,0.92) 72%)',
-              zIndex: 2,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
-            {/* radial gold glow */}
+            {/* Quiet corner brackets — replaces the boxy offset frame */}
+            <span aria-hidden className="hidden sm:block" style={cornerStyle({ top: -14, left: -14 })} />
+            <span aria-hidden className="hidden sm:block" style={cornerStyle({ top: -14, right: -14 })} />
+            <span aria-hidden className="hidden sm:block" style={cornerStyle({ bottom: -14, left: -14 })} />
+            <span aria-hidden className="hidden sm:block" style={cornerStyle({ bottom: -14, right: -14 })} />
+
             <div
-              aria-hidden
               style={{
-                position: 'absolute',
-                width: '72%',
-                aspectRatio: '1',
-                borderRadius: '50%',
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                overflow: 'hidden',
+                boxShadow: '0 25px 60px -12px rgba(0,0,0,0.85)',
+                border: '1px solid rgba(255,255,255,0.06)',
                 background:
-                  'radial-gradient(circle, rgba(200,164,107,0.18) 0%, transparent 66%)',
-                filter: 'blur(22px)',
+                  'radial-gradient(ellipse at center, rgba(30,22,10,0.5) 0%, rgba(8,8,8,0.95) 75%)',
+                zIndex: 2,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
-            />
-
-            {/* rotating dashed gold rings */}
-            <motion.div
-              aria-hidden
-              animate={{ rotate: 360 }}
-              transition={{ duration: 55, repeat: Infinity, ease: 'linear' }}
-              style={ringStyle('86%', '1px dashed rgba(200,164,107,0.22)')}
-            />
-            <motion.div
-              aria-hidden
-              animate={{ rotate: -360 }}
-              transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-              style={ringStyle('64%', '1px dashed rgba(200,164,107,0.32)')}
-            />
-            <motion.div
-              aria-hidden
-              animate={{ rotate: 360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-              style={ringStyle('44%', '1px solid rgba(200,164,107,0.4)')}
-            />
-
-            {/* orbiting light dots */}
-            <motion.div
-              aria-hidden
-              animate={{ rotate: 360 }}
-              transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
-              style={orbitStyle('64%')}
             >
-              <span style={dotStyle} />
-            </motion.div>
-            <motion.div
-              aria-hidden
-              animate={{ rotate: -360 }}
-              transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-              style={orbitStyle('44%')}
-            >
-              <span style={dotStyle} />
-            </motion.div>
-
-            {/* central floating "7" */}
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ position: 'relative', zIndex: 5, textAlign: 'center' }}
-            >
-              <span
+              {/* faint diagonal texture — quiet depth, not sparkle */}
+              <div
+                aria-hidden
                 style={{
-                  display: 'block',
-                  fontFamily: 'var(--font-display), "Playfair Display", serif',
-                  fontSize: 'clamp(130px, 20vw, 220px)',
-                  fontWeight: 400,
-                  lineHeight: 1,
+                  position: 'absolute',
+                  inset: 0,
+                  opacity: 0.04,
+                  backgroundImage:
+                    'repeating-linear-gradient(45deg, #C8A46B 0px, #C8A46B 1px, transparent 1px, transparent 28px)',
+                }}
+              />
+
+              {/* soft gold glow */}
+              <div
+                aria-hidden
+                style={{
+                  position: 'absolute',
+                  width: '58%',
+                  aspectRatio: '1',
+                  borderRadius: '50%',
                   background:
-                    'linear-gradient(135deg, #C8A46B 0%, #F3E0B0 45%, #C8A46B 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  filter: 'drop-shadow(0 8px 30px rgba(200,164,107,0.35))',
+                    'radial-gradient(circle, rgba(200,164,107,0.16) 0%, transparent 70%)',
+                  filter: 'blur(30px)',
                 }}
+              />
+
+              {/* single boundary ring */}
+              <div aria-hidden style={ringStyle('58%', '1px solid rgba(200,164,107,0.28)')} />
+
+              {/* slow-rotating circular seal text — the one motion accent */}
+              <motion.svg
+                aria-hidden
+                viewBox="0 0 200 200"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
+                style={{ position: 'absolute', width: '80%', aspectRatio: '1' }}
               >
-                7
-              </span>
-              <span
-                style={{
-                  display: 'block',
-                  marginTop: '10px',
-                  fontFamily: 'var(--font-body), Poppins, sans-serif',
-                  fontSize: '11px',
-                  letterSpacing: '0.4em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(200,164,107,0.7)',
-                }}
-              >
-                Nature&nbsp;·&nbsp;Seven
-              </span>
-            </motion.div>
+                <defs>
+                  <path id="natureSevenRing" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0" />
+                </defs>
+                <text
+                  fontSize="7.4"
+                  letterSpacing="3.4"
+                  fill="rgba(200,164,107,0.62)"
+                  style={{ fontFamily: 'var(--font-body), Poppins, sans-serif' }}
+                >
+                  <textPath href="#natureSevenRing" startOffset="0%">
+                    NATURE · SEVEN · ARTISAN PARFUM · NATURE · SEVEN · ARTISAN PARFUM ·
+                  </textPath>
+                </text>
+              </motion.svg>
+
+              {/* central emblem */}
+              <div style={{ position: 'relative', zIndex: 5, textAlign: 'center' }}>
+                <span
+                  aria-hidden
+                  style={{
+                    display: 'block',
+                    width: '40px',
+                    height: '1px',
+                    margin: '0 auto 18px',
+                    background: 'linear-gradient(to right, transparent, #C8A46B, transparent)',
+                  }}
+                />
+                <span
+                  style={{
+                    display: 'block',
+                    fontFamily: 'var(--font-display), "Playfair Display", serif',
+                    fontStyle: 'italic',
+                    fontSize: 'clamp(120px, 18vw, 200px)',
+                    fontWeight: 400,
+                    lineHeight: 1,
+                    background:
+                      'linear-gradient(135deg, #C8A46B 0%, #F3E0B0 45%, #C8A46B 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    filter: 'drop-shadow(0 8px 30px rgba(200,164,107,0.3))',
+                  }}
+                >
+                  7
+                </span>
+                <span
+                  aria-hidden
+                  style={{
+                    display: 'block',
+                    width: '40px',
+                    height: '1px',
+                    margin: '18px auto 16px',
+                    background: 'linear-gradient(to right, transparent, #C8A46B, transparent)',
+                  }}
+                />
+                <span
+                  style={{
+                    display: 'block',
+                    fontFamily: 'var(--font-body), Poppins, sans-serif',
+                    fontSize: '11px',
+                    letterSpacing: '0.4em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(200,164,107,0.75)',
+                  }}
+                >
+                  Nature&nbsp;·&nbsp;Seven
+                </span>
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>
