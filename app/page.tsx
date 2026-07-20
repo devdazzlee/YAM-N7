@@ -4,15 +4,13 @@ import { useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Newsletter from './components/Newsletter';
-import HeroSection from './components/HeroSection';
-import ScrollBottle3D from './components/ScrollBottle3D';
+import PerfumeStoryExperience from './components/PerfumeStoryExperience';
 import IdentitySection from './components/IdentitySection';
 import GenderProductCollections from './components/GenderProductCollections';
 import StatsSection from './components/StatsSection';
 import LuxuryCollectionsSection from './components/LuxuryCollectionsSection';
 import WhyChooseUsSection from './components/WhyChooseUsSection';
 import TrendingProductsSection from './components/TrendingProductsSection';
-import ProductShowcaseSection from './components/ProductShowcaseSection';
 import BestSellersSection from './components/BestSellersSection';
 import WhyChooseYAMSection from './components/WhyChooseYAMSection';
 import SignatureBannerSection from './components/SignatureBannerSection';
@@ -27,7 +25,6 @@ import { useWebHomeStore } from '../lib/store/webHomeStore';
 export default function Home() {
   const data = useWebHomeStore((s) => s.data);
   const loading = useWebHomeStore((s) => s.loading);
-  const error = useWebHomeStore((s) => s.error);
   const fetch = useWebHomeStore((s) => s.fetch);
 
   useEffect(() => {
@@ -36,15 +33,12 @@ export default function Home() {
 
   const featured = data?.featuredProducts ?? [];
   const bestSellers = data?.bestSellingProducts ?? [];
-  const categories = data?.categories ?? [];
-  const categoriesTotal = data?.categories_total ?? categories.length;
   const featuredTotal = data?.featured_total ?? featured.length;
 
   return (
-    <div className="home-3d-bg min-h-screen">
+    <div className="min-h-screen bg-[#12040b]">
       <Header />
-      <ScrollBottle3D />
-      <HeroSection />
+      <PerfumeStoryExperience />
       <IdentitySection />
       <GenderProductCollections />
       <StatsSection />
@@ -54,10 +48,7 @@ export default function Home() {
         initialTotal={featuredTotal}
         initialLoading={loading && !data}
       />
-      <BestSellersSection
-        products={bestSellers}
-        loading={loading && !data}
-      />
+      <BestSellersSection products={bestSellers} loading={loading && !data} />
       <WhyChooseYAMSection />
       <SignatureBannerSection />
       <NewArrivalsSection />

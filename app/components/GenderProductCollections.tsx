@@ -18,71 +18,70 @@ const COLLECTIONS: CollectionCard[] = [
     title: "Men's Collection",
     href: '/categories/men-s-fragrances',
     bottleImageUrl: '/categories-images/Men.png',
-    gradientFrom: '#0A0A0A',
-    gradientTo: '#16161A',
-    accentColor: 'rgba(200, 164, 107, 0.4)',
+    gradientFrom: '#2B0B16',
+    gradientTo: '#1E0A14',
+    accentColor: 'rgba(232,180,160, 0.4)',
   },
   {
     title: "Women's Collection",
     href: '/categories/women',
     bottleImageUrl: '/categories-images/Women.png',
-    gradientFrom: '#0A0A0A',
-    gradientTo: '#1C1518',
-    accentColor: 'rgba(216, 196, 160, 0.4)',
+    gradientFrom: '#2B0B16',
+    gradientTo: '#2A0F1C',
+    accentColor: 'rgba(245,214,206, 0.4)',
   },
   {
     title: 'Unisex Collection',
     href: '/shop',
     bottleImageUrl: '/categories-images/Premium.png',
-    gradientFrom: '#0A0A0A',
-    gradientTo: '#1A1713',
-    accentColor: 'rgba(200, 164, 107, 0.4)',
+    gradientFrom: '#2B0B16',
+    gradientTo: '#22101A',
+    accentColor: 'rgba(232,180,160, 0.4)',
   },
   {
     title: 'Attars',
     href: '/categories/attars',
     bottleImageUrl: '/categories-images/Attars.png',
-    gradientFrom: '#0A0A0A',
-    gradientTo: '#121815',
-    accentColor: 'rgba(216, 196, 160, 0.4)',
+    gradientFrom: '#2B0B16',
+    gradientTo: '#1C0D18',
+    accentColor: 'rgba(245,214,206, 0.4)',
   },
   {
     title: 'Oud Collection',
     href: '/categories/oud',
     bottleImageUrl: '/categories-images/Oud.png',
-    gradientFrom: '#0A0A0A',
-    gradientTo: '#1E1611',
-    accentColor: 'rgba(200, 164, 107, 0.5)',
+    gradientFrom: '#2B0B16',
+    gradientTo: '#280C16',
+    accentColor: 'rgba(232,180,160, 0.5)',
   },
   {
     title: 'Limited Editions',
     href: '/search?q=Elite',
     bottleImageUrl: '/categories-images/Elite.png',
-    gradientFrom: '#0A0A0A',
-    gradientTo: '#17131D',
-    accentColor: 'rgba(200, 164, 107, 0.5)',
+    gradientFrom: '#2B0B16',
+    gradientTo: '#20081A',
+    accentColor: 'rgba(232,180,160, 0.5)',
   },
 ];
 
 export default function GenderProductCollections() {
   return (
-    <section className="luxury-section bg-[#0A0A0A] border-b border-border/20 py-24 relative overflow-hidden">
+    <section className="luxury-section bg-background border-b border-border/20 py-24 relative overflow-hidden">
       {/* Dynamic Background Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#161616_1px,transparent_1px),linear-gradient(to_bottom,#161616_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#5C2438_1px,transparent_1px),linear-gradient(to_bottom,#5C2438_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30" />
 
       <div className="luxury-container relative z-10">
         <SectionHeader
           accent="Signature Series"
           title="Shop by Collection"
           subtitle="Refined gender narratives and exceptional product extractions, designed for the modern connoisseur."
-          light
         />
 
         <Stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mt-12 md:mt-16">
           {COLLECTIONS.map((card) => (
             <StaggerChild key={card.title} className="h-full">
               <Link href={card.href} className="block h-full group">
-                <div className="relative h-[400px] w-full flex flex-col justify-end p-8 overflow-hidden rounded-md border border-border/30 bg-[#0E0E0E] transition-all duration-500">
+                <div className="relative h-[400px] w-full flex flex-col justify-end p-8 overflow-hidden rounded-md border border-border/30 bg-[#35111F] transition-all duration-500">
                   
                   {/* Background Zooming Layer */}
                   <motion.div
@@ -113,7 +112,7 @@ export default function GenderProductCollections() {
                       <img
                         src={card.bottleImageUrl}
                         alt={card.title}
-                        className="w-full h-full object-contain transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(200,164,107,0.7)]"
+                        className="w-full h-full object-contain transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(232,180,160,0.7)]"
                         style={{
                           filter: 'drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4))',
                         }}
@@ -122,12 +121,12 @@ export default function GenderProductCollections() {
                   </div>
 
                   {/* Gold Border Outline on Hover */}
-                  <div className="absolute inset-0 z-20 border border-transparent group-hover:border-[#C8A46B]/80 rounded-md transition-all duration-500 pointer-events-none" />
+                  <div className="absolute inset-0 z-20 border border-transparent group-hover:border-[#E8B4A0]/80 rounded-md transition-all duration-500 pointer-events-none" />
 
                   {/* Title and Action */}
                   <div className="relative z-30 flex flex-col items-center text-center mt-auto w-full">
                     {/* Collection Title */}
-                    <h3 className="font-display text-xl sm:text-2xl text-white mb-2 tracking-wide group-hover:text-[#C8A46B] transition-colors duration-300">
+                    <h3 className="font-display text-xl sm:text-2xl text-white mb-2 tracking-wide group-hover:text-[#E8B4A0] transition-colors duration-300">
                       {card.title}
                     </h3>
                     

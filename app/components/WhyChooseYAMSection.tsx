@@ -42,9 +42,9 @@ const FEATURES = [
 /* ─── Section component ───────────────────────────────────────────────── */
 export default function WhyChooseYAMSection() {
   return (
-    <section className="relative bg-[#0A0A0A] border-t border-border/20 overflow-hidden">
+    <section className="relative bg-background border-t border-border/20 overflow-hidden">
       {/* Ambient glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(200,164,107,0.04)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(232,180,160,0.05)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="luxury-container relative z-10 py-20 sm:py-24">
 
@@ -76,7 +76,7 @@ export default function WhyChooseYAMSection() {
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.2, ease }}
             className="mt-6 mx-auto h-px w-24 origin-center"
-            style={{ background: 'linear-gradient(to right, transparent, #C8A46B, transparent)' }}
+            style={{ background: 'linear-gradient(to right, transparent, #E8B4A0, transparent)' }}
           />
         </motion.div>
 
@@ -97,28 +97,28 @@ export default function WhyChooseYAMSection() {
                   group relative flex flex-col items-center text-center px-6 py-10
                   ${!isLast ? 'lg:border-r border-border/20' : ''}
                   border-b lg:border-b-0 border-border/15
-                  hover:bg-white/[0.015] transition-colors duration-400
+                  hover:bg-black/[0.02] transition-colors duration-400
                 `}
               >
                 {/* Subtle hover gold top line */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-[#C8A46B] group-hover:w-full transition-all duration-500 ease-out" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-[#E8B4A0] group-hover:w-full transition-all duration-500 ease-out" />
 
                 {/* Gold icon */}
                 <motion.div
                   whileHover={{ scale: 1.12, rotate: 3 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 18 }}
-                  className="mb-5 flex items-center justify-center w-12 h-12 border border-[#C8A46B]/25 group-hover:border-[#C8A46B]/60 transition-colors duration-400"
-                  style={{ background: 'rgba(200,164,107,0.06)' }}
+                  className="mb-5 flex items-center justify-center w-12 h-12 border border-[#E8B4A0]/25 group-hover:border-[#E8B4A0]/60 transition-colors duration-400"
+                  style={{ background: 'rgba(232,180,160,0.06)' }}
                 >
                   <Icon
                     className="w-5 h-5"
-                    style={{ color: '#C8A46B' }}
+                    style={{ color: '#E8B4A0' }}
                     strokeWidth={1.5}
                   />
                 </motion.div>
 
                 {/* Title */}
-                <h3 className="font-heading text-base sm:text-lg text-foreground font-normal mb-2 leading-snug group-hover:text-[#C8A46B] transition-colors duration-300">
+                <h3 className="font-heading text-base sm:text-lg text-foreground font-normal mb-2 leading-snug group-hover:text-[#E8B4A0] transition-colors duration-300">
                   {feature.title}
                 </h3>
 

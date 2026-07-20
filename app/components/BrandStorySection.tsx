@@ -44,22 +44,22 @@ export default function BrandStorySection() {
     height: '34px',
     zIndex: 3,
     ...pos,
-    borderTop: pos.top !== undefined ? '1px solid rgba(200,164,107,0.55)' : undefined,
-    borderBottom: pos.bottom !== undefined ? '1px solid rgba(200,164,107,0.55)' : undefined,
-    borderLeft: pos.left !== undefined ? '1px solid rgba(200,164,107,0.55)' : undefined,
-    borderRight: pos.right !== undefined ? '1px solid rgba(200,164,107,0.55)' : undefined,
+    borderTop: pos.top !== undefined ? '1px solid rgba(232,180,160,0.55)' : undefined,
+    borderBottom: pos.bottom !== undefined ? '1px solid rgba(232,180,160,0.55)' : undefined,
+    borderLeft: pos.left !== undefined ? '1px solid rgba(232,180,160,0.55)' : undefined,
+    borderRight: pos.right !== undefined ? '1px solid rgba(232,180,160,0.55)' : undefined,
   });
 
   return (
     <section
       style={{
-        background: '#080808',
+        background: '#2B0B16',
         color: '#FFFFFF',
         position: 'relative',
         overflow: 'hidden',
         padding: '120px 24px',
-        borderTop: '1px solid rgba(200, 164, 107, 0.12)',
-        borderBottom: '1px solid rgba(200, 164, 107, 0.12)',
+        borderTop: '1px solid rgba(232,180,160, 0.12)',
+        borderBottom: '1px solid rgba(232,180,160, 0.12)',
       }}
     >
       {/* Decorative subtle background gradient */}
@@ -70,7 +70,7 @@ export default function BrandStorySection() {
           left: '-10%',
           width: '50%',
           height: '50%',
-          background: 'radial-gradient(circle, rgba(200,164,107,0.03) 0%, rgba(0,0,0,0) 70%)',
+          background: 'radial-gradient(circle, rgba(232,180,160,0.03) 0%, rgba(0,0,0,0) 70%)',
           pointerEvents: 'none',
           zIndex: 1,
         }}
@@ -82,7 +82,7 @@ export default function BrandStorySection() {
           right: '-10%',
           width: '50%',
           height: '50%',
-          background: 'radial-gradient(circle, rgba(200,164,107,0.03) 0%, rgba(0,0,0,0) 70%)',
+          background: 'radial-gradient(circle, rgba(232,180,160,0.03) 0%, rgba(0,0,0,0) 70%)',
           pointerEvents: 'none',
           zIndex: 1,
         }}
@@ -113,7 +113,7 @@ export default function BrandStorySection() {
               fontSize: '11px',
               letterSpacing: '0.24em',
               textTransform: 'uppercase',
-              color: '#C8A46B',
+              color: '#E8B4A0',
               margin: '0 0 20px',
               fontWeight: 500,
             }}
@@ -157,7 +157,7 @@ export default function BrandStorySection() {
                 fontFamily: 'var(--font-display), "Playfair Display", serif',
                 fontSize: 'clamp(18px, 2.5vw, 24px)',
                 lineHeight: 1.4,
-                color: '#F3F4F6',
+                color: '#F3E6E2',
                 fontStyle: 'italic',
                 margin: 0,
               }}
@@ -172,7 +172,7 @@ export default function BrandStorySection() {
                 flexDirection: 'column',
                 gap: '12px',
                 paddingLeft: '16px',
-                borderLeft: '1px solid rgba(200,164,107,0.2)',
+                borderLeft: '1px solid rgba(232,180,160,0.2)',
                 margin: '12px 0',
               }}
             >
@@ -221,7 +221,7 @@ export default function BrandStorySection() {
                 fontFamily: 'var(--font-body), Poppins, sans-serif',
                 fontSize: 'clamp(14px, 1.8vw, 16px)',
                 lineHeight: 1.8,
-                color: '#9CA3AF',
+                color: '#C4A0A5',
                 margin: '8px 0',
                 maxWidth: '540px',
               }}
@@ -236,7 +236,7 @@ export default function BrandStorySection() {
                 style={{
                   fontFamily: 'var(--font-body), Poppins, sans-serif',
                   fontSize: 'clamp(15px, 2vw, 18px)',
-                  color: '#E5E7EB',
+                  color: '#EDD9D4',
                   margin: 0,
                 }}
               >
@@ -247,7 +247,7 @@ export default function BrandStorySection() {
                 style={{
                   fontFamily: 'var(--font-body), Poppins, sans-serif',
                   fontSize: 'clamp(15px, 2vw, 18px)',
-                  color: '#E5E7EB',
+                  color: '#EDD9D4',
                   margin: 0,
                 }}
               >
@@ -263,10 +263,10 @@ export default function BrandStorySection() {
                 fontSize: 'clamp(24px, 3.8vw, 36px)',
                 fontWeight: 600,
                 letterSpacing: '0.08em',
-                color: '#C8A46B',
+                color: '#E8B4A0',
                 margin: '24px 0 0',
                 textTransform: 'uppercase',
-                textShadow: '0 4px 20px rgba(200,164,107,0.15)',
+                textShadow: '0 4px 20px rgba(232,180,160,0.15)',
               }}
             >
               Minimal Outside. Infinite Within.
@@ -308,9 +308,9 @@ export default function BrandStorySection() {
                 height: '100%',
                 overflow: 'hidden',
                 boxShadow: '0 25px 60px -12px rgba(0,0,0,0.85)',
-                border: '1px solid rgba(255,255,255,0.06)',
+                border: '1px solid rgba(232,180,160,0.08)',
                 background:
-                  'radial-gradient(ellipse at center, rgba(30,22,10,0.5) 0%, rgba(8,8,8,0.95) 75%)',
+                  'radial-gradient(ellipse at center, rgba(80,20,45,0.5) 0%, rgba(20,5,12,0.95) 75%)',
                 zIndex: 2,
                 display: 'flex',
                 alignItems: 'center',
@@ -325,7 +325,7 @@ export default function BrandStorySection() {
                   inset: 0,
                   opacity: 0.04,
                   backgroundImage:
-                    'repeating-linear-gradient(45deg, #C8A46B 0px, #C8A46B 1px, transparent 1px, transparent 28px)',
+                    'repeating-linear-gradient(45deg, #E8B4A0 0px, #E8B4A0 1px, transparent 1px, transparent 28px)',
                 }}
               />
 
@@ -338,13 +338,13 @@ export default function BrandStorySection() {
                   aspectRatio: '1',
                   borderRadius: '50%',
                   background:
-                    'radial-gradient(circle, rgba(200,164,107,0.16) 0%, transparent 70%)',
+                    'radial-gradient(circle, rgba(232,180,160,0.16) 0%, transparent 70%)',
                   filter: 'blur(30px)',
                 }}
               />
 
               {/* single boundary ring */}
-              <div aria-hidden style={ringStyle('58%', '1px solid rgba(200,164,107,0.28)')} />
+              <div aria-hidden style={ringStyle('58%', '1px solid rgba(232,180,160,0.28)')} />
 
               {/* slow-rotating circular seal text — the one motion accent */}
               <motion.svg
@@ -360,7 +360,7 @@ export default function BrandStorySection() {
                 <text
                   fontSize="7.4"
                   letterSpacing="3.4"
-                  fill="rgba(200,164,107,0.62)"
+                  fill="rgba(232,180,160,0.62)"
                   style={{ fontFamily: 'var(--font-body), Poppins, sans-serif' }}
                 >
                   <textPath href="#natureSevenRing" startOffset="0%">
@@ -378,7 +378,7 @@ export default function BrandStorySection() {
                     width: '40px',
                     height: '1px',
                     margin: '0 auto 18px',
-                    background: 'linear-gradient(to right, transparent, #C8A46B, transparent)',
+                    background: 'linear-gradient(to right, transparent, #E8B4A0, transparent)',
                   }}
                 />
                 <span
@@ -390,11 +390,11 @@ export default function BrandStorySection() {
                     fontWeight: 400,
                     lineHeight: 1,
                     background:
-                      'linear-gradient(135deg, #C8A46B 0%, #F3E0B0 45%, #C8A46B 100%)',
+                      'linear-gradient(135deg, #E8B4A0 0%, #F5D6CE 45%, #E8B4A0 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
-                    filter: 'drop-shadow(0 8px 30px rgba(200,164,107,0.3))',
+                    filter: 'drop-shadow(0 8px 30px rgba(232,180,160,0.3))',
                   }}
                 >
                   7
@@ -406,7 +406,7 @@ export default function BrandStorySection() {
                     width: '40px',
                     height: '1px',
                     margin: '18px auto 16px',
-                    background: 'linear-gradient(to right, transparent, #C8A46B, transparent)',
+                    background: 'linear-gradient(to right, transparent, #E8B4A0, transparent)',
                   }}
                 />
                 <span
@@ -416,7 +416,7 @@ export default function BrandStorySection() {
                     fontSize: '11px',
                     letterSpacing: '0.4em',
                     textTransform: 'uppercase',
-                    color: 'rgba(200,164,107,0.75)',
+                    color: 'rgba(232,180,160,0.75)',
                   }}
                 >
                   Nature&nbsp;·&nbsp;Seven

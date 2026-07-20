@@ -11,17 +11,6 @@ const REVEAL = [0.16, 1,    0.3,  1   ] as const;
 /* client-spec headline ease — cubic-bezier(0.22, 1, 0.36, 1) */
 const SPEC   = [0.22, 1,    0.36, 1   ] as const;
 
-/* ─── gold particle pool ───────────────────────────────────────── */
-const PARTICLES = Array.from({ length: 28 }, (_, i) => ({
-  id: i,
-  x:  Math.random() * 100,
-  y:  Math.random() * 100,
-  size: Math.random() * 3 + 1,
-  delay: Math.random() * 4,
-  dur:   Math.random() * 6 + 5,
-  opacity: Math.random() * 0.55 + 0.15,
-}));
-
 /* ─── smoke layers ─────────────────────────────────────────────── */
 const SMOKE = [
   { x: '30%', y: '55%', scale: 1.4, delay: 0,   dur: 14, blur: 60 },
@@ -32,7 +21,6 @@ const SMOKE = [
 /* ══════════════════════════════════════════════════════════════ */
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const canvasRef  = useRef<HTMLCanvasElement>(null);
 
   // Detect mobile once on mount — disable parallax on small screens
   const [isDesktop, setIsDesktop] = useState(false);
@@ -64,64 +52,6 @@ export default function HeroSection() {
   const contentY = useTransform(contentYRaw, (val) => isDesktop ? `${val}%` : '0%');
   const overallO = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
-  /* ── canvas particle field ── */
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let raf: number;
-    let t = 0;
-
-    const dots: { x: number; y: number; vx: number; vy: number; r: number; o: number; base: number }[] = [];
-    const resize = () => {
-      canvas.width  = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    for (let i = 0; i < 55; i++) {
-      dots.push({
-        x:    Math.random() * canvas.width,
-        y:    Math.random() * canvas.height,
-        vx:   (Math.random() - 0.5) * 0.18,
-        vy:   -(Math.random() * 0.22 + 0.06),
-        r:    Math.random() * 1.4 + 0.4,
-        o:    Math.random() * 0.5 + 0.15,
-        base: Math.random() * 0.5 + 0.15,
-      });
-    }
-
-    const draw = () => {
-      t += 0.012;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      dots.forEach((d) => {
-        d.x += d.vx;
-        d.y += d.vy;
-        if (d.y < -4)  { d.y = canvas.height + 4; d.x = Math.random() * canvas.width; }
-        if (d.x < -4)  d.x = canvas.width  + 4;
-        if (d.x > canvas.width + 4) d.x = -4;
-
-        const pulse = d.base + Math.sin(t + d.r * 3) * 0.18;
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200,164,107,${Math.min(pulse, 0.7)})`;
-        ctx.fill();
-      });
-
-      raf = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
-
   return (
     <section
       ref={sectionRef}
@@ -132,7 +62,7 @@ export default function HeroSection() {
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
-        background: '#000000',
+        background: '#2B0B16',
       }}
     >
 
@@ -190,7 +120,7 @@ export default function HeroSection() {
           left: 0,
           right: 0,
           height: '1px',
-          background: 'linear-gradient(to right, transparent, rgba(200,164,107,0.12) 30%, rgba(200,164,107,0.06) 70%, transparent)',
+          background: 'linear-gradient(to right, transparent, rgba(232,180,160,0.12) 30%, rgba(232,180,160,0.06) 70%, transparent)',
           transformOrigin: 'left',
           pointerEvents: 'none',
         }}
@@ -221,56 +151,13 @@ export default function HeroSection() {
             height: 'clamp(300px, 40vw, 600px)',
             transform: 'translate(-50%, -50%)',
             borderRadius: '50%',
-            background: `radial-gradient(circle, rgba(200,164,107,0.045) 0%, rgba(200,164,107,0) 70%)`,
+            background: `radial-gradient(circle, rgba(232,180,160,0.045) 0%, rgba(232,180,160,0) 70%)`,
             filter: `blur(${s.blur}px)`,
             pointerEvents: 'none',
             mixBlendMode: 'screen',
           }}
         />
       ))}
-
-      {/* 5 — CSS particle field (canvas) */}
-      <canvas
-        ref={canvasRef}
-        aria-hidden
-        style={{
-          position: 'absolute', inset: 0,
-          width: '100%', height: '100%',
-          pointerEvents: 'none',
-          opacity: 0.7,
-          mixBlendMode: 'screen',
-        }}
-      />
-
-      {/* 6 — SVG floating gold particles (declarative, crisp) */}
-      <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-        {PARTICLES.map((p) => (
-          <motion.div
-            key={p.id}
-            animate={{
-              y:       [0, -30, 0],
-              opacity: [p.opacity * 0.4, p.opacity, p.opacity * 0.4],
-            }}
-            transition={{
-              duration:   p.dur,
-              delay:      p.delay,
-              repeat:     Infinity,
-              repeatType: 'mirror',
-              ease:       'easeInOut',
-            }}
-            style={{
-              position: 'absolute',
-              left:     `${p.x}%`,
-              top:      `${p.y}%`,
-              width:    `${p.size}px`,
-              height:   `${p.size}px`,
-              borderRadius: '50%',
-              background:   '#C8A46B',
-              boxShadow:    `0 0 ${p.size * 3}px rgba(200,164,107,0.6)`,
-            }}
-          />
-        ))}
-      </div>
 
       {/* 7 — vignette */}
       <div
@@ -313,14 +200,14 @@ export default function HeroSection() {
             >
               <span style={{
                 display: 'block', width: '36px', height: '1px',
-                background: 'linear-gradient(to right, transparent, #C8A46B)',
+                background: 'linear-gradient(to right, transparent, #E8B4A0)',
                 flexShrink: 0,
               }} />
               <span style={{
                 fontFamily:    'var(--font-body), Poppins, sans-serif',
                 fontSize:      'clamp(9px, 1.1vw, 11px)',
                 fontWeight:    500,
-                color:         '#C8A46B',
+                color:         '#E8B4A0',
                 letterSpacing: '0.28em',
                 textTransform: 'uppercase',
               }}>
@@ -367,7 +254,7 @@ export default function HeroSection() {
                     fontStyle:     'italic',
                     lineHeight:    1.1,
                     letterSpacing: 'clamp(0.02em, 0.5vw, 0.06em)',
-                    background:    'linear-gradient(135deg, #C8A46B 0%, #D8C4A0 40%, #C8A46B 100%)',
+                    background:    'linear-gradient(135deg, #E8B4A0 0%, #F5D6CE 40%, #E8B4A0 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -409,16 +296,16 @@ export default function HeroSection() {
               {/* Gold filled */}
               <Link href="/shop" style={{ textDecoration: 'none' }}>
                 <motion.div
-                  whileHover={{ scale: 1.03, boxShadow: '0 0 32px rgba(200,164,107,0.35)' }}
+                  whileHover={{ scale: 1.03, boxShadow: '0 0 32px rgba(232,180,160,0.35)' }}
                   whileTap={{ scale: 0.97 }}
                   style={{
                     display:       'inline-flex',
                     alignItems:    'center',
                     gap:           '10px',
                     padding:       'clamp(12px, 1.5vw, 15px) clamp(24px, 3vw, 36px)',
-                    background:    'linear-gradient(135deg, #C8A46B 0%, #D8C4A0 50%, #C8A46B 100%)',
+                    background:    'linear-gradient(135deg, #E8B4A0 0%, #F5D6CE 50%, #E8B4A0 100%)',
                     backgroundSize:'200% 100%',
-                    color:         '#0A0A0A',
+                    color:         '#2B0B16',
                     fontFamily:    'var(--font-body), Poppins, sans-serif',
                     fontSize:      'clamp(10px, 1.1vw, 12px)',
                     fontWeight:    600,
@@ -439,8 +326,8 @@ export default function HeroSection() {
               <Link href="/about" style={{ textDecoration: 'none' }}>
                 <motion.div
                   whileHover={{
-                    background: 'rgba(200,164,107,0.08)',
-                    borderColor: '#D8C4A0',
+                    background: 'rgba(232,180,160,0.08)',
+                    borderColor: '#F5D6CE',
                   }}
                   whileTap={{ scale: 0.97 }}
                   style={{
@@ -449,8 +336,8 @@ export default function HeroSection() {
                     gap:           '10px',
                     padding:       'clamp(11px, 1.5vw, 14px) clamp(24px, 3vw, 36px)',
                     background:    'transparent',
-                    border:        '1px solid rgba(200,164,107,0.55)',
-                    color:         '#C8A46B',
+                    border:        '1px solid rgba(232,180,160,0.55)',
+                    color:         '#E8B4A0',
                     fontFamily:    'var(--font-body), Poppins, sans-serif',
                     fontSize:      'clamp(10px, 1.1vw, 12px)',
                     fontWeight:    500,
@@ -492,14 +379,14 @@ export default function HeroSection() {
                       position: 'absolute', left: `calc(-1 * clamp(12px, 2vw, 24px))`,
                       top: '50%', transform: 'translateY(-50%)',
                       width: '1px', height: '28px',
-                      background: 'rgba(200,164,107,0.2)',
+                      background: 'rgba(232,180,160,0.2)',
                     }} />
                   )}
                   <p style={{
                     fontFamily:    'var(--font-heading), "Cormorant Garamond", serif',
                     fontSize:      'clamp(22px, 2.8vw, 34px)',
                     fontWeight:    400,
-                    color:         '#C8A46B',
+                    color:         '#E8B4A0',
                     margin:        0,
                     lineHeight:    1,
                   }}>{stat.value}</p>
@@ -558,7 +445,7 @@ export default function HeroSection() {
             transform: 'translateX(-50%)',
             width:  '140%',
             height: '60%',
-            background: 'radial-gradient(ellipse, rgba(200,164,107,0.18) 0%, transparent 70%)',
+            background: 'radial-gradient(ellipse, rgba(232,180,160,0.18) 0%, transparent 70%)',
             filter: 'blur(30px)',
             pointerEvents: 'none',
           }} />
@@ -575,7 +462,7 @@ export default function HeroSection() {
                 height:     'clamp(300px, 38vw, 560px)',
                 width:      'auto',
                 objectFit:  'contain',
-                filter:     'drop-shadow(0 40px 80px rgba(0,0,0,0.8)) drop-shadow(0 0 40px rgba(200,164,107,0.15)) brightness(1.05)',
+                filter:     'drop-shadow(0 40px 80px rgba(0,0,0,0.8)) drop-shadow(0 0 40px rgba(232,180,160,0.15)) brightness(1.05)',
                 display:    'block',
                 maxWidth:   '100%',
               }}
@@ -608,9 +495,9 @@ export default function HeroSection() {
               position:   'absolute',
               top:        '12%',
               left:       '-40px',
-              background: 'rgba(10,10,10,0.85)',
+              background: 'rgba(43,11,22,0.85)',
               backdropFilter: 'blur(16px)',
-              border:     '1px solid rgba(200,164,107,0.25)',
+              border:     '1px solid rgba(232,180,160,0.25)',
               padding:    '12px 18px',
               borderRadius: '2px',
             }}
@@ -619,7 +506,7 @@ export default function HeroSection() {
               fontFamily:    'var(--font-body), Poppins, sans-serif',
               fontSize:      '9px',
               letterSpacing: '0.2em',
-              color:         '#C8A46B',
+              color:         '#E8B4A0',
               textTransform: 'uppercase',
               margin:        0,
             }}>New</p>
@@ -648,18 +535,18 @@ export default function HeroSection() {
           fontSize:      '9px',
           letterSpacing: '0.24em',
           textTransform: 'uppercase',
-          color:         'rgba(200,164,107,0.5)',
+          color:         'rgba(232,180,160,0.5)',
         }}>Scroll</span>
 
         {/* Animated scroll line */}
-        <div style={{ width: '1px', height: '40px', background: 'rgba(200,164,107,0.2)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ width: '1px', height: '40px', background: 'rgba(232,180,160,0.2)', position: 'relative', overflow: 'hidden' }}>
           <motion.div
             animate={{ y: ['-100%', '100%'] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: 'linear' }}
             style={{
               position: 'absolute', top: 0, left: 0,
               width: '100%', height: '50%',
-              background: 'linear-gradient(to bottom, transparent, #C8A46B)',
+              background: 'linear-gradient(to bottom, transparent, #E8B4A0)',
             }}
           />
         </div>

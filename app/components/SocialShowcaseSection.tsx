@@ -108,10 +108,10 @@ export default function SocialShowcaseSection() {
   return (
     <section
       style={{
-        background: '#0A0A0A',
-        color: '#FFFFFF',
+        background: '#2B0B16',
+        color: '#FFF8F6',
         padding: '100px 24px',
-        borderBottom: '1px solid rgba(200, 164, 107, 0.12)',
+        borderBottom: '1px solid rgba(232,180,160, 0.16)',
         position: 'relative',
         zIndex: 5,
       }}
@@ -135,7 +135,7 @@ export default function SocialShowcaseSection() {
               fontSize: '11px',
               letterSpacing: '0.24em',
               textTransform: 'uppercase',
-              color: '#C8A46B',
+              color: '#E8B4A0',
               margin: '0 0 16px',
               fontWeight: 500,
             }}
@@ -148,7 +148,7 @@ export default function SocialShowcaseSection() {
               fontSize: 'clamp(28px, 4vw, 40px)',
               fontWeight: 400,
               letterSpacing: '0.04em',
-              color: '#FFFFFF',
+              color: '#FFF8F6',
               margin: 0,
             }}
           >
@@ -162,7 +162,7 @@ export default function SocialShowcaseSection() {
             style={{
               width: '40px',
               height: '1px',
-              background: 'rgba(200, 164, 107, 0.35)',
+              background: 'rgba(232,180,160, 0.4)',
               margin: '20px auto 0',
               transformOrigin: 'center',
             }}
@@ -186,7 +186,7 @@ export default function SocialShowcaseSection() {
               whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.65, delay: (i % 5) * 0.1, ease }}
-              className={`break-inside-avoid block relative overflow-hidden group bg-[#111111] border border-white/5 rounded-sm ${post.aspectRatio}`}
+              className={`break-inside-avoid block relative overflow-hidden group bg-surface-muted border border-border/40 rounded-sm ${post.aspectRatio}`}
               style={{
                 width: '100%',
                 display: 'block',
@@ -211,7 +211,7 @@ export default function SocialShowcaseSection() {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'linear-gradient(135deg, rgba(10,10,10,0.6) 0%, rgba(200,164,107,0.3) 100%)',
+                  background: 'linear-gradient(135deg, rgba(43,11,22,0.6) 0%, rgba(232,180,160,0.3) 100%)',
                   opacity: 0,
                   transition: 'opacity 0.4s ease',
                   display: 'flex',
@@ -228,17 +228,17 @@ export default function SocialShowcaseSection() {
                   className="transform translate-y-2 group-hover:translate-y-0 group-hover:opacity-100"
                   style={{
                     transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                    background: 'rgba(10, 10, 10, 0.8)',
+                    background: 'rgba(43,11,22, 0.8)',
                     padding: '12px',
                     borderRadius: '50%',
-                    border: '1px solid rgba(200, 164, 107, 0.35)',
+                    border: '1px solid rgba(232,180,160, 0.35)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
                   }}
                 >
-                  <Instagram size={20} style={{ color: '#C8A46B' }} strokeWidth={1.5} />
+                  <Instagram size={20} style={{ color: '#E8B4A0' }} strokeWidth={1.5} />
                 </motion.div>
 
                 {/* Sub-label/Type Badge on Hover */}
@@ -259,7 +259,7 @@ export default function SocialShowcaseSection() {
                       color: 'rgba(255,255,255,0.7)',
                       letterSpacing: '0.12em',
                       textTransform: 'uppercase',
-                      background: 'rgba(10, 10, 10, 0.65)',
+                      background: 'rgba(43,11,22, 0.65)',
                       padding: '4px 8px',
                       borderRadius: '2px',
                       border: '1px solid rgba(255,255,255,0.06)',
@@ -292,7 +292,7 @@ export default function SocialShowcaseSection() {
               gap: '8px',
               fontFamily: 'var(--font-display), "Playfair Display", serif',
               fontSize: 'clamp(18px, 2.5vw, 24px)',
-              color: '#C8A46B',
+              color: '#E8B4A0',
               textDecoration: 'none',
               letterSpacing: '0.08em',
               position: 'relative',
@@ -309,7 +309,7 @@ export default function SocialShowcaseSection() {
                 left: 0,
                 right: 0,
                 height: '1px',
-                background: '#C8A46B',
+                background: '#E8B4A0',
                 transform: 'scaleX(0.3)',
                 transformOrigin: 'center',
                 transition: 'transform 0.3s ease',

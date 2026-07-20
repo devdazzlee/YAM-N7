@@ -110,7 +110,7 @@ export default function PageTransition() {
               position: 'fixed',
               inset: 0,
               zIndex: 9999,
-              background: '#080808',
+              background: '#2B0B16',
               pointerEvents: 'none',
             }}
             aria-hidden="true"

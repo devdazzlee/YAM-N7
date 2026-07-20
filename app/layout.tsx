@@ -6,7 +6,6 @@ import PageTransition from "./components/PageTransition";
 import AnnouncementBar from "./components/AnnouncementBar";
 import BrandPreloader from "./components/BrandPreloader";
 import CustomCursor from "./components/CustomCursor";
-import GoldParticles from "./components/GoldParticles";
 import GlobalScrollReveal from "./components/GlobalScrollReveal";
 
 const poppins = Poppins({
@@ -31,7 +30,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "YAM-N7 — Luxury Perfumes, Attars & Fragrances",
+  title: "YAM-N7 - Luxury Perfumes, Attars & Fragrances",
   description:
     "Discover curated luxury perfumes, rare attars, and exclusive oud blends. YAM-N7 — twenty-five years of fragrance excellence.",
 };
@@ -48,7 +47,6 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <CustomCursor />
-        <GoldParticles />
         <GlobalScrollReveal />
         <BrandPreloader />
         <AnnouncementBar />

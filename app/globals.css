@@ -3,45 +3,45 @@
 @tailwind utilities;
 
 /*
- * YAM-N7 Boutique Theme
- * Warm ivory site · logo keeps its own black + gold
- * UI accent = espresso bronze (NOT logo gold — so the mark stays visible)
+ * YAM-N7 Romantic Wine Theme
+ * Deep burgundy site · rose gold + burgundy accents
+ * UI accent = rose gold (highlight) / burgundy (hover, depth)
  */
 :root {
-  --color-background: 10 10 10;
-  --color-foreground: 255 255 255;
-  --color-cream: 10 10 10;
-  --color-champagne: 216 196 160;
+  --color-background: 43 11 22;
+  --color-foreground: 255 248 246;
+  --color-cream: 43 11 22;
+  --color-champagne: 245 214 206;
 
-  --color-surface: 10 10 10;
-  --color-surface-elevated: 15 15 15;
-  --color-surface-muted: 10 10 10;
-  --color-card: 10 10 10;
+  --color-surface: 53 15 28;
+  --color-surface-elevated: 61 18 33;
+  --color-surface-muted: 48 14 25;
+  --color-card: 53 15 28;
 
-  /* UI accent — matte bronze, separate from logo metallics */
-  --color-primary: 200 164 107;
-  --color-primary-dark: 160 128 80;
-  --color-primary-light: 216 196 160;
-  --color-on-primary: 10 10 10;
+  /* UI accent — rose gold highlight, burgundy for hover/depth */
+  --color-primary: 232 180 160;
+  --color-primary-dark: 109 33 79;
+  --color-primary-light: 245 214 206;
+  --color-on-primary: 43 11 22;
 
-  --color-muted: 192 192 192;
-  --color-muted-subtle: 120 120 120;
+  --color-muted: 196 160 165;
+  --color-muted-subtle: 150 115 125;
 
-  --color-border: 40 40 40;
-  --color-border-strong: 200 164 107;
-  --color-input: 10 10 10;
-  --color-ring: 200 164 107;
-  --color-destructive: 185 58 58;
+  --color-border: 90 40 60;
+  --color-border-strong: 232 180 160;
+  --color-input: 53 15 28;
+  --color-ring: 232 180 160;
+  --color-destructive: 220 68 68;
 
-  --color-subtle: 10 10 10;
-  --color-subtle-strong: 15 15 15;
+  --color-subtle: 43 11 22;
+  --color-subtle-strong: 53 15 28;
 
-  --navy: 10 10 10;
-  --blue: 200 164 107;
-  --beige: 216 196 160;
-  --green: 10 10 10;
-  --grey: 192 192 192;
-  --accent: 216 196 160;
+  --navy: 255 248 246;
+  --blue: 232 180 160;
+  --beige: 245 214 206;
+  --green: 48 14 25;
+  --grey: 196 160 165;
+  --accent: 109 33 79;
 }
 
 * {
@@ -91,7 +91,7 @@ h2, h3, h4, h5, h6, .font-heading {
 }
 
 ::selection {
-  background: rgb(var(--color-primary) / 0.18);
+  background: rgb(var(--color-primary) / 0.22);
   color: rgb(var(--color-foreground));
 }
 
@@ -145,7 +145,7 @@ h2, h3, h4, h5, h6, .font-heading {
     @apply inline-flex items-center justify-center overflow-hidden;
   }
 
-  /* Light icon container — visible on ivory theme (never dark-on-dark) */
+  /* Rose-gold tinted icon container — visible on the deep burgundy theme */
   .luxury-icon-box {
     @apply flex items-center justify-center rounded-xl
            border border-primary/20 bg-primary/[0.08];
@@ -284,7 +284,7 @@ button:hover,
 .btn-solid-primary:hover,
 [role="button"]:hover {
   transform: scale(1.02) !important;
-  box-shadow: 0 0 15px rgba(200, 164, 107, 0.55) !important;
+  box-shadow: 0 0 18px rgba(232, 180, 160, 0.35) !important;
 }
 
 button:active,
@@ -295,7 +295,7 @@ button:active,
   transform: scale(0.98) !important;
 }
 
-/* 2. Global Navigation Link Slide-in Gold Underline */
+/* 2. Global Navigation Link Slide-in Rose Gold Underline */
 .luxury-underline-link {
   position: relative;
   text-decoration: none !important;
@@ -309,7 +309,7 @@ button:active,
   left: 0;
   width: 100%;
   height: 1px;
-  background-color: #C8A46B;
+  background-color: #E8B4A0;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
@@ -319,7 +319,7 @@ button:active,
   transform: scaleX(1);
 }
 
-/* 3. Global Text Inputs glowing gold border focus */
+/* 3. Global Text Inputs glowing rose gold border focus */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -338,8 +338,8 @@ input[type="tel"]:focus,
 textarea:focus,
 select:focus {
   outline: none !important;
-  border-color: #C8A46B !important;
-  box-shadow: 0 0 10px rgba(200, 164, 107, 0.5) !important;
+  border-color: #E8B4A0 !important;
+  box-shadow: 0 0 0 3px rgba(232, 180, 160, 0.18) !important;
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -347,9 +347,9 @@ select:focus {
  * ──────────────────────────────────────────────────────────────────────────
  * The animated flacon (ScrollBottle3D) is a fixed layer at z-index -1 — BEHIND
  * all page content and the navbar. The homepage sections normally paint an
- * opaque near-black fill, which would hide it, so on desktop we make the
+ * opaque burgundy fill, which would hide it, so on desktop we make the
  * top-level sections transparent. The <body> still provides the exact same
- * black base, so the page looks identical — the flacon simply shows through
+ * burgundy base, so the page looks identical — the flacon simply shows through
  * the empty space behind the text/cards. Product cards keep their own opaque
  * fills, so they occlude the flacon and give it real depth.
  * Desktop only (the flacon itself is desktop-only).

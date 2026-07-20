@@ -151,7 +151,7 @@ function Flacon({ progress }: { progress: React.MutableRefObject<number> }) {
     const ctx = c.getContext('2d');
     if (!ctx) return null;
 
-    const gold = '#f3e0b0';
+    const gold = '#F5D6CE';
     ctx.clearRect(0, 0, 512, 512);
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -256,7 +256,7 @@ function Flacon({ progress }: { progress: React.MutableRefObject<number> }) {
       <mesh>
         <latheGeometry args={[glassProfile, 80]} />
         <meshPhysicalMaterial
-          color="#e6a94f"
+          color="#8a1538"
           roughness={0.05}
           metalness={0}
           transmission={0.92}
@@ -266,7 +266,7 @@ function Flacon({ progress }: { progress: React.MutableRefObject<number> }) {
           clearcoatRoughness={0.04}
           transparent
           opacity={0.62}
-          emissive="#c9772a"
+          emissive="#6d214f"
           emissiveIntensity={0.06}
           envMapIntensity={1.4}
           side={THREE.DoubleSide}
@@ -296,28 +296,28 @@ function Flacon({ progress }: { progress: React.MutableRefObject<number> }) {
         <mesh position={[0, LIQ_HEIGHT / 2, 0]}>
           <cylinderGeometry args={[0.58, 0.56, LIQ_HEIGHT, 48]} />
           <meshStandardMaterial
-            color="#b56a15"
+            color="#7a1030"
             roughness={0.16}
             metalness={0.1}
-            emissive="#7a3d0c"
+            emissive="#4a0a1e"
             emissiveIntensity={0.32}
             envMapIntensity={1.2}
           />
         </mesh>
       </group>
 
-      {/* gold neck collar */}
+      {/* rose gold neck collar */}
       <mesh position={[0, 1.03, 0]}>
         <cylinderGeometry args={[0.26, 0.22, 0.12, 48]} />
         <meshStandardMaterial
-          color="#C8A46B"
-          metalness={1}
-          roughness={0.2}
-          envMapIntensity={1.5}
+          color="#E8B4A0"
+          metalness={0.85}
+          roughness={0.32}
+          envMapIntensity={2.4}
         />
       </mesh>
 
-      {/* chunky rounded gold cap — the clearest "this is perfume" cue */}
+      {/* chunky rounded rose gold cap — the clearest "this is perfume" cue */}
       <RoundedBox
         args={[0.62, 0.6, 0.62]}
         radius={0.07}
@@ -325,12 +325,12 @@ function Flacon({ progress }: { progress: React.MutableRefObject<number> }) {
         position={[0, 1.42, 0]}
       >
         <meshStandardMaterial
-          color="#CBA76E"
-          metalness={1}
-          roughness={0.22}
-          emissive="#3a2a10"
-          emissiveIntensity={0.1}
-          envMapIntensity={1.5}
+          color="#E0A98F"
+          metalness={0.85}
+          roughness={0.34}
+          emissive="#6d214f"
+          emissiveIntensity={0.18}
+          envMapIntensity={2.4}
         />
       </RoundedBox>
     </group>
@@ -390,31 +390,38 @@ export default function ScrollBottle3D() {
         <Environment resolution={256} frames={1}>
           <Lightformer
             form="rect"
-            intensity={2.2}
+            intensity={2.8}
             position={[3, 3, 4]}
             scale={[5, 5, 1]}
             color="#ffffff"
           />
           <Lightformer
             form="rect"
-            intensity={1.4}
+            intensity={2.2}
             position={[-4, 1, -3]}
             scale={[4, 4, 1]}
-            color="#C8A46B"
+            color="#E8B4A0"
           />
           <Lightformer
             form="ring"
-            intensity={1.1}
+            intensity={1.8}
             position={[0, -3, 3]}
             scale={3}
-            color="#E8C68A"
+            color="#F5D6CE"
+          />
+          <Lightformer
+            form="rect"
+            intensity={1.4}
+            position={[0, 4, -4]}
+            scale={[6, 6, 1]}
+            color="#F5D6CE"
           />
         </Environment>
 
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[4, 6, 5]} intensity={1.7} />
-        <directionalLight position={[-5, 2, -3]} intensity={0.8} color="#C8A46B" />
-        <pointLight position={[0, -2, 4]} intensity={0.7} color="#E8C68A" />
+        <ambientLight intensity={0.7} />
+        <directionalLight position={[4, 6, 5]} intensity={1.9} />
+        <directionalLight position={[-5, 2, -3]} intensity={1.1} color="#E8B4A0" />
+        <pointLight position={[0, -2, 4]} intensity={0.9} color="#F5D6CE" />
         <Flacon progress={progress} />
       </Canvas>
     </motion.div>

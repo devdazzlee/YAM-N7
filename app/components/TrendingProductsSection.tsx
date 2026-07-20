@@ -21,40 +21,40 @@ const LABELS: LabelKey[] = ['NEW', 'TRENDING', 'LIMITED', 'EXCLUSIVE', 'Bestsell
 const LABEL_STYLES: Record<LabelKey, React.CSSProperties & { text: string }> = {
   NEW: {
     text: 'NEW',
-    background: '#C8A46B',
-    color: '#0A0A0A',
+    background: '#E8B4A0',
+    color: '#2B0B16',
     border: 'none',
     fontWeight: 700,
     letterSpacing: '0.16em',
   },
   TRENDING: {
     text: 'TRENDING',
-    background: '#0E0E0E',
-    color: '#C8A46B',
-    border: '1px solid #C8A46B',
+    background: '#35111F',
+    color: '#E8B4A0',
+    border: '1px solid #E8B4A0',
     fontWeight: 600,
     letterSpacing: '0.12em',
   },
   LIMITED: {
     text: 'LIMITED',
-    background: '#1C0F00',
-    color: '#D4A96A',
-    border: '1px solid rgba(200,164,107,0.25)',
+    background: '#2A0A1C',
+    color: '#D9A8A0',
+    border: '1px solid rgba(232,180,160,0.25)',
     fontWeight: 600,
     letterSpacing: '0.14em',
   },
   EXCLUSIVE: {
     text: 'EXCLUSIVE',
-    background: '#000000',
-    color: '#C8A46B',
+    background: '#2B0B16',
+    color: '#E8B4A0',
     border: 'none',
     fontWeight: 500,
     letterSpacing: '0.18em',
   },
   Bestseller: {
     text: 'Bestseller',
-    background: '#D8C4A0',
-    color: '#1A1208',
+    background: '#F5D6CE',
+    color: '#2B0B16',
     border: 'none',
     fontWeight: 700,
     letterSpacing: '0.06em',
@@ -135,7 +135,7 @@ function TrendingCard({ product, index }: { product: WebProduct; index: number }
       {/* ── Image container ─────────────────────────────────────────── */}
       <Link href={`/products/${product.id}`} className="block relative overflow-hidden">
         <div
-          className="relative overflow-hidden border border-border/20 bg-[#0E0E0E] transition-all duration-500 group-hover:border-[#C8A46B]/50"
+          className="relative overflow-hidden border border-border/20 bg-surface-muted transition-all duration-500 group-hover:border-[#E8B4A0]/60"
           style={{ aspectRatio: '3/4' }}
         >
           {/* Product image — lifts on hover */}
@@ -158,7 +158,7 @@ function TrendingCard({ product, index }: { product: WebProduct; index: number }
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <span className="font-display text-5xl text-primary/15 tracking-widest">N7</span>
+                <span className="font-display text-5xl text-primary/25 tracking-widest">N7</span>
               </div>
             )}
           </motion.div>
@@ -171,7 +171,7 @@ function TrendingCard({ product, index }: { product: WebProduct; index: number }
             className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10"
             style={{
               background:
-                'linear-gradient(130deg, transparent 35%, rgba(200,164,107,0.07) 52%, transparent 68%)',
+                'linear-gradient(130deg, transparent 35%, rgba(232,180,160,0.07) 52%, transparent 68%)',
             }}
           />
 
@@ -180,7 +180,7 @@ function TrendingCard({ product, index }: { product: WebProduct; index: number }
             className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-5 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-2xl pointer-events-none z-10"
             style={{
               background:
-                'radial-gradient(ellipse at center, rgba(200,164,107,0.3) 0%, transparent 70%)',
+                'radial-gradient(ellipse at center, rgba(232,180,160,0.3) 0%, transparent 70%)',
             }}
           />
 
@@ -200,10 +200,10 @@ function TrendingCard({ product, index }: { product: WebProduct; index: number }
               onClick={handleQuickAdd}
               className="w-full py-3 flex items-center justify-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition-all duration-300"
               style={{
-                background: added ? 'rgba(200,164,107,0.96)' : 'rgba(10,10,10,0.93)',
-                color: added ? '#0A0A0A' : '#C8A46B',
+                background: added ? 'rgba(232,180,160,0.96)' : 'rgba(43,11,22,0.93)',
+                color: added ? '#2B0B16' : '#E8B4A0',
                 backdropFilter: 'blur(6px)',
-                borderTop: '1px solid rgba(200,164,107,0.35)',
+                borderTop: '1px solid rgba(232,180,160,0.35)',
               }}
             >
               <AnimatePresence mode="wait">
@@ -247,7 +247,7 @@ function TrendingCard({ product, index }: { product: WebProduct; index: number }
 
         {/* Product name */}
         <Link href={`/products/${product.id}`}>
-          <h3 className="font-heading text-base sm:text-lg text-foreground leading-snug font-normal hover:text-[#C8A46B] transition-colors duration-300 line-clamp-2">
+          <h3 className="font-heading text-base sm:text-lg text-foreground leading-snug font-normal hover:text-[#E8B4A0] transition-colors duration-300 line-clamp-2">
             {product.name}
           </h3>
         </Link>
@@ -256,7 +256,7 @@ function TrendingCard({ product, index }: { product: WebProduct; index: number }
         <div className="mt-2 flex items-baseline gap-2.5">
           <span
             className="font-heading text-lg sm:text-xl font-normal"
-            style={{ color: '#C8A46B' }}
+            style={{ color: '#E8B4A0' }}
           >
             Rs.&nbsp;{product.price.toLocaleString()}
           </span>
@@ -276,7 +276,7 @@ function CardSkeleton() {
   return (
     <div className="flex flex-col">
       <div
-        className="bg-[#0E0E0E] border border-border/20 animate-pulse"
+        className="bg-surface-muted border border-border/20 animate-pulse"
         style={{ aspectRatio: '3/4' }}
       />
       <div className="pt-4 space-y-2">
@@ -343,10 +343,10 @@ export default function TrendingProductsSection({
   return (
     <section
       id="featured"
-      className="py-24 sm:py-28 md:py-32 bg-[#0A0A0A] border-t border-border/20 relative overflow-hidden"
+      className="py-24 sm:py-28 md:py-32 bg-background border-t border-border/20 relative overflow-hidden"
     >
       {/* Ambient background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_35%_at_50%_100%,rgba(200,164,107,0.035)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_35%_at_50%_100%,rgba(232,180,160,0.05)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="luxury-container relative z-10">
 
@@ -377,7 +377,7 @@ export default function TrendingProductsSection({
             transition={{ duration: 1, delay: 0.2, ease }}
             className="mt-8 mx-auto h-px w-32 origin-center"
             style={{
-              background: 'linear-gradient(to right, transparent, #C8A46B, transparent)',
+              background: 'linear-gradient(to right, transparent, #E8B4A0, transparent)',
             }}
           />
         </Reveal>
@@ -447,7 +447,7 @@ export default function TrendingProductsSection({
           )}
           <Link
             href="/shop"
-            className="group inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#C8A46B] border-b border-[#C8A46B]/40 pb-1 hover:border-[#C8A46B] transition-colors duration-300"
+            className="group inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#E8B4A0] border-b border-[#E8B4A0]/40 pb-1 hover:border-[#E8B4A0] transition-colors duration-300"
           >
             Explore All Fragrances
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />

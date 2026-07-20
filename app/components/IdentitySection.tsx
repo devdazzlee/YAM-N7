@@ -66,16 +66,15 @@ const IDENTITY_CARDS: IdentityCard[] = [
 
 export default function IdentitySection() {
   return (
-    <section className="luxury-section bg-[#0A0A0A] border-b border-border/20 py-24 relative overflow-hidden">
+    <section className="luxury-section bg-background border-b border-border/20 py-24 relative overflow-hidden">
       {/* Background radial glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(200,164,107,0.05)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(232,180,160,0.06)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="luxury-container relative z-10">
         <SectionHeader
           accent="The Identity Series"
           title="Discover Your Identity"
           subtitle="We reject traditional gender categories. Discover fragrances curated to match your core persona, character, and presence."
-          light
         />
 
         <Stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mt-12 md:mt-16">
@@ -85,7 +84,7 @@ export default function IdentitySection() {
                 <motion.div
                   whileHover={{ y: -8 }}
                   transition={{ duration: 0.35, ease: ease }}
-                  className="relative h-[480px] w-full flex flex-col justify-end p-8 overflow-hidden rounded-md border border-border/30 bg-[#0E0E0E] transition-all duration-500 hover:border-[#C8A46B]"
+                  className="relative h-[480px] w-full flex flex-col justify-end p-8 overflow-hidden rounded-md border border-border/30 bg-[#35111F] transition-all duration-500 hover:border-[#E8B4A0]"
                 >
                   {/* Background Image Container */}
                   <div className="absolute inset-0 z-0">
@@ -100,17 +99,17 @@ export default function IdentitySection() {
                   </div>
 
                   {/* Gold Top Border on Hover (Accent Border) */}
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C8A46B] to-transparent scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#E8B4A0] to-transparent scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
 
                   {/* Content Container */}
                   <div className="relative z-10 flex flex-col h-full justify-end">
                     {/* Accent Persona Attribute */}
-                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#C8A46B] font-semibold mb-2 block">
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#E8B4A0] font-semibold mb-2 block">
                       {card.accent}
                     </span>
 
                     {/* Title */}
-                    <h3 className="font-display text-2xl text-white mb-3 tracking-wide group-hover:text-[#C8A46B] transition-colors duration-300">
+                    <h3 className="font-display text-2xl text-white mb-3 tracking-wide group-hover:text-[#E8B4A0] transition-colors duration-300">
                       {card.title}
                     </h3>
 
@@ -132,7 +131,7 @@ export default function IdentitySection() {
                     </div>
 
                     {/* CTA link indicator */}
-                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-white group-hover:text-[#C8A46B] transition-colors duration-300">
+                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-white group-hover:text-[#E8B4A0] transition-colors duration-300">
                       <span>Explore Aura</span>
                       <motion.svg
                         className="w-3.5 h-3.5"

@@ -35,9 +35,9 @@ function StarRating({ rating }: { rating: number }) {
                 style={{ width: half ? '50%' : '100%' }}
               >
                 <Star
-                  className="w-3.5 h-3.5 text-[#C8A46B]"
+                  className="w-3.5 h-3.5 text-[#E8B4A0]"
                   strokeWidth={0}
-                  fill="#C8A46B"
+                  fill="#E8B4A0"
                 />
               </span>
             )}
@@ -108,7 +108,7 @@ function EditorialCard({ product, index }: EditorialCardProps) {
       <Link href={`/products/${product.id}`} className="block relative">
         {/* Outer frame */}
         <div
-          className="relative overflow-hidden bg-[#0E0E0E] border border-border/20 transition-all duration-500 group-hover:border-[#C8A46B]/60"
+          className="relative overflow-hidden bg-surface-muted border border-border/20 transition-all duration-500 group-hover:border-[#E8B4A0]/60"
           style={{ aspectRatio: '3/4' }}
         >
           {/* Product image — lifts on hover */}
@@ -130,8 +130,8 @@ function EditorialCard({ product, index }: EditorialCardProps) {
                 className="w-full h-full object-cover object-center transition-none"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#111] to-[#1a1a1a]">
-                <span className="font-display text-4xl text-primary/20 tracking-widest">N7</span>
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-surface-muted to-subtle-strong">
+                <span className="font-display text-4xl text-primary/25 tracking-widest">N7</span>
               </div>
             )}
           </motion.div>
@@ -142,19 +142,19 @@ function EditorialCard({ product, index }: EditorialCardProps) {
           {/* Luxury reflection shimmer — appears on hover */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
             style={{
-              background: 'linear-gradient(135deg, transparent 40%, rgba(200,164,107,0.08) 55%, transparent 70%)',
+              background: 'linear-gradient(135deg, transparent 40%, rgba(232,180,160,0.08) 55%, transparent 70%)',
             }}
           />
 
           {/* Gold drop shadow beneath bottle — slides up on hover */}
           <div
             className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-6 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse at center, rgba(200,164,107,0.35) 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(ellipse at center, rgba(232,180,160,0.35) 0%, transparent 70%)' }}
           />
 
           {/* Category badge */}
           {product.category?.name && (
-            <span className="absolute top-3 left-3 text-[9px] uppercase tracking-[0.2em] text-[#C8A46B] font-semibold bg-black/50 backdrop-blur-sm px-2 py-0.5 border border-[#C8A46B]/20">
+            <span className="absolute top-3 left-3 text-[9px] uppercase tracking-[0.2em] text-[#E8B4A0] font-semibold bg-black/50 backdrop-blur-sm px-2 py-0.5 border border-[#E8B4A0]/20">
               {product.category.name}
             </span>
           )}
@@ -166,11 +166,11 @@ function EditorialCard({ product, index }: EditorialCardProps) {
               className="w-full py-3 flex items-center justify-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition-all duration-300"
               style={{
                 background: added
-                  ? 'rgba(200,164,107,0.95)'
-                  : 'rgba(10,10,10,0.92)',
-                color: added ? '#0A0A0A' : '#C8A46B',
+                  ? 'rgba(232,180,160,0.95)'
+                  : 'rgba(43,11,22,0.92)',
+                color: added ? '#2B0B16' : '#E8B4A0',
                 backdropFilter: 'blur(6px)',
-                borderTop: '1px solid rgba(200,164,107,0.4)',
+                borderTop: '1px solid rgba(232,180,160,0.4)',
               }}
             >
               <AnimatePresence mode="wait">
@@ -210,14 +210,14 @@ function EditorialCard({ product, index }: EditorialCardProps) {
 
         {/* Product name */}
         <Link href={`/products/${product.id}`}>
-          <h3 className="mt-2 font-heading text-base sm:text-lg text-foreground leading-snug font-normal hover:text-[#C8A46B] transition-colors duration-300 line-clamp-2">
+          <h3 className="mt-2 font-heading text-base sm:text-lg text-foreground leading-snug font-normal hover:text-[#E8B4A0] transition-colors duration-300 line-clamp-2">
             {product.name}
           </h3>
         </Link>
 
         {/* Price row */}
         <div className="mt-1.5 flex items-baseline gap-2.5">
-          <span className="font-heading text-lg sm:text-xl font-normal" style={{ color: '#C8A46B' }}>
+          <span className="font-heading text-lg sm:text-xl font-normal" style={{ color: '#E8B4A0' }}>
             Rs.&nbsp;{product.price.toLocaleString()}
           </span>
           {product.original_price && product.original_price > product.price && (
@@ -235,7 +235,7 @@ function EditorialCard({ product, index }: EditorialCardProps) {
 function CardSkeleton() {
   return (
     <div className="flex flex-col">
-      <div className="bg-[#0E0E0E] border border-border/20 animate-pulse" style={{ aspectRatio: '3/4' }} />
+      <div className="bg-surface-muted border border-border/20 animate-pulse" style={{ aspectRatio: '3/4' }} />
       <div className="pt-4 space-y-2">
         <div className="h-2.5 w-16 bg-border/30 rounded animate-pulse" />
         <div className="h-4 w-4/5 bg-border/30 rounded animate-pulse" />
@@ -255,9 +255,9 @@ export default function BestSellersSection({ products, loading = false }: BestSe
   const displayProducts = products.slice(0, 8);
 
   return (
-    <section className="py-24 sm:py-28 md:py-32 bg-[#0A0A0A] border-t border-border/20 relative overflow-hidden">
+    <section className="py-24 sm:py-28 md:py-32 bg-background border-t border-border/20 relative overflow-hidden">
       {/* Ambient background glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_40%_at_50%_0%,rgba(200,164,107,0.04)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_40%_at_50%_0%,rgba(232,180,160,0.05)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="luxury-container relative z-10">
 
@@ -288,7 +288,7 @@ export default function BestSellersSection({ products, loading = false }: BestSe
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.2, ease }}
             className="mt-8 mx-auto h-px w-32 origin-center"
-            style={{ background: 'linear-gradient(to right, transparent, #C8A46B, transparent)' }}
+            style={{ background: 'linear-gradient(to right, transparent, #E8B4A0, transparent)' }}
           />
         </Reveal>
 
@@ -316,7 +316,7 @@ export default function BestSellersSection({ products, loading = false }: BestSe
           <Reveal className="mt-14 md:mt-16 flex justify-center" delay={0.1}>
             <Link
               href="/best-sellers"
-              className="group inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#C8A46B] border-b border-[#C8A46B]/40 pb-1 hover:border-[#C8A46B] transition-colors duration-300"
+              className="group inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#E8B4A0] border-b border-[#E8B4A0]/40 pb-1 hover:border-[#E8B4A0] transition-colors duration-300"
             >
               Discover All Bestsellers
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />

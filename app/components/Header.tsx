@@ -38,8 +38,8 @@ function Badge({ count }: { count: number }) {
         position: 'absolute',
         top: '-6px',
         right: '-6px',
-        background: '#C8A46B',
-        color: '#0A0A0A',
+        background: '#E8B4A0',
+        color: '#2B0B16',
         fontSize: '10px',
         fontWeight: 700,
         borderRadius: '9999px',
@@ -60,14 +60,16 @@ function Badge({ count }: { count: number }) {
 
 /* ─── Icon button ─────────────────────────────────────────────────── */
 function IconBtn({
-  onClick, href, label, children, count,
+  onClick, href, label, children, count, dark,
 }: {
   onClick?: () => void;
   href?: string;
   label: string;
   children: React.ReactNode;
   count?: number;
+  dark?: boolean;
 }) {
+  const base = dark ? '#FFF8F6' : '#FFFFFF';
   const inner = (
     <motion.button
       whileHover={{ scale: 1.08 }}
@@ -84,11 +86,11 @@ function IconBtn({
         background: 'transparent',
         border: 'none',
         cursor: 'pointer',
-        color: '#FFFFFF',
+        color: base,
         transition: 'color 0.25s',
       }}
-      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#C8A46B'; }}
-      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#FFFFFF'; }}
+      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#E8B4A0'; }}
+      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = base; }}
     >
       {children}
       {count !== undefined && <Badge count={count} />}
@@ -248,15 +250,16 @@ export default function Header() {
           left: 0,
           right: 0,
           zIndex: 50,
-          transition: 'top 0.35s ease, background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease',
+          transition: 'top 0.35s ease, background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease',
           background: isScrolled
-            ? 'rgba(10,10,10,0.82)'
+            ? 'rgba(43,11,22,0.88)'
             : 'transparent',
           backdropFilter: isScrolled ? 'blur(18px) saturate(180%)' : 'none',
           WebkitBackdropFilter: isScrolled ? 'blur(18px) saturate(180%)' : 'none',
           borderBottom: isScrolled
-            ? '1px solid rgba(200,164,107,0.35)'
+            ? '1px solid rgba(232,180,160,0.2)'
             : '1px solid transparent',
+          boxShadow: isScrolled ? '0 4px 24px rgba(255,248,246,0.06)' : 'none',
         }}
       >
         <div
@@ -319,7 +322,7 @@ export default function Header() {
                     onMouseEnter={() => setIsShopOpen(true)}
                     onMouseLeave={() => setIsShopOpen(false)}
                   >
-                    <NavLink active={active} href={link.href} hasArrow>
+                    <NavLink active={active} href={link.href} hasArrow dark={isScrolled}>
                       {link.name}
                     </NavLink>
 
@@ -336,24 +339,25 @@ export default function Header() {
                             left: '50%',
                             transform: 'translateX(-50%)',
                             width: '420px',
-                            background: 'rgba(10,10,10,0.96)',
+                            background: 'rgba(53,15,28,0.98)',
                             backdropFilter: 'blur(20px)',
-                            border: '1px solid rgba(200,164,107,0.25)',
+                            border: '1px solid rgba(232,180,160,0.2)',
                             borderRadius: '4px',
                             overflow: 'hidden',
                             zIndex: 100,
+                            boxShadow: '0 20px 48px rgba(255,248,246,0.14)',
                           }}
                         >
                           {/* Dropdown header */}
                           <div style={{
                             padding: '16px 20px',
-                            borderBottom: '1px solid rgba(200,164,107,0.15)',
+                            borderBottom: '1px solid rgba(232,180,160,0.15)',
                           }}>
                             <p style={{
                               fontFamily: 'var(--font-display), "Playfair Display", serif',
                               fontSize: '11px',
                               letterSpacing: '0.2em',
-                              color: '#C8A46B',
+                              color: '#E8B4A0',
                               textTransform: 'uppercase',
                             }}>Shop by Category</p>
                           </div>
@@ -364,7 +368,7 @@ export default function Header() {
                               <div style={{ display: 'flex', justifyContent: 'center', padding: '32px' }}>
                                 <div style={{
                                   width: '20px', height: '20px',
-                                  border: '2px solid #C8A46B',
+                                  border: '2px solid #E8B4A0',
                                   borderTopColor: 'transparent',
                                   borderRadius: '50%',
                                   animation: 'spin 0.8s linear infinite',
@@ -393,42 +397,42 @@ export default function Header() {
                                       transition: 'background 0.2s',
                                     }}
                                     onMouseEnter={(e) => {
-                                      (e.currentTarget as HTMLElement).style.background = 'rgba(200,164,107,0.08)';
+                                      (e.currentTarget as HTMLElement).style.background = 'rgba(232,180,160,0.08)';
                                     }}
                                     onMouseLeave={(e) => {
                                       (e.currentTarget as HTMLElement).style.background = 'transparent';
                                     }}
                                   >
-                                    <Icon style={{ width: '16px', height: '16px', color: '#C8A46B', flexShrink: 0 }} strokeWidth={1.5} />
+                                    <Icon style={{ width: '16px', height: '16px', color: '#E8B4A0', flexShrink: 0 }} strokeWidth={1.5} />
                                     <div>
                                       <p style={{
                                         fontFamily: 'var(--font-body), Poppins, sans-serif',
                                         fontSize: '13px',
-                                        color: '#FFFFFF',
+                                        color: '#FFF8F6',
                                         fontWeight: 500,
                                         margin: 0,
                                       }}>{cat.name}</p>
                                       <p style={{
                                         fontFamily: 'var(--font-body), Poppins, sans-serif',
                                         fontSize: '11px',
-                                        color: 'rgba(255,255,255,0.45)',
+                                        color: 'rgba(255,248,246,0.5)',
                                         margin: 0,
                                         marginTop: '2px',
                                       }}>{cat.description}</p>
                                     </div>
-                                    <ArrowRight style={{ width: '14px', height: '14px', color: 'rgba(200,164,107,0.4)', marginLeft: 'auto' }} />
+                                    <ArrowRight style={{ width: '14px', height: '14px', color: 'rgba(232,180,160,0.5)', marginLeft: 'auto' }} />
                                   </motion.div>
                                 </Link>
                               );
                             }) : (
-                              <p style={{ textAlign: 'center', padding: '24px', color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>
+                              <p style={{ textAlign: 'center', padding: '24px', color: 'rgba(255,248,246,0.45)', fontSize: '13px' }}>
                                 No categories available
                               </p>
                             )}
                           </div>
 
                           {/* View all */}
-                          <div style={{ padding: '12px 20px', borderTop: '1px solid rgba(200,164,107,0.15)' }}>
+                          <div style={{ padding: '12px 20px', borderTop: '1px solid rgba(232,180,160,0.15)' }}>
                             <Link
                               href="/shop"
                               onClick={() => setIsShopOpen(false)}
@@ -439,12 +443,12 @@ export default function Header() {
                                 fontSize: '11px',
                                 letterSpacing: '0.18em',
                                 textTransform: 'uppercase',
-                                color: '#C8A46B',
+                                color: '#E8B4A0',
                                 textDecoration: 'none',
                                 transition: 'color 0.2s',
                               }}
-                              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#D8C4A0'; }}
-                              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#C8A46B'; }}
+                              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#F5D6CE'; }}
+                              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#E8B4A0'; }}
                             >
                               View All Products →
                             </Link>
@@ -457,7 +461,7 @@ export default function Header() {
               }
 
               return (
-                <NavLink key={link.name} active={active} href={link.href}>
+                <NavLink key={link.name} active={active} href={link.href} dark={isScrolled}>
                   {link.name}
                 </NavLink>
               );
@@ -469,7 +473,7 @@ export default function Header() {
 
             {/* Search — hidden on mobile (available in drawer) */}
             <span className="hidden sm:inline-flex">
-              <IconBtn label="Search" onClick={() => setIsSearchOpen(true)}>
+              <IconBtn label="Search" onClick={() => setIsSearchOpen(true)} dark={isScrolled}>
                 <Search size={18} strokeWidth={1.5} />
               </IconBtn>
             </span>
@@ -478,7 +482,7 @@ export default function Header() {
             <span className="hidden sm:inline-flex" style={{ position: 'relative' }}>
             {isAuthenticated ? (
               <div style={{ position: 'relative' }}>
-                <IconBtn label="Profile" onClick={() => setIsProfileOpen(!isProfileOpen)}>
+                <IconBtn label="Profile" onClick={() => setIsProfileOpen(!isProfileOpen)} dark={isScrolled}>
                   <User size={18} strokeWidth={1.5} />
                 </IconBtn>
 
@@ -494,23 +498,24 @@ export default function Header() {
                         right: 0,
                         top: 'calc(100% + 8px)',
                         width: '220px',
-                        background: 'rgba(10,10,10,0.96)',
+                        background: 'rgba(53,15,28,0.98)',
                         backdropFilter: 'blur(20px)',
-                        border: '1px solid rgba(200,164,107,0.25)',
+                        border: '1px solid rgba(232,180,160,0.2)',
                         borderRadius: '4px',
                         overflow: 'hidden',
                         zIndex: 100,
+                        boxShadow: '0 20px 48px rgba(255,248,246,0.14)',
                       }}
                     >
                       <div style={{
                         padding: '14px 16px',
-                        borderBottom: '1px solid rgba(200,164,107,0.15)',
+                        borderBottom: '1px solid rgba(232,180,160,0.15)',
                       }}>
-                        <p style={{ fontSize: '12px', color: '#C8A46B', fontFamily: 'var(--font-body)', margin: 0 }}>
+                        <p style={{ fontSize: '12px', color: '#E8B4A0', fontFamily: 'var(--font-body)', margin: 0 }}>
                           {user?.email}
                         </p>
                         {user?.name && (
-                          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-body)', margin: '2px 0 0' }}>
+                          <p style={{ fontSize: '11px', color: 'rgba(255,248,246,0.55)', fontFamily: 'var(--font-body)', margin: '2px 0 0' }}>
                             {user.name}
                           </p>
                         )}
@@ -533,11 +538,11 @@ export default function Header() {
                                 transition: 'background 0.2s',
                                 cursor: 'pointer',
                               }}
-                              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(200,164,107,0.08)'; }}
+                              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(232,180,160,0.08)'; }}
                               onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
                             >
-                              <Icon size={14} style={{ color: '#C8A46B' }} strokeWidth={1.5} />
-                              <span style={{ fontSize: '12px', color: '#FFF', fontFamily: 'var(--font-body)', letterSpacing: '0.04em' }}>
+                              <Icon size={14} style={{ color: '#E8B4A0' }} strokeWidth={1.5} />
+                              <span style={{ fontSize: '12px', color: '#FFF8F6', fontFamily: 'var(--font-body)', letterSpacing: '0.04em' }}>
                                 {label}
                               </span>
                             </div>
@@ -556,11 +561,11 @@ export default function Header() {
                             cursor: 'pointer', width: '100%',
                             transition: 'background 0.2s',
                           }}
-                          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(200,164,107,0.08)'; }}
+                          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(232,180,160,0.08)'; }}
                           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
                         >
-                          <LogOut size={14} style={{ color: '#C8A46B' }} strokeWidth={1.5} />
-                          <span style={{ fontSize: '12px', color: '#FFF', fontFamily: 'var(--font-body)', letterSpacing: '0.04em' }}>
+                          <LogOut size={14} style={{ color: '#E8B4A0' }} strokeWidth={1.5} />
+                          <span style={{ fontSize: '12px', color: '#FFF8F6', fontFamily: 'var(--font-body)', letterSpacing: '0.04em' }}>
                             Logout
                           </span>
                         </button>
@@ -570,7 +575,7 @@ export default function Header() {
                 </AnimatePresence>
               </div>
             ) : (
-              <IconBtn label="Account" href="/login">
+              <IconBtn label="Account" href="/login" dark={isScrolled}>
                 <User size={18} strokeWidth={1.5} />
               </IconBtn>
             )}
@@ -578,19 +583,19 @@ export default function Header() {
 
             {/* Wishlist — hidden on mobile */}
             <span className="hidden sm:inline-flex">
-              <IconBtn label="Wishlist" href="/wishlist" count={wishlistCount}>
+              <IconBtn label="Wishlist" href="/wishlist" count={wishlistCount} dark={isScrolled}>
                 <Heart size={18} strokeWidth={1.5} />
               </IconBtn>
             </span>
 
             {/* Cart */}
-            <IconBtn label="Cart" href="/cart" count={cartCount}>
+            <IconBtn label="Cart" href="/cart" count={cartCount} dark={isScrolled}>
               <ShoppingCart size={18} strokeWidth={1.5} />
             </IconBtn>
 
             {/* Search — mobile only shortcut */}
             <span className="inline-flex sm:hidden">
-              <IconBtn label="Search" onClick={() => setIsSearchOpen(true)}>
+              <IconBtn label="Search" onClick={() => setIsSearchOpen(true)} dark={isScrolled}>
                 <Search size={18} strokeWidth={1.5} />
               </IconBtn>
             </span>
@@ -607,7 +612,7 @@ export default function Header() {
                 background: 'transparent',
                 border: 'none',
                 cursor: 'pointer',
-                color: '#FFFFFF',
+                color: isScrolled ? '#FFF8F6' : '#FFFFFF',
                 flexShrink: 0,
               }}
             >
@@ -647,12 +652,13 @@ export default function Header() {
                 right: 0,
                 bottom: 0,
                 width: 'min(85vw, 360px)',
-                background: '#0A0A0A',
-                borderLeft: '1px solid rgba(200,164,107,0.2)',
+                background: '#2B0B16',
+                borderLeft: '1px solid rgba(232,180,160,0.2)',
                 zIndex: 99,
                 display: 'flex',
                 flexDirection: 'column',
                 overflowY: 'auto',
+                boxShadow: '-16px 0 40px rgba(255,248,246,0.12)',
               }}
             >
               {/* Drawer header */}
@@ -661,7 +667,7 @@ export default function Header() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 padding: '18px 20px',
-                borderBottom: '1px solid rgba(200,164,107,0.15)',
+                borderBottom: '1px solid rgba(232,180,160,0.15)',
                 flexShrink: 0,
               }}>
                 {/* Logo in drawer */}
@@ -675,8 +681,8 @@ export default function Header() {
                 <button
                   onClick={() => setIsMenuOpen(false)}
                   style={{
-                    background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(200,164,107,0.2)',
-                    cursor: 'pointer', color: '#fff', padding: '6px',
+                    background: 'rgba(255,248,246,0.05)', border: '1px solid rgba(232,180,160,0.2)',
+                    cursor: 'pointer', color: '#FFF8F6', padding: '6px',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}
                   aria-label="Close menu"
@@ -686,7 +692,7 @@ export default function Header() {
               </div>
 
               {/* Mobile search */}
-              <div style={{ padding: '16px 24px', borderBottom: '1px solid rgba(200,164,107,0.1)' }}>
+              <div style={{ padding: '16px 24px', borderBottom: '1px solid rgba(232,180,160,0.12)' }}>
                 <form
                   onSubmit={(e) => { e.preventDefault(); performSearch(searchQuery); setIsMenuOpen(false); }}
                   style={{ position: 'relative' }}
@@ -696,7 +702,7 @@ export default function Header() {
                     style={{
                       position: 'absolute', left: '12px', top: '50%',
                       transform: 'translateY(-50%)',
-                      color: 'rgba(200,164,107,0.6)',
+                      color: 'rgba(232,180,160,0.7)',
                     }}
                     strokeWidth={1.5}
                   />
@@ -707,11 +713,11 @@ export default function Header() {
                     placeholder="Search fragrances…"
                     style={{
                       width: '100%',
-                      background: 'rgba(255,255,255,0.04)',
-                      border: '1px solid rgba(200,164,107,0.2)',
+                      background: '#35111F',
+                      border: '1px solid rgba(232,180,160,0.2)',
                       borderRadius: '2px',
                       padding: '10px 12px 10px 36px',
-                      color: '#FFF',
+                      color: '#FFF8F6',
                       fontFamily: 'var(--font-body), Poppins, sans-serif',
                       fontSize: '13px',
                       outline: 'none',
@@ -752,11 +758,11 @@ export default function Header() {
                               fontSize: '13px',
                               letterSpacing: '0.1em',
                               textTransform: 'uppercase',
-                              color: (isShop && isMobileShopExpanded) || (isCollections && isMobileCollectionsExpanded) ? '#C8A46B' : 'rgba(255,255,255,0.78)',
-                              borderBottom: '1px solid rgba(255,255,255,0.04)',
+                              color: (isShop && isMobileShopExpanded) || (isCollections && isMobileCollectionsExpanded) ? '#E8B4A0' : 'rgba(255,248,246,0.78)',
+                              borderBottom: '1px solid rgba(255,248,246,0.05)',
                               cursor: 'pointer',
-                              background: active ? 'rgba(200,164,107,0.05)' : 'transparent',
-                              borderLeft: active ? '2px solid #C8A46B' : '2px solid transparent',
+                              background: active ? 'rgba(232,180,160,0.06)' : 'transparent',
+                              borderLeft: active ? '2px solid #E8B4A0' : '2px solid transparent',
                               transition: 'all 0.2s',
                             }}
                           >
@@ -764,7 +770,7 @@ export default function Header() {
                             <ChevronDown
                               size={15}
                               style={{
-                                color: '#C8A46B',
+                                color: '#E8B4A0',
                                 transform: (isShop && isMobileShopExpanded) || (isCollections && isMobileCollectionsExpanded) ? 'rotate(180deg)' : 'rotate(0deg)',
                                 transition: 'transform 0.25s ease',
                               }}
@@ -780,8 +786,8 @@ export default function Header() {
                                 transition={{ duration: 0.25, ease: 'easeInOut' }}
                                 style={{
                                   overflow: 'hidden',
-                                  background: 'rgba(255,255,255,0.02)',
-                                  borderBottom: '1px solid rgba(200,164,107,0.1)',
+                                  background: 'rgba(255,248,246,0.02)',
+                                  borderBottom: '1px solid rgba(232,180,160,0.1)',
                                 }}
                               >
                                 <div style={{ padding: '8px 0 8px 12px' }}>
@@ -789,7 +795,7 @@ export default function Header() {
                                     <div style={{ padding: '16px', display: 'flex', justifyContent: 'center' }}>
                                       <div style={{
                                         width: '16px', height: '16px',
-                                        border: '2px solid #C8A46B',
+                                        border: '2px solid #E8B4A0',
                                         borderTopColor: 'transparent',
                                         borderRadius: '50%',
                                         animation: 'spin 0.8s linear infinite',
@@ -809,14 +815,14 @@ export default function Header() {
                                             padding: '10px 24px',
                                             fontFamily: 'var(--font-body), Poppins, sans-serif',
                                             fontSize: '12px',
-                                            color: 'rgba(255,255,255,0.65)',
+                                            color: 'rgba(255,248,246,0.65)',
                                             textDecoration: 'none',
                                             transition: 'color 0.2s',
                                           }}
-                                          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#C8A46B'; }}
-                                          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.65)'; }}
+                                          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#E8B4A0'; }}
+                                          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,248,246,0.65)'; }}
                                         >
-                                          <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(200,164,107,0.5)' }} />
+                                          <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(232,180,160,0.5)' }} />
                                           <span>{cat.name}</span>
                                         </Link>
                                       ))}
@@ -832,9 +838,9 @@ export default function Header() {
                                           fontSize: '11px',
                                           fontWeight: 600,
                                           letterSpacing: '0.08em',
-                                          color: '#C8A46B',
+                                          color: '#E8B4A0',
                                           textDecoration: 'none',
-                                          borderTop: '1px solid rgba(255,255,255,0.02)',
+                                          borderTop: '1px solid rgba(255,248,246,0.04)',
                                           marginTop: '4px',
                                         }}
                                       >
@@ -842,7 +848,7 @@ export default function Header() {
                                       </Link>
                                     </>
                                   ) : (
-                                    <p style={{ padding: '12px 24px', color: 'rgba(255,255,255,0.4)', fontSize: '12px', margin: 0 }}>
+                                    <p style={{ padding: '12px 24px', color: 'rgba(255,248,246,0.4)', fontSize: '12px', margin: 0 }}>
                                       No categories available
                                     </p>
                                   )}
@@ -864,17 +870,17 @@ export default function Header() {
                             fontSize: '13px',
                             letterSpacing: '0.1em',
                             textTransform: 'uppercase',
-                            color: active ? '#C8A46B' : 'rgba(255,255,255,0.78)',
+                            color: active ? '#E8B4A0' : 'rgba(255,248,246,0.78)',
                             textDecoration: 'none',
-                            borderBottom: '1px solid rgba(255,255,255,0.04)',
-                            background: active ? 'rgba(200,164,107,0.05)' : 'transparent',
-                            borderLeft: active ? '2px solid #C8A46B' : '2px solid transparent',
+                            borderBottom: '1px solid rgba(255,248,246,0.05)',
+                            background: active ? 'rgba(232,180,160,0.06)' : 'transparent',
+                            borderLeft: active ? '2px solid #E8B4A0' : '2px solid transparent',
                             transition: 'all 0.2s',
                           }}
                         >
                           <span>{link.name}</span>
                           {active && (
-                            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#C8A46B', flexShrink: 0 }} />
+                            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#E8B4A0', flexShrink: 0 }} />
                           )}
                         </Link>
                       )}
@@ -889,7 +895,7 @@ export default function Header() {
                 gridTemplateColumns: '1fr 1fr 1fr',
                 gap: '8px',
                 padding: '16px 20px',
-                borderTop: '1px solid rgba(200,164,107,0.1)',
+                borderTop: '1px solid rgba(232,180,160,0.12)',
                 flexShrink: 0,
               }}>
                 {[
@@ -904,21 +910,21 @@ export default function Header() {
                     style={{
                       display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
                       padding: '12px 8px',
-                      background: 'rgba(255,255,255,0.03)',
-                      border: '1px solid rgba(200,164,107,0.15)',
+                      background: '#35111F',
+                      border: '1px solid rgba(232,180,160,0.18)',
                       textDecoration: 'none',
                       position: 'relative',
                       transition: 'border-color 0.2s',
                     }}
                   >
-                    <Icon size={18} strokeWidth={1.5} style={{ color: '#C8A46B' }} />
-                    <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--font-body)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                    <Icon size={18} strokeWidth={1.5} style={{ color: '#E8B4A0' }} />
+                    <span style={{ fontSize: '10px', color: 'rgba(255,248,246,0.65)', fontFamily: 'var(--font-body)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                       {label}
                     </span>
                     {badge > 0 && (
                       <span style={{
                         position: 'absolute', top: '6px', right: '6px',
-                        background: '#C8A46B', color: '#0A0A0A',
+                        background: '#E8B4A0', color: '#2B0B16',
                         fontSize: '9px', fontWeight: 700, borderRadius: '9999px',
                         minWidth: '16px', height: '16px',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -932,21 +938,21 @@ export default function Header() {
               {/* Auth footer */}
               <div style={{
                 padding: '20px 24px',
-                borderTop: '1px solid rgba(200,164,107,0.15)',
+                borderTop: '1px solid rgba(232,180,160,0.15)',
               }}>
                 {isAuthenticated ? (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <p style={{ fontSize: '11px', color: 'rgba(200,164,107,0.7)', fontFamily: 'var(--font-body)', letterSpacing: '0.08em', margin: 0 }}>
+                    <p style={{ fontSize: '11px', color: 'rgba(232,180,160,0.85)', fontFamily: 'var(--font-body)', letterSpacing: '0.08em', margin: 0 }}>
                       {user?.email}
                     </p>
                     <button
                       onClick={async () => { await logout(); setIsMenuOpen(false); router.push('/'); }}
                       style={{
                         background: 'transparent',
-                        border: '1px solid rgba(200,164,107,0.3)',
+                        border: '1px solid rgba(232,180,160,0.3)',
                         borderRadius: '2px',
                         padding: '10px 16px',
-                        color: '#C8A46B',
+                        color: '#E8B4A0',
                         fontFamily: 'var(--font-body), Poppins, sans-serif',
                         fontSize: '11px',
                         letterSpacing: '0.14em',
@@ -966,9 +972,9 @@ export default function Header() {
                       display: 'block',
                       textAlign: 'center',
                       padding: '12px',
-                      border: '1px solid rgba(200,164,107,0.4)',
+                      border: '1px solid rgba(232,180,160,0.4)',
                       borderRadius: '2px',
-                      color: '#C8A46B',
+                      color: '#E8B4A0',
                       fontFamily: 'var(--font-body), Poppins, sans-serif',
                       fontSize: '11px',
                       letterSpacing: '0.18em',
@@ -1015,10 +1021,11 @@ export default function Header() {
                 transform: 'translateX(-50%)',
                 zIndex: 201,
                 width: 'min(640px, calc(100vw - 32px))',
-                background: 'rgba(10,10,10,0.97)',
-                border: '1px solid rgba(200,164,107,0.25)',
+                background: 'rgba(53,15,28,0.98)',
+                border: '1px solid rgba(232,180,160,0.2)',
                 borderRadius: '4px',
                 overflow: 'hidden',
+                boxShadow: '0 24px 60px rgba(255,248,246,0.2)',
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -1028,19 +1035,19 @@ export default function Header() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 padding: '16px 20px',
-                borderBottom: '1px solid rgba(200,164,107,0.15)',
+                borderBottom: '1px solid rgba(232,180,160,0.15)',
               }}>
                 <p style={{
                   fontFamily: 'var(--font-display), "Playfair Display", serif',
                   fontSize: '11px',
                   letterSpacing: '0.2em',
-                  color: '#C8A46B',
+                  color: '#E8B4A0',
                   textTransform: 'uppercase',
                   margin: 0,
                 }}>Search</p>
                 <button
                   onClick={closeSearch}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.5)', padding: '2px' }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,248,246,0.5)', padding: '2px' }}
                 >
                   <X size={18} strokeWidth={1.5} />
                 </button>
@@ -1057,7 +1064,7 @@ export default function Header() {
                     style={{
                       position: 'absolute', left: '14px', top: '50%',
                       transform: 'translateY(-50%)',
-                      color: 'rgba(200,164,107,0.6)',
+                      color: 'rgba(232,180,160,0.7)',
                     }}
                     strokeWidth={1.5}
                   />
@@ -1070,11 +1077,11 @@ export default function Header() {
                     autoFocus
                     style={{
                       width: '100%',
-                      background: 'rgba(255,255,255,0.04)',
-                      border: '1px solid rgba(200,164,107,0.25)',
+                      background: '#2B0B16',
+                      border: '1px solid rgba(232,180,160,0.25)',
                       borderRadius: '2px',
                       padding: '14px 40px 14px 44px',
-                      color: '#FFF',
+                      color: '#FFF8F6',
                       fontFamily: 'var(--font-body), Poppins, sans-serif',
                       fontSize: '15px',
                       outline: 'none',
@@ -1090,7 +1097,7 @@ export default function Header() {
                         position: 'absolute', right: '12px', top: '50%',
                         transform: 'translateY(-50%)',
                         background: 'none', border: 'none',
-                        cursor: 'pointer', color: 'rgba(255,255,255,0.4)',
+                        cursor: 'pointer', color: 'rgba(255,248,246,0.4)',
                         padding: '2px',
                       }}
                     >
@@ -1113,12 +1120,12 @@ export default function Header() {
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '24px', justifyContent: 'center' }}>
                           <div style={{
                             width: '18px', height: '18px',
-                            border: '2px solid #C8A46B',
+                            border: '2px solid #E8B4A0',
                             borderTopColor: 'transparent',
                             borderRadius: '50%',
                             animation: 'spin 0.8s linear infinite',
                           }} />
-                          <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', fontFamily: 'var(--font-body)' }}>
+                          <span style={{ color: 'rgba(255,248,246,0.45)', fontSize: '13px', fontFamily: 'var(--font-body)' }}>
                             Searching…
                           </span>
                         </div>
@@ -1140,12 +1147,12 @@ export default function Header() {
                                 padding: '10px 4px',
                                 background: 'transparent',
                                 border: 'none',
-                                borderBottom: '1px solid rgba(255,255,255,0.05)',
+                                borderBottom: '1px solid rgba(255,248,246,0.06)',
                                 cursor: 'pointer',
                                 textAlign: 'left',
                                 transition: 'background 0.15s',
                               }}
-                              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(200,164,107,0.06)'; }}
+                              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(232,180,160,0.07)'; }}
                               onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
                             >
                               <div style={{
@@ -1153,7 +1160,7 @@ export default function Header() {
                                 borderRadius: '2px',
                                 overflow: 'hidden',
                                 flexShrink: 0,
-                                background: 'rgba(255,255,255,0.06)',
+                                background: 'rgba(255,248,246,0.06)',
                               }}>
                                 <img
                                   src={product.image || '/Banner-01.jpg'}
@@ -1167,22 +1174,22 @@ export default function Header() {
                                   margin: 0,
                                   fontFamily: 'var(--font-body), Poppins, sans-serif',
                                   fontSize: '13px',
-                                  color: '#FFF',
+                                  color: '#FFF8F6',
                                   fontWeight: 500,
                                   whiteSpace: 'nowrap',
                                   overflow: 'hidden',
                                   textOverflow: 'ellipsis',
                                 }}>{product.name}</p>
                                 {product.category && (
-                                  <p style={{ margin: '2px 0 0', fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-body)' }}>
+                                  <p style={{ margin: '2px 0 0', fontSize: '11px', color: 'rgba(255,248,246,0.45)', fontFamily: 'var(--font-body)' }}>
                                     {product.category.name}
                                   </p>
                                 )}
-                                <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#C8A46B', fontWeight: 600, fontFamily: 'var(--font-body)' }}>
+                                <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#E8B4A0', fontWeight: 600, fontFamily: 'var(--font-body)' }}>
                                   Rs. {product.price?.toLocaleString() || '0'}
                                 </p>
                               </div>
-                              <ArrowRight size={14} style={{ color: 'rgba(200,164,107,0.4)', flexShrink: 0 }} />
+                              <ArrowRight size={14} style={{ color: 'rgba(232,180,160,0.5)', flexShrink: 0 }} />
                             </button>
                           ))}
 
@@ -1193,9 +1200,9 @@ export default function Header() {
                               width: '100%',
                               padding: '12px',
                               background: 'transparent',
-                              border: '1px solid rgba(200,164,107,0.35)',
+                              border: '1px solid rgba(232,180,160,0.35)',
                               borderRadius: '2px',
-                              color: '#C8A46B',
+                              color: '#E8B4A0',
                               fontFamily: 'var(--font-body), Poppins, sans-serif',
                               fontSize: '11px',
                               letterSpacing: '0.16em',
@@ -1205,7 +1212,7 @@ export default function Header() {
                             }}
                             onMouseEnter={(e) => {
                               const el = e.currentTarget as HTMLElement;
-                              el.style.background = 'rgba(200,164,107,0.08)';
+                              el.style.background = 'rgba(232,180,160,0.08)';
                             }}
                             onMouseLeave={(e) => {
                               const el = e.currentTarget as HTMLElement;
@@ -1218,7 +1225,7 @@ export default function Header() {
                       ) : (
                         <p style={{
                           textAlign: 'center', padding: '24px',
-                          color: 'rgba(255,255,255,0.35)',
+                          color: 'rgba(255,248,246,0.4)',
                           fontFamily: 'var(--font-body)',
                           fontSize: '13px',
                         }}>
@@ -1239,7 +1246,7 @@ export default function Header() {
                       <p style={{
                         fontSize: '10px',
                         letterSpacing: '0.18em',
-                        color: 'rgba(200,164,107,0.6)',
+                        color: 'rgba(232,180,160,0.75)',
                         textTransform: 'uppercase',
                         fontFamily: 'var(--font-body)',
                         margin: '0 0 10px',
@@ -1252,10 +1259,10 @@ export default function Header() {
                             onClick={() => setSearchQuery(cat.name)}
                             style={{
                               padding: '6px 14px',
-                              background: 'rgba(200,164,107,0.08)',
-                              border: '1px solid rgba(200,164,107,0.2)',
+                              background: 'rgba(232,180,160,0.08)',
+                              border: '1px solid rgba(232,180,160,0.2)',
                               borderRadius: '2px',
-                              color: 'rgba(255,255,255,0.7)',
+                              color: 'rgba(255,248,246,0.7)',
                               fontFamily: 'var(--font-body), Poppins, sans-serif',
                               fontSize: '11px',
                               letterSpacing: '0.06em',
@@ -1264,13 +1271,13 @@ export default function Header() {
                             }}
                             onMouseEnter={(e) => {
                               const el = e.currentTarget as HTMLElement;
-                              el.style.background = 'rgba(200,164,107,0.15)';
-                              el.style.color = '#C8A46B';
+                              el.style.background = 'rgba(232,180,160,0.15)';
+                              el.style.color = '#E8B4A0';
                             }}
                             onMouseLeave={(e) => {
                               const el = e.currentTarget as HTMLElement;
-                              el.style.background = 'rgba(200,164,107,0.08)';
-                              el.style.color = 'rgba(255,255,255,0.7)';
+                              el.style.background = 'rgba(232,180,160,0.08)';
+                              el.style.color = 'rgba(255,248,246,0.7)';
                             }}
                           >
                             {cat.name}
@@ -1286,7 +1293,7 @@ export default function Header() {
                 textAlign: 'center',
                 padding: '0 20px 14px',
                 fontSize: '10px',
-                color: 'rgba(255,255,255,0.2)',
+                color: 'rgba(255,248,246,0.3)',
                 fontFamily: 'var(--font-body)',
                 letterSpacing: '0.08em',
               }}>
@@ -1305,14 +1312,16 @@ export default function Header() {
 
 /* ─── NavLink sub-component ──────────────────────────────────────── */
 function NavLink({
-  href, active, children, hasArrow,
+  href, active, children, hasArrow, dark,
 }: {
   href: string;
   active: boolean;
   children: React.ReactNode;
   hasArrow?: boolean;
+  dark?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
+  const base = dark ? 'rgba(255,248,246,0.78)' : 'rgba(255,255,255,0.85)';
 
   return (
     <Link
@@ -1331,7 +1340,7 @@ function NavLink({
         letterSpacing: '0.13em',
         textTransform: 'uppercase',
         textDecoration: 'none',
-        color: active || hovered ? '#C8A46B' : 'rgba(255,255,255,0.85)',
+        color: active || hovered ? '#E8B4A0' : base,
         transition: 'color 0.25s',
         whiteSpace: 'nowrap',
       }}
@@ -1353,7 +1362,7 @@ function NavLink({
           left: '12px',
           right: '12px',
           height: '1px',
-          background: '#C8A46B',
+          background: '#E8B4A0',
           transform: active || hovered ? 'scaleX(1)' : 'scaleX(0)',
           transformOrigin: 'left',
           transition: 'transform 0.3s ease',

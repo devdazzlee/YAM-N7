@@ -98,7 +98,7 @@ function SearchContent() {
             className="text-center max-w-2xl mx-auto"
           >
             {personalityMatch && (
-              <span className="text-xs uppercase tracking-[0.25em] text-[#C8A46B] font-semibold mb-2 block">
+              <span className="text-xs uppercase tracking-[0.25em] text-[#E8B4A0] font-semibold mb-2 block">
                 The Identity Series
               </span>
             )}
@@ -106,7 +106,7 @@ function SearchContent() {
               {displayTitle}
             </h1>
             {displaySubtitle && (
-              <p className="text-gray-300 font-heading text-lg max-w-xl mx-auto leading-relaxed mb-6 font-normal">
+              <p className="text-foreground/70 font-heading text-lg max-w-xl mx-auto leading-relaxed mb-6 font-normal">
                 {displaySubtitle}
               </p>
             )}

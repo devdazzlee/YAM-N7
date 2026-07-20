@@ -34,9 +34,9 @@ export default function Footer() {
   return (
     <footer
       style={{
-        background: '#0A0A0A',
+        background: '#2B0B16',
         color: '#FFFFFF',
-        borderTop: '1px solid rgba(200, 164, 107, 0.2)',
+        borderTop: '1px solid rgba(232,180,160, 0.2)',
         padding: '100px 24px 40px',
         position: 'relative',
         zIndex: 10,
@@ -72,7 +72,7 @@ export default function Footer() {
                 fontSize: '15px',
                 fontStyle: 'italic',
                 letterSpacing: '0.08em',
-                color: '#C8A46B',
+                color: '#E8B4A0',
                 margin: 0,
               }}
             >
@@ -106,7 +106,7 @@ export default function Footer() {
               Subscribe to receive private invitations, fragrance collections, and priority updates.
             </p>
             {subscribed ? (
-              <div style={{ color: '#C8A46B', fontSize: '13px', fontWeight: 500, textAlign: 'left' }}>
+              <div style={{ color: '#E8B4A0', fontSize: '13px', fontWeight: 500, textAlign: 'left' }}>
                 Thank you. You have joined the inner circle.
               </div>
             ) : (
@@ -123,7 +123,7 @@ export default function Footer() {
                     width: '100%',
                     background: 'rgba(255,255,255,0.03)',
                     border: 'none',
-                    borderBottom: isInputFocused ? '1px solid #C8A46B' : '1px solid rgba(255, 255, 255, 0.25)',
+                    borderBottom: isInputFocused ? '1px solid #E8B4A0' : '1px solid rgba(255, 255, 255, 0.25)',
                     padding: '12px 48px 12px 0',
                     color: '#FFFFFF',
                     fontSize: '13px',
@@ -143,7 +143,7 @@ export default function Footer() {
                     background: 'none',
                     border: 'none',
                     cursor: 'pointer',
-                    color: '#C8A46B',
+                    color: '#E8B4A0',
                     padding: '8px',
                     display: 'flex',
                     alignItems: 'center',
@@ -279,7 +279,7 @@ export default function Footer() {
               { icon: Truck, text: 'Fast Delivery' },
             ].map(({ icon: Icon, text }) => (
               <div key={text} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <Icon size={18} style={{ color: '#C8A46B' }} strokeWidth={1.5} />
+                <Icon size={18} style={{ color: '#E8B4A0' }} strokeWidth={1.5} />
                 <span style={{ fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.75)' }}>
                   {text}
                 </span>
@@ -308,26 +308,26 @@ export default function Footer() {
                   width: '36px',
                   height: '36px',
                   borderRadius: '50%',
-                  border: '1px solid rgba(200, 164, 107, 0.25)',
+                  border: '1px solid rgba(232,180,160, 0.25)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#C8A46B',
+                  color: '#E8B4A0',
                   background: 'transparent',
                   transition: 'all 0.3s ease',
                 }}
                 onMouseEnter={(e) => {
                   const el = e.currentTarget as HTMLElement;
                   el.style.transform = 'scale(1.12)';
-                  el.style.color = '#D8C4A0';
-                  el.style.borderColor = '#D8C4A0';
-                  el.style.boxShadow = '0 0 10px rgba(216, 196, 160, 0.4)';
+                  el.style.color = '#F5D6CE';
+                  el.style.borderColor = '#F5D6CE';
+                  el.style.boxShadow = '0 0 10px rgba(245,214,206, 0.4)';
                 }}
                 onMouseLeave={(e) => {
                   const el = e.currentTarget as HTMLElement;
                   el.style.transform = 'scale(1)';
-                  el.style.color = '#C8A46B';
-                  el.style.borderColor = 'rgba(200, 164, 107, 0.25)';
+                  el.style.color = '#E8B4A0';
+                  el.style.borderColor = 'rgba(232,180,160, 0.25)';
                   el.style.boxShadow = 'none';
                 }}
               >
@@ -349,7 +349,7 @@ export default function Footer() {
           {/* Shipping information details */}
           <div style={{ maxWidth: '640px', lineHeight: 1.8 }}>
             <p style={{ margin: 0 }}>
-              <strong style={{ color: '#C8A46B' }}>Shipping Information:</strong> Free nationwide shipping on all orders over PKR 5,000. Reliable domestic and international shipping with complete customs clearances and active transit tracking alerts.
+              <strong style={{ color: '#E8B4A0' }}>Shipping Information:</strong> Free nationwide shipping on all orders over PKR 5,000. Reliable domestic and international shipping with complete customs clearances and active transit tracking alerts.
             </p>
           </div>
 
@@ -365,10 +365,10 @@ export default function Footer() {
                   style={{
                     fontSize: '10px',
                     padding: '4px 8px',
-                    border: '1px solid rgba(200, 164, 107, 0.2)',
-                    color: '#C8A46B',
+                    border: '1px solid rgba(232,180,160, 0.2)',
+                    color: '#E8B4A0',
                     borderRadius: '2px',
-                    background: 'rgba(200, 164, 107, 0.02)',
+                    background: 'rgba(232,180,160, 0.02)',
                     fontWeight: 500,
                   }}
                 >
@@ -407,7 +407,7 @@ const columnHeaderStyle: React.CSSProperties = {
   fontSize: '12px',
   letterSpacing: '0.15em',
   textTransform: 'uppercase',
-  color: '#C8A46B',
+  color: '#E8B4A0',
   marginBottom: '20px',
   fontWeight: 600,
 };
@@ -438,7 +438,7 @@ const bottomLinkStyle: React.CSSProperties = {
 if (typeof window !== 'undefined') {
   const styles = `
     footer a:hover {
-      color: #C8A46B !important;
+      color: #E8B4A0 !important;
     }
   `;
   const sheet = document.createElement('style');

@@ -68,7 +68,7 @@ export default function BrandPreloader() {
             position: 'fixed',
             inset: 0,
             zIndex: 9999,
-            background: '#000000',
+            background: '#2B0B16',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -90,7 +90,7 @@ export default function BrandPreloader() {
                 width: '180px',
                 height: '180px',
                 borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(200,164,107,0.55) 0%, rgba(200,164,107,0) 70%)',
+                background: 'radial-gradient(circle, rgba(232,180,160,0.4) 0%, rgba(232,180,160,0) 70%)',
                 filter: 'blur(28px)',
                 pointerEvents: 'none',
               }}
@@ -106,7 +106,7 @@ export default function BrandPreloader() {
                 width: '120px',
                 height: '120px',
                 borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(216,196,160,0.35) 0%, rgba(216,196,160,0) 70%)',
+                background: 'radial-gradient(circle, rgba(109,33,79,0.35) 0%, rgba(109,33,79,0) 70%)',
                 filter: 'blur(40px)',
                 pointerEvents: 'none',
               }}
@@ -121,8 +121,8 @@ export default function BrandPreloader() {
                 width: '6px',
                 height: '6px',
                 borderRadius: '50%',
-                background: '#C8A46B',
-                boxShadow: '0 0 12px 4px rgba(200,164,107,0.9)',
+                background: '#E8B4A0',
+                boxShadow: '0 0 12px 4px rgba(232,180,160,0.7)',
                 position: 'absolute',
                 zIndex: 2,
               }}
@@ -157,8 +157,7 @@ export default function BrandPreloader() {
                   position: 'absolute',
                   inset: 0,
                   background:
-                    'linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.55) 50%, rgba(216,196,160,0.3) 52%, transparent 70%)',
-                  mixBlendMode: 'screen',
+                    'linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.55) 50%, rgba(232,180,160,0.4) 52%, transparent 70%)',
                   pointerEvents: 'none',
                   borderRadius: '4px',
                   overflow: 'hidden',
@@ -186,7 +185,7 @@ export default function BrandPreloader() {
                 fontFamily:   "'Cormorant Garamond', Georgia, serif",
                 fontSize:     'clamp(10px, 1.5vw, 14px)',
                 fontWeight:   400,
-                color:        '#C8A46B',
+                color:        '#E8B4A0',
                 textTransform:'uppercase',
                 letterSpacing:'0.24em',
                 textAlign:    'center',
@@ -205,7 +204,7 @@ export default function BrandPreloader() {
                 fontFamily:   "'Poppins', system-ui, sans-serif",
                 fontSize:     'clamp(9px, 1.2vw, 11px)',
                 fontWeight:   300,
-                color:        'rgba(192,192,192,0.65)',
+                color:        'rgba(255,248,246,0.55)',
                 letterSpacing:'0.18em',
                 textTransform:'uppercase',
                 textAlign:    'center',
@@ -221,7 +220,7 @@ export default function BrandPreloader() {
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.65) 100%)',
+              background: 'radial-gradient(ellipse at center, transparent 40%, rgba(20,5,12,0.15) 100%)',
               pointerEvents: 'none',
             }}
           />

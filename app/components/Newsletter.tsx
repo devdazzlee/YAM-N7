@@ -19,10 +19,10 @@ export default function Newsletter() {
   return (
     <section
       style={{
-        background: '#090909',
+        background: '#2B0B16',
         color: '#FFFFFF',
         padding: '120px 24px',
-        borderTop: '1px solid rgba(200, 164, 107, 0.12)',
+        borderTop: '1px solid rgba(232,180,160, 0.12)',
         position: 'relative',
         overflow: 'hidden',
         width: '100%',
@@ -40,7 +40,7 @@ export default function Newsletter() {
           transform: 'translate(-50%, -50%)',
           width: '600px',
           height: '600px',
-          background: 'radial-gradient(circle, rgba(200,164,107,0.025) 0%, rgba(0,0,0,0) 70%)',
+          background: 'radial-gradient(circle, rgba(232,180,160,0.025) 0%, rgba(0,0,0,0) 70%)',
           pointerEvents: 'none',
           zIndex: 1,
         }}
@@ -70,13 +70,13 @@ export default function Newsletter() {
               justifyContent: 'center',
               width: '52px',
               height: '52px',
-              border: '1px solid rgba(200, 164, 107, 0.25)',
-              background: 'rgba(200, 164, 107, 0.04)',
+              border: '1px solid rgba(232,180,160, 0.25)',
+              background: 'rgba(232,180,160, 0.04)',
               borderRadius: '2px',
               marginBottom: '28px',
             }}
           >
-            <Mail size={22} style={{ color: '#C8A46B' }} strokeWidth={1.5} />
+            <Mail size={22} style={{ color: '#E8B4A0' }} strokeWidth={1.5} />
           </div>
 
           {/* Subheading tag */}
@@ -86,7 +86,7 @@ export default function Newsletter() {
               fontSize: '11px',
               letterSpacing: '0.24em',
               textTransform: 'uppercase',
-              color: '#C8A46B',
+              color: '#E8B4A0',
               margin: '0 0 16px',
               fontWeight: 500,
             }}
@@ -132,8 +132,8 @@ export default function Newsletter() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.5, ease: 'easeOut' }}
                 style={{
-                  background: 'rgba(200, 164, 107, 0.05)',
-                  border: '1px solid rgba(200, 164, 107, 0.35)',
+                  background: 'rgba(232,180,160, 0.05)',
+                  border: '1px solid rgba(232,180,160, 0.35)',
                   padding: '24px 32px',
                   borderRadius: '2px',
                   display: 'inline-block',
@@ -143,7 +143,7 @@ export default function Newsletter() {
                   style={{
                     fontFamily: 'var(--font-display), "Playfair Display", serif',
                     fontSize: '22px',
-                    color: '#C8A46B',
+                    color: '#E8B4A0',
                     margin: 0,
                     letterSpacing: '0.04em',
                   }}
@@ -186,7 +186,7 @@ export default function Newsletter() {
                       left: '16px',
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      color: isFocused ? '#C8A46B' : 'rgba(255, 255, 255, 0.4)',
+                      color: isFocused ? '#E8B4A0' : 'rgba(255, 255, 255, 0.4)',
                       transition: 'color 0.3s ease',
                     }}
                     strokeWidth={1.5}
@@ -202,14 +202,14 @@ export default function Newsletter() {
                     style={{
                       width: '100%',
                       background: 'rgba(255, 255, 255, 0.03)',
-                      border: isFocused ? '1px solid #C8A46B' : '1px solid rgba(255, 255, 255, 0.12)',
+                      border: isFocused ? '1px solid #E8B4A0' : '1px solid rgba(255, 255, 255, 0.12)',
                       borderRadius: '2px',
                       padding: '14px 16px 14px 44px',
                       color: '#FFFFFF',
                       fontSize: '14px',
                       fontFamily: 'var(--font-body), Poppins, sans-serif',
                       outline: 'none',
-                      boxShadow: isFocused ? '0 0 14px rgba(200, 164, 107, 0.3)' : 'none',
+                      boxShadow: isFocused ? '0 0 14px rgba(232,180,160, 0.3)' : 'none',
                       transition: 'all 0.35s ease',
                       boxSizing: 'border-box',
                     }}
@@ -221,9 +221,9 @@ export default function Newsletter() {
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   style={{
-                    background: isHovered ? '#C8A46B' : 'transparent',
-                    color: isHovered ? '#0A0A0A' : '#C8A46B',
-                    border: '1px solid #C8A46B',
+                    background: isHovered ? '#E8B4A0' : 'transparent',
+                    color: isHovered ? '#2B0B16' : '#E8B4A0',
+                    border: '1px solid #E8B4A0',
                     borderRadius: '2px',
                     padding: '14px 28px',
                     fontSize: '12px',
