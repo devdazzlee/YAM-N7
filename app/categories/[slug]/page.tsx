@@ -4,7 +4,6 @@ import { use, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import Newsletter from '../../components/Newsletter';
 import Services from '../../components/Services';
 import ProductBrowser from '../../components/ProductBrowser';
 import Loader from '../../components/Loader';
@@ -38,7 +37,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
     <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-16">
+      <section className="page-banner text-foreground page-offset py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -71,8 +70,6 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
       ) : (
         <ProductBrowser bucketKey={`category:${slug}`} lockedCategorySlug={slug} />
       )}
-
-      <Newsletter />
       <Services />
       <Footer />
     </div>

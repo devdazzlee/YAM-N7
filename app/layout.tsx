@@ -1,31 +1,23 @@
 import type { Metadata } from "next";
-import { Poppins, Cormorant_Garamond, Playfair_Display } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import CartToast from "./components/CartToast";
 import PageTransition from "./components/PageTransition";
 import AnnouncementBar from "./components/AnnouncementBar";
-import BrandPreloader from "./components/BrandPreloader";
 import CustomCursor from "./components/CustomCursor";
 import GlobalScrollReveal from "./components/GlobalScrollReveal";
+import RouteThemeFlag from "./components/RouteThemeFlag";
 
-const poppins = Poppins({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-heading",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+/* Same font family as the home (Fizzi) page — applied site-wide */
+const alpino = localFont({
+  src: [
+    {
+      path: "../public/fonts/Alpino-Variable.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-alpino",
   display: "swap",
 });
 
@@ -43,12 +35,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppins.variable} ${cormorant.variable} ${playfair.variable} font-sans antialiased`}
+        className={`${alpino.variable} ${alpino.className} antialiased`}
         suppressHydrationWarning
       >
+        <RouteThemeFlag />
         <CustomCursor />
         <GlobalScrollReveal />
-        <BrandPreloader />
         <AnnouncementBar />
         <PageTransition />
         {children}
@@ -57,4 +49,3 @@ export default function RootLayout({
     </html>
   );
 }
-

@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
 import PageHero from '../components/pages/PageHero';
 import PageCTA from '../components/pages/PageCTA';
 import { SectionHeader, SectionShell, Reveal } from '../components/motion/reveal';
@@ -51,8 +50,8 @@ function CategoryCard({ cat, index }: { cat: WebCategory; index: number }) {
           <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
         )}
 
-        {/* Dark overlay — lightens on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10 transition-opacity duration-500 group-hover:opacity-70" />
+        {/* Dark overlay — keeps text readable; no yellow wash at top */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-black/25 transition-opacity duration-500 group-hover:opacity-70" />
 
         {/* Reflection sheen on hover */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/8 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
@@ -62,9 +61,9 @@ function CategoryCard({ cat, index }: { cat: WebCategory; index: number }) {
 
         {/* Product count badge */}
         {cat.product_count > 0 && (
-          <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-background/70 backdrop-blur-sm border border-border/40 rounded-sm">
-            <Package className="w-3 h-3 text-primary" />
-            <span className="text-[10px] font-semibold text-primary tracking-wide">
+          <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-black/55 backdrop-blur-sm border border-white/15 rounded-sm">
+            <Package className="w-3 h-3 text-primary-light" />
+            <span className="text-[10px] font-semibold text-white tracking-wide">
               {cat.product_count}
             </span>
           </div>
@@ -135,19 +134,19 @@ export default function CollectionsPage() {
         </Link>
       </PageHero>
 
-      {/* Search + Stats bar */}
-      <div className="border-b border-border/40 bg-surface/80 backdrop-blur-sm sticky top-[108px] z-20">
+      {/* Search + Stats bar — scrolls with page (sticky was colliding with fixed header) */}
+      <div className="border-b border-foreground/10 bg-surface">
         <div className="luxury-container py-4">
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
             {/* Search */}
             <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-subtle pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
               <input
                 type="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search collections…"
-                className="w-full pl-9 pr-4 py-2 bg-background border border-border/60 text-sm text-foreground placeholder:text-muted-subtle rounded-sm focus:outline-none"
+                className="w-full pl-9 pr-4 py-2.5 bg-surface border border-foreground/15 text-sm text-foreground placeholder:text-muted rounded-sm focus:outline-none focus:border-primary"
               />
             </div>
 
@@ -253,8 +252,6 @@ export default function CollectionsPage() {
         secondaryHref="/shop"
         secondaryLabel="Shop All Fragrances"
       />
-
-      <Newsletter />
       <Footer />
     </div>
   );

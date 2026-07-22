@@ -4,23 +4,20 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
-import Services from '../components/Services';
 import ProductCard from '../components/ProductCard';
+import PageHero from '../components/pages/PageHero';
 import { Heart, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function WishlistPage() {
   const [items, setItems] = useState<any[]>([]);
 
-  // Load wishlist from localStorage
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
       setItems(wishlist);
     }
 
-    // Listen for wishlist updates
     const handleWishlistUpdate = () => {
       const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
       setItems(wishlist);
@@ -38,47 +35,33 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-surface">
       <Header />
 
-      {/* Page Header */}
-      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-8 sm:py-10 md:py-14">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <div className="flex items-center justify-center space-x-2 mb-2">
-              <Heart className="w-5 h-5 sm:w-6 sm:h-6 fill-white" />
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">My Wishlist</h1>
-            </div>
-            <p className="text-sm sm:text-base text-foreground/90">Save your favorite items for later</p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        label="Saved"
+        title="My Wishlist"
+        subtitle="Save your favorite fragrances for later."
+      />
 
-      {/* Wishlist Items */}
-      <section className="py-6 sm:py-8 bg-gradient-to-b from-background to-surface-muted">
-        <div className="container mx-auto px-4">
+      <section className="py-8 sm:py-12 bg-surface">
+        <div className="luxury-container">
           {items.length > 0 ? (
             <>
-              {/* Wishlist Summary */}
-              <div className="mb-4 sm:mb-6 flex items-center justify-between">
-                <p className="text-muted text-xs sm:text-sm">
-                  <span className="font-semibold text-foreground">{items.length}</span> {items.length === 1 ? 'item' : 'items'} in your wishlist
+              <div className="mb-6 flex items-center justify-between">
+                <p className="text-muted text-sm">
+                  <span className="font-semibold text-foreground">{items.length}</span>{' '}
+                  {items.length === 1 ? 'item' : 'items'} in your wishlist
                 </p>
                 <button
                   onClick={clearAll}
-                  className="flex items-center gap-1 text-xs sm:text-sm text-red-500 hover:text-red-600 font-medium transition-colors"
+                  className="flex items-center gap-1.5 text-sm text-destructive hover:opacity-80 font-medium transition-opacity"
                 >
-                  <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <Trash2 className="w-3.5 h-3.5" />
                   Clear All
                 </button>
               </div>
 
-              {/* Grid Layout — uses the same ProductCard as everywhere else */}
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 items-stretch">
                 {items.map((item, index) => (
                   <motion.div
@@ -105,27 +88,20 @@ export default function WishlistPage() {
             </>
           ) : (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-center py-10 sm:py-14"
+              className="text-center py-16 sm:py-20"
             >
-              <div className="bg-card rounded-xl sm:rounded-2xl p-6 sm:p-10 max-w-sm mx-auto shadow-md">
-                <motion.div
-                  animate={{ scale: [1, 1.08, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-                >
-                  <Heart className="w-12 h-12 sm:w-16 sm:h-16 text-muted-subtle mx-auto mb-3" />
-                </motion.div>
-                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-2">Your wishlist is empty</h2>
-                <p className="text-muted mb-5 text-xs sm:text-sm">Start adding your favorite items to your wishlist!</p>
-                <Link href="/shop">
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="bg-primary hover:bg-primary-dark text-primary-foreground px-5 sm:px-7 py-2.5 sm:py-3 rounded-full font-semibold transition-colors text-sm"
-                  >
-                    Continue Shopping
-                  </motion.button>
+              <div className="max-w-md mx-auto border border-foreground/10 bg-surface px-6 py-12 sm:px-10">
+                <Heart className="w-12 h-12 text-primary mx-auto mb-4" strokeWidth={1.5} />
+                <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
+                  Your wishlist is empty
+                </h2>
+                <p className="text-muted mb-6 text-sm">
+                  Start adding your favorite items to your wishlist.
+                </p>
+                <Link href="/shop" className="luxury-btn-primary">
+                  Continue Shopping
                 </Link>
               </div>
             </motion.div>
@@ -133,8 +109,6 @@ export default function WishlistPage() {
         </div>
       </section>
 
-      <Newsletter />
-      <Services />
       <Footer />
     </div>
   );

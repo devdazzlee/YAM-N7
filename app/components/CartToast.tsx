@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import { CheckCircle, ShoppingCart, X } from 'lucide-react';
 import Link from 'next/link';
 
@@ -22,6 +23,7 @@ export function showCartToast(productName: string, image?: string) {
 
 /** Drop this component once in a layout/page – it renders the toast UI */
 export default function CartToast() {
+  const pathname = usePathname();
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
   const addToast = useCallback((msg: ToastMessage) => {
@@ -45,6 +47,7 @@ export default function CartToast() {
   };
 
   if (toasts.length === 0) return null;
+  if (pathname === '/') return null;
 
   return (
     <div className="fixed bottom-4 right-4 z-[9999] flex flex-col gap-2 pointer-events-none">

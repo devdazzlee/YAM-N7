@@ -40,7 +40,7 @@ export default function HerbsSection({ categories }: HerbsSectionProps) {
       whileInView={{ opacity: 1 }}
       viewport={viewport}
       transition={{ duration: 0.6, ease }}
-      className="py-10 sm:py-12 md:py-14 bg-gradient-to-r from-surface-elevated to-primary text-foreground relative overflow-hidden"
+      className="py-10 sm:py-12 md:py-14 page-banner text-foreground relative overflow-hidden"
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}

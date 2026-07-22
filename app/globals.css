@@ -3,45 +3,50 @@
 @tailwind utilities;
 
 /*
- * YAM-N7 Romantic Wine Theme
- * Deep burgundy site · rose gold + burgundy accents
- * UI accent = rose gold (highlight) / burgundy (hover, depth)
+ * YAM-N7 Fizzi Theme
+ * Bright yellow site · sky-950 text · orange accents
+ * UI accent = orange (highlight/CTA) / sky-950 (hover, depth)
  */
 :root {
-  --color-background: 43 11 22;
-  --color-foreground: 255 248 246;
-  --color-cream: 43 11 22;
-  --color-champagne: 245 214 206;
+  --color-background: 253 224 71;
+  --color-foreground: 8 47 73;
+  --color-cream: 253 224 71;
+  --color-champagne: 254 249 195;
 
-  --color-surface: 53 15 28;
-  --color-surface-elevated: 61 18 33;
-  --color-surface-muted: 48 14 25;
-  --color-card: 53 15 28;
+  --color-surface: 255 255 255;
+  --color-surface-elevated: 255 255 255;
+  --color-surface-muted: 254 249 195;
+  --color-card: 255 255 255;
 
-  /* UI accent — rose gold highlight, burgundy for hover/depth */
-  --color-primary: 232 180 160;
-  --color-primary-dark: 109 33 79;
-  --color-primary-light: 245 214 206;
-  --color-on-primary: 43 11 22;
+  /* UI accent — orange highlight/CTA, sky-950 for hover/depth */
+  --color-primary: 234 88 12;
+  --color-primary-dark: 194 65 12;
+  --color-primary-light: 251 146 60;
+  --color-on-primary: 255 255 255;
 
-  --color-muted: 196 160 165;
-  --color-muted-subtle: 150 115 125;
+  --color-muted: 7 89 133;
+  --color-muted-subtle: 2 132 199;
 
-  --color-border: 90 40 60;
-  --color-border-strong: 232 180 160;
-  --color-input: 53 15 28;
-  --color-ring: 232 180 160;
+  --color-border: 8 47 73;
+  --color-border-strong: 234 88 12;
+  --color-input: 255 255 255;
+  --color-ring: 234 88 12;
   --color-destructive: 220 68 68;
 
-  --color-subtle: 43 11 22;
-  --color-subtle-strong: 53 15 28;
+  --color-subtle: 253 224 71;
+  --color-subtle-strong: 254 249 195;
 
-  --navy: 255 248 246;
-  --blue: 232 180 160;
-  --beige: 245 214 206;
-  --green: 48 14 25;
-  --grey: 196 160 165;
-  --accent: 109 33 79;
+  --navy: 8 47 73;
+  --blue: 234 88 12;
+  --beige: 254 249 195;
+  --green: 255 255 255;
+  --grey: 7 89 133;
+  --accent: 194 65 12;
+
+  /* Point legacy font tokens at Alpino (home page font) */
+  --font-body: var(--font-alpino);
+  --font-heading: var(--font-alpino);
+  --font-display: var(--font-alpino);
 }
 
 * {
@@ -53,29 +58,44 @@
 body {
   background: rgb(var(--color-background));
   color: rgb(var(--color-foreground));
-  font-family: var(--font-body), 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-alpino), var(--font-body), system-ui, sans-serif;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-html {
+html:not(.is-home) {
   scroll-behavior: smooth;
+}
+
+/*
+ * Fizzi's Hero/AlternatingText sections rely on a sticky-behind-content
+ * trick (negative margin + position: sticky) whose stick range is measured
+ * against the nearest scroll container. overflow-x-hidden has to sit on
+ * <body> itself (as Fizzi's own layout does) rather than a wrapper <div>:
+ * browsers propagate body's overflow to the viewport in HTML documents, but
+ * a plain div doesn't get that propagation — it becomes its own nested
+ * scroll container instead (the x-hidden/y-auto quirk), which cuts the
+ * sticky range short. Scoped to home only via the .is-home flag.
+ */
+html.is-home body {
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: rgb(var(--color-foreground));
-  font-weight: 400;
+  font-weight: 700;
+  font-family: var(--font-alpino), var(--font-body), system-ui, sans-serif;
 }
 
 h1, .font-display {
-  font-family: var(--font-display), 'Playfair Display', Georgia, serif;
-  letter-spacing: 0.16em;
+  font-family: var(--font-alpino), var(--font-body), system-ui, sans-serif;
+  letter-spacing: 0.04em;
 }
 
 h2, h3, h4, h5, h6, .font-heading {
-  font-family: var(--font-heading), 'Cormorant Garamond', Georgia, serif;
-  letter-spacing: 0.08em;
+  font-family: var(--font-alpino), var(--font-body), system-ui, sans-serif;
+  letter-spacing: 0.02em;
 }
 
 /* Headings stay readable on bronze / primary surfaces */
@@ -223,6 +243,14 @@ h2, h3, h4, h5, h6, .font-heading {
   padding-top: var(--header-total);
 }
 
+/* Shared page banner — warm brand wash (used by PageHero + legacy banners) */
+.page-banner {
+  background:
+    radial-gradient(ellipse 80% 70% at 50% -10%, rgba(255, 255, 255, 0.65) 0%, transparent 55%),
+    linear-gradient(135deg, rgb(var(--color-background)) 0%, rgb(var(--color-champagne)) 45%, rgb(var(--color-primary) / 0.18) 100%);
+  border-bottom: 1px solid rgb(var(--color-foreground) / 0.1);
+}
+
 /* ──────────────────────────────────────────────────────────────────────────
  * Global Scroll-Reveal System
  * Used by GlobalScrollReveal.tsx + framer-motion Reveal/Stagger components.
@@ -269,77 +297,80 @@ h2, h3, h4, h5, h6, .font-heading {
  * Luxury Micro-Interactions System
  * ────────────────────────────────────────────────────────────────────────── */
 
+/* Scoped to html:not(.is-home): the Fizzi-sourced home page brings its own
+   look and feel and shouldn't inherit these site-wide micro-interactions. */
+
 /* 1. Global Button Micro-Interactions (200-300ms transitions) */
-button,
-.luxury-btn-primary,
-.luxury-btn-outline,
-.btn-solid-primary,
-[role="button"] {
+html:not(.is-home) button,
+html:not(.is-home) .luxury-btn-primary,
+html:not(.is-home) .luxury-btn-outline,
+html:not(.is-home) .btn-solid-primary,
+html:not(.is-home) [role="button"] {
   transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.25s ease, border-color 0.25s ease !important;
 }
 
-button:hover,
-.luxury-btn-primary:hover,
-.luxury-btn-outline:hover,
-.btn-solid-primary:hover,
-[role="button"]:hover {
+html:not(.is-home) button:hover,
+html:not(.is-home) .luxury-btn-primary:hover,
+html:not(.is-home) .luxury-btn-outline:hover,
+html:not(.is-home) .btn-solid-primary:hover,
+html:not(.is-home) [role="button"]:hover {
   transform: scale(1.02) !important;
-  box-shadow: 0 0 18px rgba(232, 180, 160, 0.35) !important;
+  box-shadow: 0 0 18px rgba(234, 88, 12, 0.35) !important;
 }
 
-button:active,
-.luxury-btn-primary:active,
-.luxury-btn-outline:active,
-.btn-solid-primary:active,
-[role="button"]:active {
+html:not(.is-home) button:active,
+html:not(.is-home) .luxury-btn-primary:active,
+html:not(.is-home) .luxury-btn-outline:active,
+html:not(.is-home) .btn-solid-primary:active,
+html:not(.is-home) [role="button"]:active {
   transform: scale(0.98) !important;
 }
 
-/* 2. Global Navigation Link Slide-in Rose Gold Underline */
-.luxury-underline-link {
+/* 2. Global Navigation Link Slide-in Orange Underline */
+html:not(.is-home) .luxury-underline-link {
   position: relative;
   text-decoration: none !important;
   transition: color 0.25s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.luxury-underline-link::after {
+html:not(.is-home) .luxury-underline-link::after {
   content: '';
   position: absolute;
   bottom: -4px;
   left: 0;
   width: 100%;
   height: 1px;
-  background-color: #E8B4A0;
+  background-color: #EA580C;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.luxury-underline-link:hover::after {
+html:not(.is-home) .luxury-underline-link:hover::after {
   transform: scaleX(1);
 }
 
-/* 3. Global Text Inputs glowing rose gold border focus */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="search"],
-input[type="tel"],
-textarea,
-select {
+/* 3. Global Text Inputs glowing orange border focus */
+html:not(.is-home) input[type="text"],
+html:not(.is-home) input[type="email"],
+html:not(.is-home) input[type="password"],
+html:not(.is-home) input[type="search"],
+html:not(.is-home) input[type="tel"],
+html:not(.is-home) textarea,
+html:not(.is-home) select {
   transition: border-color 0.25s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="search"]:focus,
-input[type="tel"]:focus,
-textarea:focus,
-select:focus {
+html:not(.is-home) input[type="text"]:focus,
+html:not(.is-home) input[type="email"]:focus,
+html:not(.is-home) input[type="password"]:focus,
+html:not(.is-home) input[type="search"]:focus,
+html:not(.is-home) input[type="tel"]:focus,
+html:not(.is-home) textarea:focus,
+html:not(.is-home) select:focus {
   outline: none !important;
-  border-color: #E8B4A0 !important;
-  box-shadow: 0 0 0 3px rgba(232, 180, 160, 0.18) !important;
+  border-color: #EA580C !important;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18) !important;
 }
 
 /* ──────────────────────────────────────────────────────────────────────────

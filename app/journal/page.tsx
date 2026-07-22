@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
 import ProductBrowser from '../components/ProductBrowser';
 import PageHero from '../components/pages/PageHero';
 import TrustStrip from '../components/pages/TrustStrip';
@@ -43,8 +42,6 @@ export default function JournalPage() {
         label="The Journal"
         title="Fragrance as Story"
         subtitle="An editorial lens on scent — exploring fragrances through culture, memory, and the art of personal expression. Discover what we are wearing, and why."
-        image="/banners/New-Banner.jpg"
-        imageAlt="YAM-N7 Journal — fragrance stories and editorial picks"
       >
         <Link href="#products" className="luxury-btn-primary">
           Explore the Journal
@@ -147,8 +144,6 @@ export default function JournalPage() {
         secondaryHref="/shop"
         secondaryLabel="Browse Full Shop"
       />
-
-      <Newsletter />
       <Footer />
     </div>
   );

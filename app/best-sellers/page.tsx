@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
 import ProductBrowser from '../components/ProductBrowser';
 import PageHero from '../components/pages/PageHero';
 import TrustStrip from '../components/pages/TrustStrip';
@@ -43,8 +42,6 @@ export default function BestSellersPage() {
         label="Best Sellers"
         title="Loved by Thousands"
         subtitle="Our most-ordered fragrances — proven favourites chosen by customers across Pakistan for quality, longevity, and sheer presence."
-        image="/banners/New-Banner.jpg"
-        imageAlt="YAM-N7 Best Sellers — most popular fragrances"
       >
         <Link href="#products" className="luxury-btn-primary">
           Shop Best Sellers
@@ -147,8 +144,6 @@ export default function BestSellersPage() {
         secondaryHref="/shop"
         secondaryLabel="Browse Full Shop"
       />
-
-      <Newsletter />
       <Footer />
     </div>
   );

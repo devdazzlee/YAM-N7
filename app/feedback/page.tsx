@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
 import Services from '../components/Services';
 import { MessageSquare, Send } from 'lucide-react';
 
@@ -27,7 +26,7 @@ export default function FeedbackPage() {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-20">
+      <section className="page-banner text-foreground page-offset py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -119,8 +118,6 @@ export default function FeedbackPage() {
           </motion.div>
         </div>
       </section>
-
-      <Newsletter />
       <Services />
       <Footer />
     </div>

@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
 import ProductBrowser from '../components/ProductBrowser';
 import PageHero from '../components/pages/PageHero';
 import TrustStrip from '../components/pages/TrustStrip';
@@ -43,8 +42,6 @@ export default function IdentitySeriesPage() {
         label="The Identity Series"
         title="Find Your Signature"
         subtitle="A collection of rare, concentrated fragrances — each crafted to become an extension of your identity. Bold. Quiet. Unmistakable."
-        image="/banners/New-Banner.jpg"
-        imageAlt="The Identity Series — YAM-N7 signature fragrances"
       >
         <Link href="#products" className="luxury-btn-primary">
           Explore the Collection
@@ -147,8 +144,6 @@ export default function IdentitySeriesPage() {
         secondaryHref="/shop"
         secondaryLabel="Browse All Fragrances"
       />
-
-      <Newsletter />
       <Footer />
     </div>
   );

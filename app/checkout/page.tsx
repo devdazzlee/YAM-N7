@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
 import Services from '../components/Services';
 import { CheckCircle, ArrowRight, Lock, Truck, ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
@@ -158,7 +157,7 @@ export default function CheckoutPage() {
       <Header />
 
       {/* Page Header */}
-      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-8 sm:py-12 md:py-16">
+      <section className="page-banner text-foreground page-offset py-8 sm:py-12 md:py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -505,8 +504,6 @@ export default function CheckoutPage() {
           </div>
         </div>
       </section>
-
-      <Newsletter />
       <Services />
       <Footer />
     </div>

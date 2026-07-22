@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import Newsletter from '../../components/Newsletter';
 import Services from '../../components/Services';
 import { MapPin, Plus, Loader2 } from 'lucide-react';
 import { useAuthStore } from '../../../lib/store/authStore';
@@ -39,7 +38,7 @@ export default function AddressesPage() {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-16">
+      <section className="page-banner text-foreground page-offset py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -128,8 +127,6 @@ export default function AddressesPage() {
           </div>
         </div>
       </section>
-
-      <Newsletter />
       <Services />
       <Footer />
     </div>

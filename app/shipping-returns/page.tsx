@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
 import Services from '../components/Services';
 import { Truck, RotateCcw, Shield, Clock, Package, MapPin, CreditCard, AlertTriangle, CheckCircle, XCircle, ArrowLeftRight, Phone, Mail } from 'lucide-react';
 import { CONTACT } from '../../config/storeInfo';
@@ -358,8 +357,6 @@ export default function ShippingReturnsPage() {
           </motion.div>
         </div>
       </section>
-
-      <Newsletter />
       <Services />
       <Footer />
     </div>

@@ -5,8 +5,6 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
-import Services from '../components/Services';
 import Link from 'next/link';
 import { Mail, Lock, User, Phone, UserPlus, AlertCircle, Loader2, Eye, EyeOff } from 'lucide-react';
 import { useAuthStore } from '../../lib/store/authStore';
@@ -62,18 +60,17 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-surface">
       <Header />
 
-      {/* Register Section */}
-      <section className="py-20 bg-gradient-to-b from-surface-muted to-background">
-        <div className="container mx-auto px-4">
+      <section className="page-offset py-12 sm:py-16 md:py-20 bg-surface">
+        <div className="luxury-container">
           <div className="max-w-md mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="bg-card rounded-2xl shadow-xl p-8 md:p-10"
+              transition={{ duration: 0.5 }}
+              className="border border-foreground/10 bg-surface p-8 md:p-10"
             >
               <div className="text-center mb-8">
                 <h1 className="text-3xl font-bold text-foreground mb-2">Create Account</h1>
@@ -262,9 +259,6 @@ export default function RegisterPage() {
           </div>
         </div>
       </section>
-
-      <Newsletter />
-      <Services />
       <Footer />
     </div>
   );

@@ -80,6 +80,8 @@ export default function PageTransition() {
     };
   }, []);
 
+  if (pathname === '/') return null;
+
   return (
     <>
       {/* ── Splash screen (first load only) ── */}
@@ -97,7 +99,7 @@ export default function PageTransition() {
         )}
       </AnimatePresence>
 
-      {/* ── Exit curtain: fades current page out on navigation ── */}
+      {/* ── Exit curtain: yellow brand loader on navigation ── */}
       <AnimatePresence>
         {exitCurtain && !showSplash && (
           <motion.div
@@ -106,15 +108,11 @@ export default function PageTransition() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.32, ease: EASE }}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              zIndex: 9999,
-              background: '#2B0B16',
-              pointerEvents: 'none',
-            }}
+            style={{ position: 'fixed', inset: 0, zIndex: 9999, pointerEvents: 'none' }}
             aria-hidden="true"
-          />
+          >
+            <BrandLoader variant="splash" />
+          </motion.div>
         )}
       </AnimatePresence>
     </>

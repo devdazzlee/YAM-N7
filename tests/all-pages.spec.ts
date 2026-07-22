@@ -132,12 +132,6 @@ test.describe('Component Tests', () => {
     await expect(logo).toBeVisible();
   });
 
-  test('should display newsletter section', async ({ page }) => {
-    await page.goto('/');
-    const newsletter = page.locator('text=Sign up to Newsletter');
-    await expect(newsletter).toBeVisible();
-  });
-
   test('should display services section', async ({ page }) => {
     await page.goto('/');
     const services = page.locator('text=Free Shipping');
@@ -148,7 +142,7 @@ test.describe('Component Tests', () => {
     await page.goto('/');
     const footer = page.locator('footer');
     await expect(footer).toBeVisible();
-    await expect(footer.locator('text=About Us')).toBeVisible();
+    await expect(footer.locator('text=About')).toBeVisible();
   });
 });
 

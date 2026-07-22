@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
 import Services from '../components/Services';
 import { Award, Users, Heart, TrendingUp, Shield, Star, Gift, CheckCircle, Target, Eye, Sprout, Globe, Package } from 'lucide-react';
 import Link from 'next/link';
@@ -93,8 +92,6 @@ export default function AboutPage() {
         label="Our Heritage"
         title="About YAM-N7"
         subtitle="Your trusted destination for luxury perfumes, attars, and exclusive fragrances — crafting memorable scents since 2000."
-        image="/banners/New-Banner.jpg"
-        imageAlt="YAM-N7 heritage"
       >
         <Link href="/shop" className="luxury-btn-primary">
           Explore Collection
@@ -517,8 +514,6 @@ export default function AboutPage() {
         secondaryHref="/contact"
         secondaryLabel="Contact Us"
       />
-
-      <Newsletter />
       <Services />
       <Footer />
     </div>

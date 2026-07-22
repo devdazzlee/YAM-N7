@@ -334,10 +334,7 @@ export default function ProductCard({
               <span className="font-heading text-2xl text-primary/30">N7</span>
             </div>
           )}
- 
-          {/* Hover overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
- 
+
           {category && (
             <span className="absolute top-3 left-3 luxury-label text-[9px] bg-background/60 backdrop-blur-sm px-2 py-1">
               {category}

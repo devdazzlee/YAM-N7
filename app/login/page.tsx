@@ -5,8 +5,6 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
-import Services from '../components/Services';
 import Link from 'next/link';
 import { Mail, Lock, LogIn, AlertCircle, Loader2, Eye, EyeOff } from 'lucide-react';
 import { useAuthStore } from '../../lib/store/authStore';
@@ -43,18 +41,17 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-surface">
       <Header />
 
-      {/* Login Section */}
-      <section className="py-20 bg-gradient-to-b from-surface-muted to-background">
-        <div className="container mx-auto px-4">
+      <section className="page-offset py-12 sm:py-16 md:py-20 bg-surface">
+        <div className="luxury-container">
           <div className="max-w-md mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="bg-card rounded-2xl shadow-xl p-8 md:p-10"
+              transition={{ duration: 0.5 }}
+              className="border border-foreground/10 bg-surface p-8 md:p-10"
             >
               <div className="text-center mb-8">
                 <h1 className="text-3xl font-bold text-foreground mb-2">Welcome Back</h1>
@@ -65,7 +62,7 @@ export default function LoginPage() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-destructive/10 border border-destructive/30 text-red-700 px-4 py-3 rounded-lg flex items-center space-x-2 mb-4"
+                  className="bg-destructive/10 border border-destructive/30 text-destructive px-4 py-3 flex items-center space-x-2 mb-4"
                 >
                   <AlertCircle className="w-5 h-5" />
                   <span className="text-sm">{error}</span>
@@ -86,7 +83,7 @@ export default function LoginPage() {
                       disabled={isLoading}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full pl-12 pr-4 py-3 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full pl-12 pr-4 py-3 border border-foreground/15 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-surface"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -105,7 +102,7 @@ export default function LoginPage() {
                       disabled={isLoading}
                       value={formData.password}
                       onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                      className="w-full pl-12 pr-12 py-3 rounded-xl border border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full pl-12 pr-12 py-3 border border-foreground/15 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-surface"
                       placeholder="••••••••"
                     />
                     <button
@@ -130,7 +127,7 @@ export default function LoginPage() {
                       checked={rememberMe}
                       onChange={(e) => setRememberMe(e.target.checked)}
                       disabled={isLoading}
-                      className="w-4 h-4 text-primary border-border-strong rounded focus:ring-primary disabled:opacity-50"
+                      className="w-4 h-4 text-primary border-foreground/20 rounded focus:ring-primary disabled:opacity-50"
                     />
                     <span className="text-sm text-muted">Remember me</span>
                   </label>
@@ -142,12 +139,10 @@ export default function LoginPage() {
                   </Link>
                 </div>
 
-                <motion.button
+                <button
                   type="submit"
                   disabled={isLoading}
-                  whileHover={{ scale: isLoading ? 1 : 1.02 }}
-                  whileTap={{ scale: isLoading ? 1 : 0.98 }}
-                  className="w-full bg-primary hover:bg-primary-dark disabled:bg-muted-subtle disabled:cursor-not-allowed text-primary-foreground px-8 py-4 rounded-full font-semibold transition-colors flex items-center justify-center space-x-2"
+                  className="w-full luxury-btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <>
@@ -160,7 +155,7 @@ export default function LoginPage() {
                       <span>Sign In</span>
                     </>
                   )}
-                </motion.button>
+                </button>
               </form>
 
               <div className="mt-6 text-center">
@@ -178,9 +173,6 @@ export default function LoginPage() {
           </div>
         </div>
       </section>
-
-      <Newsletter />
-      <Services />
       <Footer />
     </div>
   );

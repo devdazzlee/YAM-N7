@@ -52,9 +52,9 @@ module.exports = {
         accent: 'rgb(var(--color-primary-dark) / <alpha-value>)',
       },
       fontFamily: {
-        sans: ['var(--font-body)', 'Poppins', 'system-ui', 'sans-serif'],
-        heading: ['var(--font-heading)', 'Cormorant Garamond', 'Georgia', 'serif'],
-        display: ['var(--font-display)', 'Playfair Display', 'Georgia', 'serif'],
+        sans: ['var(--font-alpino)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-alpino)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-alpino)', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         luxury: '0.28em',

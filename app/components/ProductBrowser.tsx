@@ -208,7 +208,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                 placeholder="Search fragrances..."
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                className="w-full pl-9 pr-8 py-2.5 bg-background border border-border text-sm text-foreground placeholder:text-muted-subtle focus:outline-none focus:ring-1 focus:ring-primary/40 focus:border-primary transition-all"
+                className="w-full pl-9 pr-8 py-2.5 bg-surface border border-border text-sm text-foreground placeholder:text-muted-subtle focus:outline-none focus:ring-1 focus:ring-primary/40 focus:border-primary transition-all"
               />
               {searchInput && (
                 <button onClick={() => setSearchInput('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-subtle hover:text-muted">
@@ -222,7 +222,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
               <div className="relative flex-1 sm:flex-none">
                 <button
                   onClick={(e) => { e.stopPropagation(); setShowSortMenu(!showSortMenu); }}
-                  className="flex items-center gap-1.5 w-full sm:w-auto px-3 py-2.5 bg-background border border-border text-sm text-foreground hover:border-primary/40 transition-all whitespace-nowrap"
+                  className="flex items-center gap-1.5 w-full sm:w-auto px-3 py-2.5 bg-surface border border-border text-sm text-foreground hover:border-primary/40 transition-all whitespace-nowrap"
                 >
                   <ArrowUpDown className="w-3.5 h-3.5 text-muted" />
                   <span className="text-xs sm:text-sm font-medium truncate max-w-[140px] sm:max-w-none">
@@ -258,7 +258,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
               </div>
 
               {/* View Toggle */}
-              <div className="hidden sm:flex items-center gap-0.5 bg-background border border-border p-0.5">
+              <div className="hidden sm:flex items-center gap-0.5 bg-surface border border-border p-0.5">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={`p-2 transition-all duration-200 ${viewMode === 'grid' ? 'bg-primary/10 text-primary' : 'text-muted-subtle hover:text-muted'}`}
@@ -299,7 +299,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                   className={`px-3 py-1.5 text-xs font-medium transition-all border ${
                     selectedCategory === 'All'
                       ? 'bg-primary text-primary-foreground border-primary'
-                      : 'bg-background text-muted border-border hover:border-primary/50 hover:text-primary'
+                      : 'bg-surface text-muted border-border hover:border-primary/50 hover:text-primary'
                   }`}
                 >
                   All Products
@@ -311,7 +311,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                     className={`px-3 py-1.5 text-xs font-medium transition-all border ${
                       selectedCategory === cat.slug
                         ? 'bg-primary text-primary-foreground border-primary'
-                        : 'bg-background text-muted border-border hover:border-primary/50 hover:text-primary'
+                        : 'bg-surface text-muted border-border hover:border-primary/50 hover:text-primary'
                     }`}
                   >
                     {cat.name}
@@ -334,7 +334,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                         className={`px-3 py-1.5 text-xs font-medium border ${
                           selectedCategory === 'All'
                             ? 'bg-primary text-primary-foreground border-primary'
-                            : 'bg-background text-muted border-border'
+                            : 'bg-surface text-muted border-border'
                         }`}
                       >
                         All
@@ -346,7 +346,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                           className={`px-3 py-1.5 text-xs font-medium border ${
                             selectedCategory === cat.slug
                               ? 'bg-primary text-primary-foreground border-primary'
-                              : 'bg-background text-muted border-border'
+                              : 'bg-surface text-muted border-border'
                           }`}
                         >
                           {cat.name}
@@ -382,7 +382,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                   className={`px-3 py-1.5 text-xs font-medium transition-all border ${
                     selectedPriceTag === tag.id
                       ? 'bg-primary text-primary-foreground border-primary'
-                      : 'bg-background text-muted border-border hover:border-primary/50 hover:text-primary'
+                      : 'bg-surface text-muted border-border hover:border-primary/50 hover:text-primary'
                   }`}
                 >
                   {tag.label}
@@ -407,7 +407,7 @@ export default function ProductBrowser({ bucketKey, lockedCategorySlug }: Produc
                         className={`px-3 py-1.5 text-xs font-medium border ${
                           selectedPriceTag === tag.id
                             ? 'bg-primary text-primary-foreground border-primary'
-                            : 'bg-background text-muted border-border'
+                            : 'bg-surface text-muted border-border'
                         }`}
                       >
                         {tag.label}

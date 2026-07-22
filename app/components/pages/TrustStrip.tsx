@@ -15,20 +15,36 @@ interface TrustStripProps {
 
 export default function TrustStrip({ items }: TrustStripProps) {
   return (
-    <section className="py-6 sm:py-8 bg-surface-muted/60 border-y border-border">
-      <div className="luxury-container">
-        <Stagger className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          {items.map((item) => {
+    <section className="border-y border-foreground/10 bg-surface">
+      <div className="luxury-container py-8 sm:py-10">
+        <Stagger className="grid grid-cols-2 md:grid-cols-4">
+          {items.map((item, index) => {
             const Icon = item.icon;
+            const isOdd = index % 2 === 1;
+            const isBottomRow = index >= 2;
+
             return (
               <StaggerChild key={item.label}>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 border border-border bg-surface flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-4 h-4 text-primary" strokeWidth={1.5} />
+                <div
+                  className={[
+                    'flex flex-col items-center text-center gap-3 px-4 py-5 md:py-2',
+                    isOdd ? 'border-l border-foreground/10' : '',
+                    isBottomRow ? 'border-t border-foreground/10 md:border-t-0' : '',
+                    index > 0 ? 'md:border-l md:border-foreground/10' : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                >
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10">
+                    <Icon className="h-[18px] w-[18px] text-primary" strokeWidth={1.5} />
                   </div>
                   <div>
-                    <p className="font-heading text-lg text-foreground leading-none">{item.value}</p>
-                    <p className="text-[10px] uppercase tracking-luxury text-muted-subtle mt-1">{item.label}</p>
+                    <p className="font-heading text-xl sm:text-2xl text-foreground leading-none tracking-wide">
+                      {item.value}
+                    </p>
+                    <p className="mt-2 text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-muted">
+                      {item.label}
+                    </p>
                   </div>
                 </div>
               </StaggerChild>

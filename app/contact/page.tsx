@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
 import PageHero from '../components/pages/PageHero';
 import TrustStrip from '../components/pages/TrustStrip';
 import PageFAQ from '../components/pages/PageFAQ';
@@ -321,8 +320,6 @@ export default function ContactPage() {
         secondaryHref={CONTACT.whatsappUrl}
         secondaryLabel="WhatsApp Us"
       />
-
-      <Newsletter />
       <Footer />
     </div>
   );

@@ -25,8 +25,8 @@ export default function AnnouncementBar() {
     <div
       aria-live="polite"
       style={{
-        background: '#2B0B16',
-        borderBottom: '1px solid rgba(232,180,160, 0.18)',
+        background: '#082F49',
+        borderBottom: '1px solid rgba(234,88,12, 0.18)',
         height: '36px',
         display: 'flex',
         alignItems: 'center',
@@ -46,7 +46,7 @@ export default function AnnouncementBar() {
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
           style={{
-            color: '#E8B4A0',
+            color: '#EA580C',
             fontFamily: 'var(--font-body), Poppins, sans-serif',
             fontSize: 'clamp(9px, 2vw, 10.5px)',
             fontWeight: 500,

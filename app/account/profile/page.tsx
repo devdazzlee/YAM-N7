@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import Newsletter from '../../components/Newsletter';
 import Services from '../../components/Services';
 import { User, Mail, Phone, MapPin, Package, Edit2, Save, X, Loader2, CheckCircle, Clock, Truck, XCircle, Calendar } from 'lucide-react';
 import { useAuthStore } from '../../../lib/store/authStore';
@@ -420,8 +419,6 @@ export default function ProfilePage() {
           </motion.div>
         </div>
       </section>
-
-      <Newsletter />
       <Services />
       <Footer />
     </div>

@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
 import ProductBrowser from '../components/ProductBrowser';
 import PageHero from '../components/pages/PageHero';
 import TrustStrip from '../components/pages/TrustStrip';
@@ -43,8 +42,6 @@ export default function WhatsHotPage() {
         label="What's Hot"
         title="Trending Right Now"
         subtitle="The fragrances the community is talking about — new releases, viral picks, and rising stars gaining momentum across Pakistan this season."
-        image="/banners/New-Banner.jpg"
-        imageAlt="YAM-N7 What's Hot — trending fragrances"
       >
         <Link href="#products" className="luxury-btn-primary">
           See What's Trending
@@ -147,8 +144,6 @@ export default function WhatsHotPage() {
         secondaryHref="/shop"
         secondaryLabel="Browse Full Shop"
       />
-
-      <Newsletter />
       <Footer />
     </div>
   );

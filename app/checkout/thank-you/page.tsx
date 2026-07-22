@@ -5,7 +5,6 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import Newsletter from '../../components/Newsletter';
 import Services from '../../components/Services';
 import { CheckCircle, Package, Mail, Home, Truck } from 'lucide-react';
 import Link from 'next/link';
@@ -246,8 +245,6 @@ function ThankYouContent() {
           </div>
         </div>
       </section>
-
-      <Newsletter />
       <Services />
       <Footer />
     </div>

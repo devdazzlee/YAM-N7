@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import Newsletter from '../../components/Newsletter';
 import ProductCard from '../../components/ProductCard';
 import { ShoppingCart, Heart, Minus, Plus, Star, Shield, RotateCcw, CheckCircle, Award, Zap, Clock } from 'lucide-react';
 import BrandLoader from '../../components/BrandLoader';
@@ -391,15 +390,15 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       <Header />
 
       {/* Breadcrumb */}
-      <div className="border-b border-border bg-surface-muted/40">
+      <div className="border-b border-foreground/10 bg-surface">
         <div className="luxury-container py-3">
           <nav className="flex items-center gap-2 text-xs sm:text-sm text-muted flex-wrap">
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-            <span>/</span>
+            <span className="text-foreground/20">/</span>
             <Link href="/shop" className="hover:text-primary transition-colors">Shop</Link>
             {product.category?.name && (
               <>
-                <span>/</span>
+                <span className="text-foreground/20">/</span>
                 <Link
                   href={`/categories/${product.category.slug}`}
                   className="hover:text-primary transition-colors"
@@ -408,16 +407,16 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </Link>
               </>
             )}
-            <span>/</span>
+            <span className="text-foreground/20">/</span>
             <span className="text-foreground truncate max-w-[200px] sm:max-w-none">{product.name}</span>
           </nav>
         </div>
       </div>
 
       {/* Product Details */}
-      <section className="py-6 sm:py-10 md:py-12 bg-background overflow-x-hidden">
+      <section className="py-6 sm:py-10 md:py-12 bg-surface overflow-x-hidden">
         <div className="luxury-container max-w-6xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-14">
             {/* Product Images */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -427,7 +426,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             >
               <motion.div
                 whileHover={{ scale: 1.01 }}
-                className="relative aspect-[3/4] rounded-sm overflow-hidden shadow-luxury bg-surface-muted"
+                className="relative aspect-[3/4] overflow-hidden border border-foreground/10 bg-background"
               >
                 <img
                   src={product.ProductImage && product.ProductImage[selectedImage] ? product.ProductImage[selectedImage].image : (product.image || '/Banner-01.jpg')}
@@ -435,8 +434,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   className="w-full h-full object-cover object-center"
                 />
                 {discount > 0 && (
-                  <div className="absolute top-2.5 left-2.5 bg-primary-dark text-primary-foreground px-2.5 py-0.5 rounded-full font-bold text-xs">
-                    -{discount}%
+                  <div className="absolute top-3 left-3 bg-primary text-primary-foreground px-2.5 py-0.5 text-xs font-semibold tracking-wide">
+                    −{discount}%
                   </div>
                 )}
               </motion.div>
@@ -445,10 +444,10 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   <button
                     key={index}
                     onClick={() => setSelectedImage(index)}
-                    className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
+                    className={`aspect-square overflow-hidden border transition-all ${
                       selectedImage === index
-                        ? 'border-primary shadow-sm'
-                        : 'border-border hover:border-primary/50'
+                        ? 'border-primary'
+                        : 'border-foreground/10 hover:border-primary/50'
                     }`}
                   >
                     <img src={img} alt={`${product.name} ${index + 1}`} className="w-full h-full object-cover object-center" />
@@ -462,24 +461,24 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-4"
+              className="space-y-5"
             >
               <div>
                 <Link href={`/categories/${(product.category?.name || (product as any).category || '').toLowerCase().replace(/\s+/g, '-')}`}>
-                  <span className="inline-block text-primary text-[11px] sm:text-xs font-semibold uppercase tracking-wider mb-1.5 hover:text-foreground transition-colors">
+                  <span className="inline-block text-primary text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] mb-2 hover:text-foreground transition-colors">
                     {product.category?.name || (product as any).category}
                   </span>
                 </Link>
-                <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-light text-foreground mb-3 leading-tight">{product.name}</h1>
-                <div className="flex flex-wrap items-center gap-2 mb-3">
+                <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-normal text-foreground mb-3 leading-tight">{product.name}</h1>
+                <div className="flex flex-wrap items-center gap-2 mb-1">
                   <div className="flex items-center space-x-0.5">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
                         className={`w-3.5 h-3.5 ${
                           i < Math.floor((product as any).rating || 4.5)
-                            ? 'fill-primary-dark text-primary-dark'
-                            : 'text-muted-subtle'
+                            ? 'fill-primary text-primary'
+                            : 'text-foreground/20'
                         }`}
                       />
                     ))}
@@ -490,32 +489,32 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 p-3 bg-surface-muted/60 rounded-xl">
-                <span className="text-xl sm:text-2xl font-bold text-foreground">
+              <div className="flex flex-wrap items-baseline gap-2 sm:gap-3 border-y border-foreground/10 py-4">
+                <span className="font-heading text-2xl sm:text-3xl text-foreground tracking-wide">
                   Rs. {computedPrice.toLocaleString()}
                 </span>
                 {kgDiscountAmount > 0 && (
-                  <span className="text-sm text-muted-subtle line-through">
+                  <span className="text-sm text-muted line-through">
                     Rs. {computedPriceBeforeDiscount.toLocaleString()}
                   </span>
                 )}
                 {quantityOptions.length > 0 && selectedQuantityOption && parseFloat(selectedQuantityOption) !== 1 && (
-                  <span className="text-xs text-muted bg-card/70 px-2 py-0.5 rounded-full">
+                  <span className="text-xs text-muted">
                     Rs. {(product.selling_price || product.price || 0).toLocaleString()} / kg
                   </span>
                 )}
                 {kgDiscountAmount <= 0 && product.originalPrice && (
-                  <span className="text-sm text-muted-subtle line-through">
+                  <span className="text-sm text-muted line-through">
                     Rs. {product.originalPrice.toLocaleString()}
                   </span>
                 )}
                 {discount > 0 && kgDiscountAmount <= 0 && (
-                  <span className="bg-primary-dark text-primary-foreground px-2 py-0.5 rounded-full text-[11px] font-bold ml-auto">
-                    -{discount}%
+                  <span className="bg-primary text-primary-foreground px-2 py-0.5 text-[11px] font-semibold ml-auto">
+                    −{discount}%
                   </span>
                 )}
                 {kgDiscountAmount > 0 && (
-                  <span className="bg-gradient-to-r from-primary to-primary-light text-primary-foreground px-2.5 py-0.5 rounded-full text-[11px] font-bold ml-auto">
+                  <span className="bg-primary text-primary-foreground px-2.5 py-0.5 text-[11px] font-semibold ml-auto">
                     Rs {kgDiscountAmount} OFF
                   </span>
                 )}
@@ -668,12 +667,12 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     )}
                   </div>
                 ) : (
-                  <div className="flex items-center gap-3 p-3 bg-card border border-border rounded-xl">
+                  <div className="flex items-center gap-3 p-3 border border-foreground/10 bg-background">
                     <span className="font-semibold text-foreground text-sm">Quantity</span>
-                    <div className="flex items-center bg-subtle-strong rounded-lg px-1 py-1">
+                    <div className="flex items-center bg-surface border border-foreground/10 px-1 py-1">
                       <button
                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-surface-muted transition-colors"
+                        className="w-7 h-7 flex items-center justify-center hover:bg-background transition-colors"
                       >
                         <Minus className="w-3.5 h-3.5 text-foreground" />
                       </button>
@@ -682,33 +681,37 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                       </span>
                       <button
                         onClick={() => setQuantity(quantity + 1)}
-                        className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-surface-muted transition-colors"
+                        className="w-7 h-7 flex items-center justify-center hover:bg-background transition-colors"
                       >
                         <Plus className="w-3.5 h-3.5 text-foreground" />
                       </button>
                     </div>
-                    <span className="text-muted-subtle text-xs ml-auto">{product.stock} in stock</span>
+                    <span className={`text-xs ml-auto ${(product.stock ?? 0) > 0 ? 'text-muted' : 'text-destructive'}`}>
+                      {(product.stock ?? 0) > 0 ? `${product.stock} in stock` : 'Out of stock'}
+                    </span>
                   </div>
                 )
               ) : (
-              <div className="flex items-center gap-3 p-3 bg-card border border-border rounded-xl">
+              <div className="flex items-center gap-3 p-3 border border-foreground/10 bg-background">
                 <span className="font-semibold text-foreground text-sm">Quantity</span>
-                <div className="flex items-center bg-subtle-strong rounded-lg px-1 py-1">
+                <div className="flex items-center bg-surface border border-foreground/10 px-1 py-1">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-surface-muted transition-colors"
+                    className="w-7 h-7 flex items-center justify-center hover:bg-background transition-colors"
                   >
                     <Minus className="w-3.5 h-3.5 text-foreground" />
                   </button>
                   <span className="font-bold text-foreground min-w-[50px] text-center text-sm">{quantity}</span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-surface-muted transition-colors"
+                    className="w-7 h-7 flex items-center justify-center hover:bg-background transition-colors"
                   >
                     <Plus className="w-3.5 h-3.5 text-foreground" />
                   </button>
                 </div>
-                <span className="text-muted-subtle text-xs ml-auto">{product.stock} in stock</span>
+                <span className={`text-xs ml-auto ${(product.stock ?? 0) > 0 ? 'text-muted' : 'text-destructive'}`}>
+                  {(product.stock ?? 0) > 0 ? `${product.stock} in stock` : 'Out of stock'}
+                </span>
               </div>
               )}
 
@@ -716,7 +719,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 py-2.5 rounded-lg font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 bg-surface-elevated text-foreground hover:bg-primary hover:text-primary-foreground"
+                  className="flex-1 py-3 border border-foreground text-foreground font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 hover:bg-foreground hover:text-background"
                   aria-label="Add to cart"
                 >
                   <ShoppingCart className="w-4 h-4" />
@@ -724,7 +727,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </button>
                 <button
                   onClick={handleBuyNow}
-                  className="flex-1 py-2.5 bg-primary text-primary-foreground rounded-lg font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 hover:bg-primary-dark"
+                  className="flex-1 py-3 bg-primary text-primary-foreground font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-1.5 hover:bg-primary-dark"
                   aria-label="Buy now"
                 >
                   <Zap className="w-4 h-4" />
@@ -732,10 +735,10 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </button>
                 <button
                   onClick={toggleWishlist}
-                  className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all border ${
+                  className={`w-11 h-11 flex items-center justify-center transition-all border ${
                     isInWishlist
-                      ? 'bg-primary/10 border-primary/30 text-primary'
-                      : 'bg-surface-muted border-border text-muted hover:border-primary hover:text-primary'
+                      ? 'bg-primary/10 border-primary text-primary'
+                      : 'border-foreground/20 text-muted hover:border-primary hover:text-primary'
                   }`}
                   aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
                 >
@@ -744,14 +747,14 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               </div>
 
               {/* Service Badges */}
-              <div className="grid grid-cols-2 gap-2 pt-2">
-                <div className="flex items-center gap-1.5 p-2 bg-surface-muted rounded-lg">
-                  <Shield className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span className="text-[11px] text-muted font-medium leading-tight">Secure Payment</span>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-1">
+                <div className="flex items-center gap-2">
+                  <Shield className="w-4 h-4 text-primary flex-shrink-0" strokeWidth={1.5} />
+                  <span className="text-xs text-muted">Secure Payment</span>
                 </div>
-                <div className="flex items-center gap-1.5 p-2 bg-surface-muted rounded-lg">
-                  <RotateCcw className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span className="text-[11px] text-muted font-medium leading-tight">Easy Returns</span>
+                <div className="flex items-center gap-2">
+                  <RotateCcw className="w-4 h-4 text-primary flex-shrink-0" strokeWidth={1.5} />
+                  <span className="text-xs text-muted">Easy Returns</span>
                 </div>
               </div>
             </motion.div>
@@ -760,15 +763,15 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       </section>
 
       {/* Product Details Tabs */}
-      <section className="py-10 sm:py-14 bg-surface-muted/40 overflow-x-hidden">
+      <section className="py-10 sm:py-14 bg-background overflow-x-hidden border-t border-foreground/10">
         <div className="luxury-container max-w-4xl">
           <Reveal className="text-center mb-8">
             <p className="luxury-label mb-2">Product Details</p>
-            <h2 className="font-heading text-2xl sm:text-3xl text-foreground font-light">Discover More</h2>
+            <h2 className="font-heading text-2xl sm:text-3xl text-foreground font-normal">Discover More</h2>
           </Reveal>
 
           {/* Tabs */}
-          <div className="flex justify-center gap-1 mb-6 border-b border-border overflow-x-auto scrollbar-hide">
+          <div className="flex justify-center gap-1 mb-6 border-b border-foreground/10 overflow-x-auto scrollbar-hide">
             {[
               { id: 'description', label: 'Description' },
               { id: 'notes', label: 'Fragrance Notes' },
@@ -794,7 +797,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}
-            className="luxury-card p-6 sm:p-8"
+            className="bg-surface border border-foreground/10 p-6 sm:p-8"
           >
             {activeTab === 'description' && (
               <div className="space-y-5">
@@ -930,8 +933,6 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           )}
         </Stagger>
       </SectionShell>
-
-      <Newsletter />
       <Footer />
     </div>
   );

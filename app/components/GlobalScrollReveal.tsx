@@ -23,6 +23,8 @@ export default function GlobalScrollReveal() {
   const pathname = usePathname();
 
   useEffect(() => {
+    if (pathname === '/') return;
+
     // Small delay to let the page DOM fully render after route change
     const init = () => {
       const elements = document.querySelectorAll<HTMLElement>('.sr');

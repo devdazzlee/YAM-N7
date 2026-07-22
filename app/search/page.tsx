@@ -5,7 +5,6 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
 import Services from '../components/Services';
 import ProductCard from '../components/ProductCard';
 import Loader from '../components/Loader';
@@ -89,7 +88,7 @@ function SearchContent() {
 
   return (
     <>
-      <section className="bg-gradient-to-r from-surface-elevated to-primary text-foreground py-16">
+      <section className="page-banner text-foreground page-offset py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -98,7 +97,7 @@ function SearchContent() {
             className="text-center max-w-2xl mx-auto"
           >
             {personalityMatch && (
-              <span className="text-xs uppercase tracking-[0.25em] text-[#E8B4A0] font-semibold mb-2 block">
+              <span className="text-xs uppercase tracking-[0.25em] text-[#EA580C] font-semibold mb-2 block">
                 The Identity Series
               </span>
             )}
@@ -198,7 +197,6 @@ export default function SearchPage() {
       <Suspense fallback={<Loader size="xl" text="Loading search results..." fullScreen />}>
         <SearchContent />
       </Suspense>
-      <Newsletter />
       <Services />
       <Footer />
     </div>

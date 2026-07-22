@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Newsletter from '../components/Newsletter';
 import ProductBrowser from '../components/ProductBrowser';
 import LuxuryCollectionsSection from '../components/LuxuryCollectionsSection';
 import PageHero from '../components/pages/PageHero';
@@ -54,8 +53,6 @@ export default function ShopPage() {
         label="The Collection"
         title="Shop Fragrances"
         subtitle="Over 1,400 curated perfumes, attars, and oud blends — each selected for authenticity, projection, and lasting impression."
-        image="/banners/New-Banner.jpg"
-        imageAlt="YAM-N7 fragrance collection"
       >
         <Link href="#products" className="luxury-btn-primary">
           Browse All Products
@@ -160,8 +157,6 @@ export default function ShopPage() {
         secondaryHref="/about"
         secondaryLabel="Our Story"
       />
-
-      <Newsletter />
       <Footer />
     </div>
   );
